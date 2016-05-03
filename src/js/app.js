@@ -155,3 +155,27 @@ function initMap(){
 	});
 
 };
+
+var Location = function (data){
+
+	this.name = ko.observable(data.name);
+	this.lat = ko.observable(data.lat);
+	this.lng = ko.observable(data.lng);
+
+};
+
+
+var ViewModel = function() {
+
+	var self = this;
+
+	this.locationList = ko.observableArray([]);
+
+	locationData.forEach(function(location){
+		self.locationList.push(new Location(location));
+	});
+
+};
+
+
+ko.applyBindings(new ViewModel());
