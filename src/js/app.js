@@ -8,6 +8,66 @@ cross worship center.
 6. Animations. Find animation libraries to handle this?
 7. Error handling. Check out the ajax moving helper project again for .fail() with jquery ajax/getJSON
 */
+
+var locationData = [
+
+	{
+		name: "Pizza My Heart",
+
+		coordinates: {
+
+			lat: 37.303856,
+
+			lng: -121.89722,
+		}
+	},
+
+	{
+		name: "Powell's Sweet Shoppe",
+
+		coordinates: {
+
+			lat: 37.307686,
+
+			lng: -121.900156,
+		}
+	},
+
+	{
+		name: "Hicklebee's Bookstore",
+
+		coordinates: {
+
+			lat: 37.304035,
+
+			lng: -121.897363,
+		}
+	},
+
+	{
+		name: "AZ Fine Art Gallery",
+
+		coordinates: {
+
+			lat: 37.306385,
+
+			lng: -121.899933,
+		}
+	},
+
+	{
+		name: "MainStreet Burgers",
+
+		coordinates: {
+
+			lat: 37.308185,
+
+			lng: -121.900533,
+		}
+	},
+
+];
+
 var map;
 
 function initMap(){
@@ -18,10 +78,31 @@ function initMap(){
 
 	map = new google.maps.Map(document.getElementById('mapContainer'), {
 		center: mapCenter,
-		zoom: 15
+		zoom: 16
 	});
+
+	function createMarkers(){
+
+		var allMarkers = [];
+
+		var length = locationData.length;
+
+		for (var i = 0; i < length; i++) {
+			var marker = new google.maps.Marker({
+			    position: locationData[i].coordinates,
+			    map: map,
+			    title: locationData[i].name
+			  });
+
+			allMarkers.push(marker);
+		}
+
+	}
+
+	createMarkers();
 
 	google.maps.event.addDomListener(window, 'resize', function() {
     	map.setCenter(mapCenter);
 	});
+
 };
