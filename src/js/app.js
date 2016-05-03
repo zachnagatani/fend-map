@@ -64,7 +64,7 @@ var locationData = [
 
 			lng: -121.900533,
 		}
-	},
+	}
 
 ];
 
@@ -87,15 +87,48 @@ function initMap(){
 
 		var length = locationData.length;
 
-		for (var i = 0; i < length; i++) {
+		// for (var i = 0; i < length; i++) {
+		// 	var marker = new google.maps.Marker({
+		// 	    position: locationData[i].coordinates,
+		// 	    map: map,
+		// 	    title: locationData[i].name
+		// 	});
+
+		// 	allMarkers.push(marker);
+
+		// 	var infoWindowNode = document.getElementById('infoWindowNode');
+
+		// 	var infoWindow = new google.maps.InfoWindow({
+		// 	    content: infoWindowNode
+		// 	 });
+
+		// 	marker.addListener('click', function(){
+		// 		infoWindow.open(map, marker);
+		// 	});
+
+		// }TODO: practice the closure trick with the for-loop
+
+		locationData.forEach(function(location){
+
 			var marker = new google.maps.Marker({
-			    position: locationData[i].coordinates,
+			    position: location.coordinates,
 			    map: map,
-			    title: locationData[i].name
-			  });
+			    title: location.name
+			});
 
 			allMarkers.push(marker);
-		}
+
+			var infoWindowNode = document.getElementById('infoWindowNode');
+
+			var infoWindow = new google.maps.InfoWindow({
+			    content: infoWindowNode
+			 });
+
+			marker.addListener('click', function(){
+				infoWindow.open(map, marker);
+			});
+
+		});
 
 	}
 
