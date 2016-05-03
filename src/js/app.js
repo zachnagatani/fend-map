@@ -8,3 +8,11 @@ cross worship center.
 6. Animations. Find animation libraries to handle this?
 7. Error handling. Check out the ajax moving helper project again for .fail() with jquery ajax/getJSON
 */
+
+function initMap(){
+	var map;
+	map = new google.maps.Map(document.getElementById('mapContainer'), {
+		center: {lat: 37.3036, lng: -121.8974},
+		zoom: 15
+	});
+};
