@@ -108,6 +108,9 @@ function initMap(){
 
 		// }TODO: practice the closure trick with the for-loop
 
+		var infoWindowName = document.getElementById('infoWindowName');
+		var infoWindowNode = document.getElementById('infoWindowNode');
+
 		locationData.forEach(function(location){
 
 			var marker = new google.maps.Marker({
@@ -118,14 +121,21 @@ function initMap(){
 
 			allMarkers.push(marker);
 
-			var infoWindowNode = document.getElementById('infoWindowNode');
-
 			var infoWindow = new google.maps.InfoWindow({
 			    content: infoWindowNode
-			 });
+			});
 
 			marker.addListener('click', function(){
+
+				infoWindowName.textContent = location.name;
+				infoWindowNode.appendChild(infoWindowName);
+
+				var infoWindow = new google.maps.InfoWindow({
+			    	content: infoWindowNode
+				});
+
 				infoWindow.open(map, marker);
+
 			});
 
 		});
