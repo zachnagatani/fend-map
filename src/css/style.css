@@ -3,6 +3,7 @@
 * {
 	padding: 0;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 html, body {
@@ -10,11 +11,18 @@ html, body {
 	width: 100%;
 }
 
+body {
+	font-family: Helvetica, sans-serif;
+	font-size: 20px;
+}
+
 /* Map Styles */
 
 .mapContainer {
 	height: 100%;
-	width: 100%;
+	width: calc(100% - 230px);
+	position: relative;
+	left: 230px;
 }
 
 /* Nav Styles */
@@ -22,5 +30,21 @@ html, body {
 .listContainer {
 	position: absolute;
 	z-index: 10;
+	height: 100%;
+	width: 230px;
+	background: #333;
+	color: #f0f0f0;
+	padding: 20px;
+	display: table;
+}
+
+.locationList {
+	list-style: none;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.locationList li {
+	padding-bottom: 50px;
 }
 
