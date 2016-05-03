@@ -14,6 +14,8 @@ var locationData = [
 	{
 		name: "Pizza My Heart",
 
+		yelpBusinessID: 'pizza-my-heart-san-jose',
+
 		coordinates: {
 
 			lat: 37.303856,
@@ -67,6 +69,9 @@ var locationData = [
 	}
 
 ];
+
+
+
 
 var map;
 
