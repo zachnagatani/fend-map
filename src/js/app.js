@@ -125,6 +125,7 @@ function initMap(){
 			    content: infoWindowNode
 			});
 
+			// TODO: Make open infoWindow close on click of another marker
 			marker.addListener('click', function(){
 
 				infoWindowName.textContent = location.name;
