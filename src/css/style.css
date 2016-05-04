@@ -22,6 +22,8 @@ body {
 	height: 100%;
 	width: 100%;
 	position: relative;
+	/*Move the map up 27px to offset the infoWindowNode height*/
+	bottom: 27px;
 }
 
 /*.mapContainer {
