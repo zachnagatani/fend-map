@@ -16,7 +16,7 @@
 		</form> -->
 		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
-			<li class="listItem" data-bind="text: name, click: $parent.testMe"></li>
+			<li id="listItem" class="listItem" data-bind="text: name, click: $parent.openInfoWindow.bind($data, $index())"></li>
 		</ul>
 	</nav>
 
