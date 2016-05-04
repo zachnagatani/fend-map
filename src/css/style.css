@@ -19,11 +19,11 @@ body {
 /* Map Styles */
 
 .mapContainer {
-	height: 100%;
+	/*Add 27px to offset infoWindowNode's height*/
+	height: calc(100% + 27px);
 	width: 100%;
 	position: relative;
-	/*Move the map up 27px to offset the infoWindowNode height*/
-	bottom: 27px;
+
 }
 
 /*.mapContainer {
@@ -71,7 +71,7 @@ body {
 	left: 10px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
 
 	.openNav {
 		display: block;

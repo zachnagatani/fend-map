@@ -15,13 +15,14 @@
 			<input type="submit">
 		</form> -->
 		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+		<!-- <select data-bind="options: filters, value: filter"></select> -->
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
 			<li id="listItem" class="listItem" data-bind="text: name, click: $parent.openInfoWindow.bind($data, $index())"></li>
 		</ul>
 	</nav>
 
 	<div id="infoWindowNode">
-		<h3 id="infoWindowName"></h3>
+		<h2 id="infoWindowName"></h2>
 	</div>
 
 	<div id="mapContainer" class="mapContainer">

@@ -1,8 +1,8 @@
 /* TODO:
 1. Add full-screen map to the page. Check out resume tool and
-cross worship center.
-2. Add markers. Check out resume project (I added markers there before)
-3. Create a list with those markers' locations. Check out cat-clicker
+cross worship center.!
+2. Add markers. Check out resume project (I added markers there before)!
+3. Create a list with those markers' locations. Check out cat-clicker!
 4. Filter option.. figure that out
 5. Use others API's to provide info for the markers. Check ajax moving helper project (wikipedia/nytimes info)
 6. Animations. Find animation libraries to handle this?
@@ -16,6 +16,8 @@ var locationData = [
 
 		yelpBusinessID: 'pizza-my-heart-san-jose',
 
+		type: "Food",
+
 		coordinates: {
 
 			lat: 37.303856,
@@ -26,6 +28,8 @@ var locationData = [
 
 	{
 		name: "Powell's Sweet Shoppe",
+
+		type: "Food",
 
 		coordinates: {
 
@@ -38,6 +42,8 @@ var locationData = [
 	{
 		name: "Hicklebee's Bookstore",
 
+		type: "Art",
+
 		coordinates: {
 
 			lat: 37.304035,
@@ -48,6 +54,8 @@ var locationData = [
 
 	{
 		name: "AZ Fine Art Gallery",
+
+		type: "Art",
 
 		coordinates: {
 
@@ -60,6 +68,8 @@ var locationData = [
 	{
 		name: "MainStreet Burgers",
 
+		type: "Food",
+
 		coordinates: {
 
 			lat: 37.308185,
@@ -69,6 +79,8 @@ var locationData = [
 	}
 
 ];
+
+var filters = ["No Filter", "Food", "Art"];
 
 var map;
 var allMarkers = [];
@@ -288,14 +300,21 @@ var ViewModel = function() {
 		self.locationList.push(new Location(location));
 	});
 
+	// this.filters = ko.observableArray(filters);
+	// this.filter = ko.observable('');
+	// this.filteredItems = ko.computed(function(){
+	// 	var filter = self.filter();
+	// 		if (filter != "No Filter") {
+	// 			console.log(self.locationList());
+	// 		} else {
+	// 		    return ko.utils.arrayFilter(self.locationList(), function(i) {
+	// 		        return i.type === filter;
+	// 		    });
+	// 	}
+ //    });
+
 	this.getCreateMarkers = function(){
 		return createMarkers();
-	};
-
-	this.testMe = function(){
-
-		console.log("SUCCESS");
-
 	};
 
 	this.openNav = function(){
@@ -315,7 +334,11 @@ var ViewModel = function() {
 	this.openInfoWindow = function(index){
 
 		// Grab the index of the clicked item
+		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
+		var listItemName = locationData[listItemIndex].name;
+
+		// Launch Google Maps InfoWindow
 
 		var infoWindowName = document.getElementById('infoWindowName');
 		var infoWindowNode = document.getElementById('infoWindowNode');
@@ -330,6 +353,21 @@ var ViewModel = function() {
 
 		// The index of the li will always match the index of the allMarkers array
 		infoWindow.open(map, allMarkers[listItemIndex]);
+
+		// WikiPedia API
+		var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
+
+		$.ajax({
+			dataType: "jsonp",
+			url: wikiURL
+		}).done(function(data){
+			console.log(data);
+
+			var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
+			var wikiTitle = wikiObject.title;
+			$('#wikiTitle').remove();
+			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+		});
 
 	};
 
