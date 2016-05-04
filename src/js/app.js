@@ -14,7 +14,7 @@ var locationData = [
 	{
 		name: "Pizza My Heart",
 
-		yelpBusinessID: 'pizza-my-heart-san-jose',
+		foursquareVenueID: "4a82147ef964a52082f81fe3",
 
 		type: "Food",
 
@@ -29,6 +29,8 @@ var locationData = [
 	{
 		name: "Powell's Sweet Shoppe",
 
+		foursquareVenueID: "4b11fc05f964a520d78723e3",
+
 		type: "Food",
 
 		coordinates: {
@@ -41,6 +43,8 @@ var locationData = [
 
 	{
 		name: "Hicklebee's Bookstore",
+
+		foursquareVenueID: "4a85d37bf964a5205eff1fe3",
 
 		type: "Art",
 
@@ -55,6 +59,8 @@ var locationData = [
 	{
 		name: "AZ Fine Art Gallery",
 
+		foursquareVenueID: "",
+
 		type: "Art",
 
 		coordinates: {
@@ -66,7 +72,9 @@ var locationData = [
 	},
 
 	{
-		name: "MainStreet Burgers",
+		name: "Main Street Burgers",
+
+		foursquareVenueID: "54373d95498e5b5416738404",
 
 		type: "Food",
 
@@ -112,123 +120,6 @@ function createMarkers(){
 
 	var listListLength = listList.length;
 
-	// for (var i = 0; i < listListLength; i++) {
-
-	// 	var marker = new google.maps.Marker({
-	// 	    position: locationData[i].coordinates,
-	// 	    map: map,
-	// 	    title: locationData[i].name
-	// 	});
-
-	// 	allMarkers.push(marker);
-
-	// 	infoWindowName.textContent = locationData[i].name;
-
-	// 	function createInfoWindow(){
-
-	// 		infoWindowNode.appendChild(infoWindowName);
-
-	// 		var infoWindow = new google.maps.InfoWindow({
-	// 	    	content: infoWindowNode
-	// 		});
-
-	// 		infoWindow.open(map, marker);
-
-	// 	};
-
-	// 	listList[i].addEventListener('click', (function(infoWindowNameCopy){
-
-	// 		return function(){
-	// 			console.log(infoWindowNameCopy);
-	// 			createInfoWindow();
-	// 		}
-
-
-	// 	})(infoWindowName.textContent));
-
-	// };
-
-	// Array.prototype.forEach.call(listList, function(listItem){
-
-	// 	locationData.forEach(function(location){
-
-	// 		var marker = new google.maps.Marker({
-	// 		    position: location.coordinates,
-	// 		    map: map,
-	// 		    title: location.name
-	// 		});
-
-	// 		allMarkers.push(marker);
-
-	// 		infoWindowName.textContent = location.name;
-
-	// 		function createInfoWindow(){
-
-	// 		infoWindowNode.appendChild(infoWindowName);
-
-	// 		var infoWindow = new google.maps.InfoWindow({
-	// 	    	content: infoWindowNode
-	// 		});
-
-	// 		infoWindow.open(map, marker);
-
-	// 	};
-
-	// 		listItem.addEventListener('click', function(){
-
-	// 			createInfoWindow();
-	// 			// console.log(infoWindowName.textContent);
-
-	// 		});
-
-	// 	});
-
-	// 	// for (var i = 0; i < locationData.length; i++){
-
-	// 	// 	var marker = new google.maps.Marker({
-	// 	// 	    position: locationData[i].coordinates,
-	// 	// 	    map: map,
-	// 	// 	    title: locationData[i].name
-	// 	// 	});
-
-	// 	// }
-
-
-	// 	// allMarkers.push(marker);
-
-	// 	// locationData.forEach(function(location){
-	// 	// 	infoWindowName.textContent = location.name;
-	// 	// });
-
-	// 	infoWindowName.textContent = listItem.textContent;
-
-	// 	function createInfoWindow(){
-
-	// 		infoWindowNode.appendChild(infoWindowName);
-
-	// 		var infoWindow = new google.maps.InfoWindow({
-	// 	    	content: infoWindowNode
-	// 		});
-
-	// 		infoWindow.open(map, marker);
-
-	// 	};
-
-	// 	listItem.addEventListener('click', function(){
-
-	// 		createInfoWindow();
-	// 		// console.log(infoWindowName.textContent);
-
-	// 	});
-
-	// });
-
-	// USE GET ELEMENTS BY ID NOT CLASS NAME! OR LOOP OVER THE ARRAY to add event listeners!!
-
-	// var locationIteration = function(){
-
-	// };
-
 	locationData.forEach(function(location){
 
 		var marker = new google.maps.Marker({
@@ -250,32 +141,66 @@ function createMarkers(){
 			infoWindow.open(map, marker);
 		};
 
+		function getWiki(){
+			// WikiPedia API
+			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
+
+			$.ajax({
+				dataType: "jsonp",
+				url: wikiURL
+			}).done(function(data){
+				console.log(data);
+
+				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
+				var wikiTitle = wikiObject.title;
+
+				var wikiRequestTimeout = setTimeout(function(){
+			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+			    }, 5000);
+
+				$('#wikiTitle').remove();
+
+				// Check if wikipedia's missing key exists. If it does, there are no articles
+				// so let the user know, else link to the article
+				if (!("missing" in wikiObject)){
+					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+				} else {
+					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
+
+				}
+        	clearTimeout(wikiRequestTimeout);
+			});
+		};
+
+		function getFourSquare(){
+			// Foursquare api
+			var venueID = location.foursquareVenueID;
+
+			$.ajax({
+				dataType: "jsonp",
+				url: "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare"
+			}).done(function(data){
+				console.log(data);
+
+				var venueInfo = data.response.venue;
+				var photoGrab = data.response.venue.photos.groups[0].items[0];
+
+				$('#foursquareLocation, #foursquareLink').remove();
+
+				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+
+				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+				$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				getWiki();
+			});
+		};
+
 		// TODO: Make open infoWindow close on click of another marker
 		marker.addListener('click', function(){
 			createInfoWindow();
+			getFourSquare();
 		});
-
-		// Array.prototype.forEach.call(listList, function(listItem){
-		// 	listItem.addEventListener('click', function(){
-		// 		createInfoWindow();
-		// 		console.log(listItem);
-		// 	});
-		// });
-
-		// listList[0].addEventListener('click', function(){
-		// 		createInfoWindow();
-		// 		console.log(listList[0]);
-		// });
-
-		// for (var i = 0; i < listList.length; i++) {
-
-		// 		var currentItem = listList[i];
-
-		// 		currentItem.addEventListener('click', function(){
-		// 			createInfoWindow();
-		// 			console.log(currentItem);
-		// 		});
-		// };
 
 	});
 
@@ -299,19 +224,6 @@ var ViewModel = function() {
 	locationData.forEach(function(location){
 		self.locationList.push(new Location(location));
 	});
-
-	// this.filters = ko.observableArray(filters);
-	// this.filter = ko.observable('');
-	// this.filteredItems = ko.computed(function(){
-	// 	var filter = self.filter();
-	// 		if (filter != "No Filter") {
-	// 			console.log(self.locationList());
-	// 		} else {
-	// 		    return ko.utils.arrayFilter(self.locationList(), function(i) {
-	// 		        return i.type === filter;
-	// 		    });
-	// 	}
- //    });
 
 	this.getCreateMarkers = function(){
 		return createMarkers();
@@ -343,6 +255,7 @@ var ViewModel = function() {
 		var infoWindowName = document.getElementById('infoWindowName');
 		var infoWindowNode = document.getElementById('infoWindowNode');
 
+
 		// The index of the li will always match the index of the locationData array
 		infoWindowName.textContent = locationData[listItemIndex].name;
 		infoWindowNode.appendChild(infoWindowName);
@@ -357,6 +270,11 @@ var ViewModel = function() {
 		// WikiPedia API
 		var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
 
+		var wikiRequestTimeout = setTimeout(function(){
+        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+   		}, 5000);
+
+
 		$.ajax({
 			dataType: "jsonp",
 			url: wikiURL
@@ -366,7 +284,18 @@ var ViewModel = function() {
 			var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 			var wikiTitle = wikiObject.title;
 			$('#wikiTitle').remove();
-			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+
+			// Check if wikipedia's missing key exists. If it does, there are no articles
+			// so let the user know, else link to the article
+			if (!("missing" in wikiObject)){
+				$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+			} else {
+				$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
+
+			}
+        	clearTimeout(wikiRequestTimeout);
+		}).error(function(data){
+			alert("Failed to get WikiPedia sources.");
 		});
 
 	};
@@ -374,3 +303,14 @@ var ViewModel = function() {
 };
 
 ko.applyBindings(new ViewModel());
+
+
+
+
+
+
+
+// foursquareURL = https://api.foursquare.com/v2/venues/VENUE_ID
+
+// "https://api.foursquare.com/v2/venues/4a82147ef964a52082f81fe3?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A
+
