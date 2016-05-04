@@ -8,11 +8,13 @@
 </head>
 <body>
 
+	<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
 	<nav id="listContainer" class="listContainer">
 		<!-- <form>
 			<input type="text">
 			<input type="submit">
 		</form> -->
+		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
 			<li class="listItem" data-bind="text: name, click: $parent.testMe"></li>
 		</ul>

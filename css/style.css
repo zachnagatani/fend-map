@@ -20,15 +20,29 @@ body {
 
 .mapContainer {
 	height: 100%;
-	width: calc(100% - 230px);
+	width: 100%;
 	position: relative;
-	left: 230px;
 }
+
+/*.mapContainer {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}*/
 
 /* Nav Styles */
 
+.openNav {
+	display: none;
+}
+
+.closeNav {
+	display: none;
+}
+
 .listContainer {
 	position: absolute;
+	left: 0px;
 	z-index: 10;
 	height: 100%;
 	width: 230px;
@@ -36,6 +50,7 @@ body {
 	color: #f0f0f0;
 	padding: 20px;
 	display: table;
+	transition: .5s;
 }
 
 .locationList {
@@ -52,4 +67,50 @@ body {
 .locationList li:hover {
 	position: relative;
 	left: 10px;
+}
+
+@media screen and (max-width: 720px) {
+
+	.openNav {
+		display: block;
+		position: absolute;
+		z-index: 1;
+		padding: 10px;
+		font-size: 30px;
+		background: #333;
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.closeNav {
+		display: block;
+		position: absolute;
+		left: 100px;
+		z-index: 1;
+		padding: 10px;
+		font-size: 30px;
+		background: #333;
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.listContainer {
+		position: absolute;
+		left: -230px;
+		z-index: 10;
+		height: 100%;
+		width: 150px;
+		background: #333;
+		color: #f0f0f0;
+		padding: 20px;
+		display: table;
+		transition: .5s;
+	}
+
+	.locationList li {
+		font-size: 16px;
+		padding-bottom: 50px;
+		cursor: pointer;
+	}
+
 }
