@@ -70,9 +70,6 @@ var locationData = [
 
 ];
 
-
-
-
 var map;
 
 function initMap(){
@@ -103,6 +100,7 @@ function createMarkers(){
 	var infoWindowName = document.getElementById('infoWindowName');
 	var infoWindowNode = document.getElementById('infoWindowNode');
 	// var listList = document.getElementsByClassName('listItem');
+	// USE GET ELEMENTS BY ID NOT CLASS NAME! OR LOOP OVER THE ARRAY to add event listeners!!
 
 	// var locationIteration = function(){
 
@@ -166,7 +164,23 @@ var ViewModel = function() {
 	};
 
 	this.testMe = function(){
+
 		console.log("SUCCESS");
+
+	};
+
+	this.openNav = function(){
+
+		document.getElementById('listContainer').style = "left: 0";
+		document.getElementById('mapContainer').style = "transition: 1s; left: 150px";
+
+	};
+
+	this.closeNav = function(){
+
+		document.getElementById('listContainer').style = "left: -230px";
+		document.getElementById('mapContainer').style = "transition: .25s; left: 0px";
+
 	};
 
 };
