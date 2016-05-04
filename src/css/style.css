@@ -46,5 +46,10 @@ body {
 
 .locationList li {
 	padding-bottom: 50px;
+	cursor: pointer;
 }
 
+.locationList li:hover {
+	position: relative;
+	left: 10px;
+}

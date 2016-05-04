@@ -86,68 +86,6 @@ function initMap(){
 		zoom: 16
 	});
 
-	function createMarkers(){
-
-		var allMarkers = [];
-
-		var length = locationData.length;
-
-		// for (var i = 0; i < length; i++) {
-		// 	var marker = new google.maps.Marker({
-		// 	    position: locationData[i].coordinates,
-		// 	    map: map,
-		// 	    title: locationData[i].name
-		// 	});
-
-		// 	allMarkers.push(marker);
-
-		// 	var infoWindowNode = document.getElementById('infoWindowNode');
-
-		// 	var infoWindow = new google.maps.InfoWindow({
-		// 	    content: infoWindowNode
-		// 	 });
-
-		// 	marker.addListener('click', function(){
-		// 		infoWindow.open(map, marker);
-		// 	});
-
-		// }TODO: practice the closure trick with the for-loop
-
-		var infoWindowName = document.getElementById('infoWindowName');
-		var infoWindowNode = document.getElementById('infoWindowNode');
-
-		locationData.forEach(function(location){
-
-			var marker = new google.maps.Marker({
-			    position: location.coordinates,
-			    map: map,
-			    title: location.name
-			});
-
-			allMarkers.push(marker);
-
-			var infoWindow = new google.maps.InfoWindow({
-			    content: infoWindowNode
-			});
-
-			// TODO: Make open infoWindow close on click of another marker
-			marker.addListener('click', function(){
-
-				infoWindowName.textContent = location.name;
-				infoWindowNode.appendChild(infoWindowName);
-
-				var infoWindow = new google.maps.InfoWindow({
-			    	content: infoWindowNode
-				});
-
-				infoWindow.open(map, marker);
-
-			});
-
-		});
-
-	}
-
 	createMarkers();
 
 	google.maps.event.addDomListener(window, 'resize', function() {
@@ -155,6 +93,54 @@ function initMap(){
 	});
 
 };
+
+function createMarkers(){
+
+	var allMarkers = [];
+
+	var length = locationData.length;
+
+	var infoWindowName = document.getElementById('infoWindowName');
+	var infoWindowNode = document.getElementById('infoWindowNode');
+	// var listList = document.getElementsByClassName('listItem');
+
+	// var locationIteration = function(){
+
+	// };
+
+	locationData.forEach(function(location){
+
+		var marker = new google.maps.Marker({
+		    position: location.coordinates,
+		    map: map,
+		    title: location.name
+		});
+
+		allMarkers.push(marker);
+
+		var infoWindow = new google.maps.InfoWindow({
+		    content: infoWindowNode
+		});
+
+		function createInfoWindow(){
+			infoWindowName.textContent = location.name;
+			infoWindowNode.appendChild(infoWindowName);
+
+			var infoWindow = new google.maps.InfoWindow({
+		    	content: infoWindowNode
+			});
+
+			infoWindow.open(map, marker);
+		};
+
+		// TODO: Make open infoWindow close on click of another marker
+		marker.addListener('click', function(){
+			createInfoWindow();
+		});
+
+	});
+
+}
 
 var Location = function (data){
 
@@ -174,6 +160,14 @@ var ViewModel = function() {
 	locationData.forEach(function(location){
 		self.locationList.push(new Location(location));
 	});
+
+	this.getCreateMarkers = function(){
+		return createMarkers();
+	};
+
+	this.testMe = function(){
+		console.log("SUCCESS");
+	};
 
 };
 

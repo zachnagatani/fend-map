@@ -14,7 +14,7 @@
 			<input type="submit">
 		</form> -->
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
-			<li data-bind="text: name"></li>
+			<li class="listItem" data-bind="text: name, click: $parent.testMe"></li>
 		</ul>
 	</nav>
 
