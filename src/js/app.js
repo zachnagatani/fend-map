@@ -298,6 +298,28 @@ var ViewModel = function() {
 			alert("Failed to get WikiPedia sources.");
 		});
 
+		// Foursquare api
+		var venueID = locationData[index].foursquareVenueID;
+
+		$.ajax({
+			dataType: "jsonp",
+			url: "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare"
+		}).done(function(data){
+			console.log(data);
+
+			var venueInfo = data.response.venue;
+			var photoGrab = data.response.venue.photos.groups[0].items[0];
+
+			$('#foursquareLocation, #foursquareLink').remove();
+
+			$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+
+			$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+			$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+
+		});
+
 	};
 
 };
