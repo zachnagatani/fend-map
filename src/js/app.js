@@ -145,6 +145,11 @@ function createMarkers(){
 			// WikiPedia API
 			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
 
+
+			var wikiRequestTimeout = setTimeout(function(){
+			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+			    }, 5000);
+
 			$.ajax({
 				dataType: "jsonp",
 				url: wikiURL
@@ -153,10 +158,6 @@ function createMarkers(){
 
 				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 				var wikiTitle = wikiObject.title;
-
-				var wikiRequestTimeout = setTimeout(function(){
-			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-			    }, 5000);
 
 				$('#wikiTitle').remove();
 
@@ -182,16 +183,21 @@ function createMarkers(){
 			}).done(function(data){
 				console.log(data);
 
-				var venueInfo = data.response.venue;
+				if (!("venue" in data.response)){
+					$('#infoWindowNode').append("<h3 id='wikiTitle'>Foursquare info could not be found.</h3>");
+				} else {
+					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
+					var venueInfo = data.response.venue;
 				var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-				$('#foursquareLocation, #foursquareLink').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
 				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-				$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				}
 				getWiki();
 			});
 		};
@@ -291,7 +297,6 @@ var ViewModel = function() {
 				$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
 			} else {
 				$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
-
 			}
         	clearTimeout(wikiRequestTimeout);
 		}).error(function(data){
@@ -310,13 +315,13 @@ var ViewModel = function() {
 			var venueInfo = data.response.venue;
 			var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-			$('#foursquareLocation, #foursquareLink').remove();
+			$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
 			$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 			$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-			$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+			$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
 		});
 
