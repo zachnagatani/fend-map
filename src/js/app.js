@@ -254,7 +254,7 @@ var ViewModel = function() {
 	this.openNav = function(){
 
 		document.getElementById('listContainer').style = "left: 0";
-		document.getElementById('mapContainer').style = "transition: 1s; left: 150px";
+		document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
 
 	};
 
