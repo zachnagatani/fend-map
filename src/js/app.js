@@ -368,6 +368,11 @@ var ViewModel = function() {
 				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750)
 		};
 
+		// Close the nav if li is clicked on mobile
+		if ($(window).width() < 768) {
+		   self.closeNav();
+		};
+
 	};
 
 };
