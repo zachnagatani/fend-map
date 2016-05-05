@@ -145,6 +145,11 @@ function createMarkers(){
 			// WikiPedia API
 			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
 
+
+			var wikiRequestTimeout = setTimeout(function(){
+			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+			    }, 5000);
+
 			$.ajax({
 				dataType: "jsonp",
 				url: wikiURL
@@ -153,10 +158,6 @@ function createMarkers(){
 
 				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 				var wikiTitle = wikiObject.title;
-
-				var wikiRequestTimeout = setTimeout(function(){
-			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-			    }, 5000);
 
 				$('#wikiTitle').remove();
 
@@ -169,6 +170,8 @@ function createMarkers(){
 
 				}
         	clearTimeout(wikiRequestTimeout);
+			}).fail(function(data){
+				alert("Failed to get WikiPedia sources.");
 			});
 		};
 
@@ -182,16 +185,21 @@ function createMarkers(){
 			}).done(function(data){
 				console.log(data);
 
+				// if (!("venue" in data.response)){
+				// 	$('#infoWindowNode').append("<h3 id='wikiTitle'>Foursquare info could not be found.</h3>");
+				// } else {
+					// $("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
 				var venueInfo = data.response.venue;
 				var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-				$('#foursquareLocation, #foursquareLink').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
 				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-				$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				// }
 				getWiki();
 			});
 		};
@@ -225,6 +233,9 @@ var ViewModel = function() {
 		self.locationList.push(new Location(location));
 	});
 
+	this.infoWindowName = document.getElementById('infoWindowName');
+	this.infoWindowNode = document.getElementById('infoWindowNode');
+
 	this.getCreateMarkers = function(){
 		return createMarkers();
 	};
@@ -250,18 +261,13 @@ var ViewModel = function() {
 		var listItemIndex = index;
 		var listItemName = locationData[listItemIndex].name;
 
-		// Launch Google Maps InfoWindow
-
-		var infoWindowName = document.getElementById('infoWindowName');
-		var infoWindowNode = document.getElementById('infoWindowNode');
-
 
 		// The index of the li will always match the index of the locationData array
-		infoWindowName.textContent = locationData[listItemIndex].name;
-		infoWindowNode.appendChild(infoWindowName);
+		self.infoWindowName.textContent = locationData[listItemIndex].name;
+		self.infoWindowNode.appendChild(self.infoWindowName);
 
 		var infoWindow = new google.maps.InfoWindow({
-	    	content: infoWindowNode
+	    	content: self.infoWindowNode
 		});
 
 		// The index of the li will always match the index of the allMarkers array
@@ -283,6 +289,7 @@ var ViewModel = function() {
 
 			var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 			var wikiTitle = wikiObject.title;
+
 			$('#wikiTitle').remove();
 
 			// Check if wikipedia's missing key exists. If it does, there are no articles
@@ -290,11 +297,10 @@ var ViewModel = function() {
 			if (!("missing" in wikiObject)){
 				$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
 			} else {
-				$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
-
+				$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
 			}
         	clearTimeout(wikiRequestTimeout);
-		}).error(function(data){
+		}).fail(function(data){
 			alert("Failed to get WikiPedia sources.");
 		});
 
@@ -310,13 +316,13 @@ var ViewModel = function() {
 			var venueInfo = data.response.venue;
 			var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-			$('#foursquareLocation, #foursquareLink').remove();
+			$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
 			$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 			$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-			$('#infoWindowNode').append("<img class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+			$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
 		});
 
