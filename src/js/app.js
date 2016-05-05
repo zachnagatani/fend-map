@@ -188,14 +188,14 @@ function createMarkers(){
 
 				if(!("venue" in data.response)) {
 				console.log("MEPOO");
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
-				$('#infoWindowNode').append("<h3>Sorry! Foursquare data could not be found for this location.");
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 				} else {
 					var venueInfo = data.response.venue;
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-					$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
 					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
@@ -205,7 +205,7 @@ function createMarkers(){
 				}
 
 			}).fail(function(){
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 			});
 
@@ -324,14 +324,14 @@ var ViewModel = function() {
 
 			if(!("venue" in data.response)) {
 				console.log("MEPOO");
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
-				$('#infoWindowNode').append("<h3>Sorry! Foursquare data could not be found for this location.");
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 			} else {
 				var venueInfo = data.response.venue;
 				var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
 				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
