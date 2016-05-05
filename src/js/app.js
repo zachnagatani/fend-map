@@ -132,6 +132,7 @@ function createMarkers(){
 		allMarkers.push(marker);
 
 		function createInfoWindow(){
+			$("#infoWindowName").remove();
 			infoWindowName.textContent = location.name;
 			infoWindowNode.appendChild(infoWindowName);
 
@@ -266,6 +267,7 @@ var ViewModel = function() {
 
 	this.openInfoWindow = function(index){
 
+		$("#infoWindowName").remove();
 		// Grab the index of the clicked item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
