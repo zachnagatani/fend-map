@@ -126,7 +126,8 @@ function createMarkers(){
 		var marker = new google.maps.Marker({
 		    position: location.coordinates,
 		    map: map,
-		    title: location.name
+		    title: location.name,
+		    animation: null
 		});
 
 		allMarkers.push(marker);
@@ -214,10 +215,22 @@ function createMarkers(){
 
 		};
 
+		// https://developers.google.com/maps/documentation/javascript/markers#animate
+		function toggleBounce() {
+			if (marker.getAnimation() !== null) {
+				marker.setAnimation(null);
+			} else {
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+				setTimeout(function(){ marker.setAnimation(null); }, 750)
+			}
+		}
+
 		// TODO: Make open infoWindow close on click of another marker
 		marker.addListener('click', function(){
 			createInfoWindow();
 			getFourSquare();
+			toggleBounce();
 		});
 
 	});
@@ -346,6 +359,14 @@ var ViewModel = function() {
 			$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 			$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 		});
+
+		if (allMarkers[listItemIndex].getAnimation() !== null) {
+				allMarkers[listItemIndex].setAnimation(null);
+			} else {
+				allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
+				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750)
+		};
 
 	};
 
