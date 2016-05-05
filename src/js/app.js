@@ -233,6 +233,9 @@ var ViewModel = function() {
 		self.locationList.push(new Location(location));
 	});
 
+	this.infoWindowName = document.getElementById('infoWindowName');
+	this.infoWindowNode = document.getElementById('infoWindowNode');
+
 	this.getCreateMarkers = function(){
 		return createMarkers();
 	};
@@ -258,18 +261,13 @@ var ViewModel = function() {
 		var listItemIndex = index;
 		var listItemName = locationData[listItemIndex].name;
 
-		// Launch Google Maps InfoWindow
-
-		var infoWindowName = document.getElementById('infoWindowName');
-		var infoWindowNode = document.getElementById('infoWindowNode');
-
 
 		// The index of the li will always match the index of the locationData array
-		infoWindowName.textContent = locationData[listItemIndex].name;
-		infoWindowNode.appendChild(infoWindowName);
+		self.infoWindowName.textContent = locationData[listItemIndex].name;
+		self.infoWindowNode.appendChild(self.infoWindowName);
 
 		var infoWindow = new google.maps.InfoWindow({
-	    	content: infoWindowNode
+	    	content: self.infoWindowNode
 		});
 
 		// The index of the li will always match the index of the allMarkers array
