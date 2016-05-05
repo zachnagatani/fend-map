@@ -61,7 +61,7 @@ body {
 	width: 100%;
 }
 
-.locationList li {
+/*.locationList li {
 	text-align: center;
 	padding-bottom: 40px;
 	padding-top: 40px;
@@ -69,6 +69,20 @@ body {
 	width: 100%;
 	height: 100px;
 	cursor: pointer;
+}*/
+
+.locationList li {
+	text-align: center;
+	border-top: 2px solid #f0f0f0;
+	width: 100%;
+	height: 100px;
+	cursor: pointer;
+	display: table;
+}
+
+.locationList li a {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .locationList li:last-of-type {
@@ -124,14 +138,14 @@ body {
 		transition: .5s;
 	}
 
-	.locationList {
+	/*.locationList {
 		position: relative;
 		top: 50px;
-	}
+	}*/
 
 	.locationList li {
 		font-size: 16px;
-		padding-bottom: 50px;
+		height: 50px;
 		cursor: pointer;
 	}
 
