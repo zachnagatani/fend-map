@@ -59,7 +59,7 @@ var locationData = [
 	{
 		name: "AZ Fine Art Gallery",
 
-		foursquareVenueID: "",
+		foursquareVenueID: "POOPER",
 
 		type: "Art",
 
@@ -114,7 +114,8 @@ function initMap(){
 
 function createMarkers(){
 
-	var infoWindowName = document.getElementById('infoWindowName');
+	var infoWindowName = document.createElement('h1');
+	infoWindowName.id = "infoWindowName";
 	var infoWindowNode = document.getElementById('infoWindowNode');
 	var listList = document.getElementsByClassName('listItem');
 
@@ -131,6 +132,7 @@ function createMarkers(){
 		allMarkers.push(marker);
 
 		function createInfoWindow(){
+			$("#infoWindowName").remove();
 			infoWindowName.textContent = location.name;
 			infoWindowNode.appendChild(infoWindowName);
 
@@ -166,12 +168,12 @@ function createMarkers(){
 				if (!("missing" in wikiObject)){
 					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
 				} else {
-					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
+					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
 
 				}
         	clearTimeout(wikiRequestTimeout);
 			}).fail(function(data){
-				alert("Failed to get WikiPedia sources.");
+				alert("Failed to get WikiPedia resources.");
 			});
 		};
 
@@ -185,23 +187,31 @@ function createMarkers(){
 			}).done(function(data){
 				console.log(data);
 
-				// if (!("venue" in data.response)){
-				// 	$('#infoWindowNode').append("<h3 id='wikiTitle'>Foursquare info could not be found.</h3>");
-				// } else {
-					// $("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>")
-				var venueInfo = data.response.venue;
-				var photoGrab = data.response.venue.photos.groups[0].items[0];
+				if(!("venue" in data.response)) {
+				console.log("MEPOO");
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+				} else {
+					var venueInfo = data.response.venue;
+					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
-				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
-				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
-				// }
-				getWiki();
+					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+				}
+
+			}).fail(function(){
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 			});
+
+			getWiki();
+
 		};
 
 		// TODO: Make open infoWindow close on click of another marker
@@ -233,7 +243,8 @@ var ViewModel = function() {
 		self.locationList.push(new Location(location));
 	});
 
-	this.infoWindowName = document.getElementById('infoWindowName');
+	this.infoWindowName = document.createElement('h1');
+	this.infoWindowName.id = "infoWindowName";
 	this.infoWindowNode = document.getElementById('infoWindowNode');
 
 	this.getCreateMarkers = function(){
@@ -256,11 +267,11 @@ var ViewModel = function() {
 
 	this.openInfoWindow = function(index){
 
+		$("#infoWindowName").remove();
 		// Grab the index of the clicked item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
 		var listItemName = locationData[listItemIndex].name;
-
 
 		// The index of the li will always match the index of the locationData array
 		self.infoWindowName.textContent = locationData[listItemIndex].name;
@@ -301,7 +312,7 @@ var ViewModel = function() {
 			}
         	clearTimeout(wikiRequestTimeout);
 		}).fail(function(data){
-			alert("Failed to get WikiPedia sources.");
+			alert("Failed to get WikiPedia resources.");
 		});
 
 		// Foursquare api
@@ -313,17 +324,27 @@ var ViewModel = function() {
 		}).done(function(data){
 			console.log(data);
 
-			var venueInfo = data.response.venue;
-			var photoGrab = data.response.venue.photos.groups[0].items[0];
+			if(!("venue" in data.response)) {
+				console.log("MEPOO");
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
+			} else {
+				var venueInfo = data.response.venue;
+				var photoGrab = data.response.venue.photos.groups[0].items[0];
+
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+
+				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+
+				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+			}
+
+		}).fail(function(){
 			$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
-
-			$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
-
-			$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
-
-			$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
-
+			$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 		});
 
 	};
