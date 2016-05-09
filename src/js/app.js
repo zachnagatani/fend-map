@@ -245,30 +245,82 @@ function createMarkers(){
 
 // };
 
-
 var ViewModel = function() {
 
 	var self = this;
 
-	this.locationList = ko.observableArray(locationData);
+	// this.locationList = ko.observableArray(locationData);
+
+	// // locationData.forEach(function(location){
+	// // 	self.locationList.push(new Location(location));
+	// // });
+
+	// this.locations = ko.observableArray(locationData);
+	// this.query = ko.observable('');
+
+	// this.search = function(value){
+	// 	// self.locationList.removeAll();
+
+	// 	for(var x in self.locationList()){
+	// 		if(self.locationList()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+	// 			self.locationList.push(self.locationList()[x]);
+	// 		}
+	// 	}
+
+	// 	// console.log(self.locationList()[1].name.toLowerCase().indexOf(value.toLowerCase()));
+
+	// 	// self.locationList.forEach(function(location){
+	// 	// 	if(location.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+	// 	// 		self.locationList.push(location);
+	// 	// 	}
+	// 	// });
+	// };
+
+	this.locations = [];
+
+	(function(){
+		locationData.forEach(function(location){
+			self.locations.push(location);
+		});
+	})();
+
+	this.locationList = ko.observableArray(this.locations);
+
+	this.locationData = ko.observableArray(locationData);
 
 	// locationData.forEach(function(location){
 	// 	self.locationList.push(new Location(location));
 	// });
 
-	this.locations = ko.observableArray(locationData);
+	// this.locations = ko.observableArray([]);
 	this.query = ko.observable('');
 
 	this.search = function(value){
 		self.locationList.removeAll();
 
-		for(var x in self.locationList()){
-			if(self.locationList()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-				self.locationList.push(self.locationList()[x]);
+		for(var x in self.locationData()){
+			if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+				// self.locationList.push(self.locationList()[x]);
+				// console.log(locationData[x]);
+				self.locationList.push(self.locationData[x]);
 			}
 		}
 
-		console.log(self.locationList()[1].name.toLowerCase().indexOf(value.toLowerCase()));
+		// self.locationList.removeAll();
+
+		// console.log(self.locationList());
+
+		// console.log(locationData);
+
+		// for(var i = 0; i < self.locationList().length; i++) {
+		// 	if(self.locationList()[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		self.locationList.push(self.locationList()[i]);
+		// 	}
+		// };
+
+		// console.log(self.locationList()[0].name);
+
+		// console.log(self.locationList()[1].name.toLowerCase().indexOf(value.toLowerCase()));
 
 		// self.locationList.forEach(function(location){
 		// 	if(location.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
