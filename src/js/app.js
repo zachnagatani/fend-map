@@ -237,24 +237,47 @@ function createMarkers(){
 
 }
 
-var Location = function (data){
+// var Location = function (data){
 
-	this.name = ko.observable(data.name);
-	this.lat = ko.observable(data.lat);
-	this.lng = ko.observable(data.lng);
+// 	this.name = ko.observable(data.name);
+// 	this.lat = ko.observable(data.lat);
+// 	this.lng = ko.observable(data.lng);
 
-};
+// };
 
 
 var ViewModel = function() {
 
 	var self = this;
 
-	this.locationList = ko.observableArray([]);
+	this.locationList = ko.observableArray(locationData);
 
-	locationData.forEach(function(location){
-		self.locationList.push(new Location(location));
-	});
+	// locationData.forEach(function(location){
+	// 	self.locationList.push(new Location(location));
+	// });
+
+	this.locations = ko.observableArray(locationData);
+	this.query = ko.observable('');
+
+	this.search = function(value){
+		self.locationList.removeAll();
+
+		for(var x in self.locationList()){
+			if(self.locationList()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+				self.locationList.push(self.locationList()[x]);
+			}
+		}
+
+		console.log(self.locationList()[1].name.toLowerCase().indexOf(value.toLowerCase()));
+
+		// self.locationList.forEach(function(location){
+		// 	if(location.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		self.locationList.push(location);
+		// 	}
+		// });
+	};
+
+	this.query.subscribe(self.search);
 
 	this.infoWindowName = document.createElement('h1');
 	this.infoWindowName.id = "infoWindowName";
