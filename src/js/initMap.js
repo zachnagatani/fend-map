@@ -91,6 +91,7 @@ function createMarkers(){
 				dataType: "jsonp",
 				url: wikiURL
 			}).done(function(data){
+
 				// Log the response to the console for testing
 				console.log(data);
 
@@ -107,17 +108,23 @@ function createMarkers(){
 				// If not present, link to the article, or else
 				// let the user know there are no articles
 				if (!("missing" in wikiObject)){
+					// Success
 					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
 				} else {
+					?error
 					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
 
 				}
-			// Since the request was successful, stop the
-			// timeout request from above
-        	clearTimeout(wikiRequestTimeout);
+
+				// Since the request was successful, stop the
+				// timeout request from above
+	        	clearTimeout(wikiRequestTimeout);
+
 			}).fail(function(data){
+
 				// If no response, let the user know
 				alert("Failed to get WikiPedia resources.");
+
 			});
 		};
 
@@ -152,7 +159,7 @@ function createMarkers(){
 
 				} else {
 
-					// Grab the venue info for reasy access
+					// Grab the venue from the response info for reasy access
 					var venueInfo = data.response.venue;
 
 					// Grab the first photo of the venue in the response
@@ -169,7 +176,9 @@ function createMarkers(){
 
 					// Append the first image from 4sq to the infoWindow
 					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+
 				}
+
 			  // If no response, let the user know
 			}).fail(function(){
 
