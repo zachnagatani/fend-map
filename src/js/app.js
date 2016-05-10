@@ -172,6 +172,16 @@ var ViewModel = function() {
 
 	};
 
+	this.closeNavOnSelect = function() {
+
+		// Close the nav if li is clicked on mobile
+		// Check if the width of the window is 768px (mobile)
+		if ($(window).width() < 768) {
+		   self.closeNav();
+		};
+
+	};
+
 	// var itemIndexes = [];
 
 	// locationData.forEach(function(location){
@@ -203,126 +213,141 @@ var ViewModel = function() {
 		// The index of the li will always match the index of the allMarkers array
 		infoWindow.open(map, allMarkers[listItemIndex]);
 
-		// WikiPedia API
-		// Create the correct URL from the Wikipedia API according to the docs
-		var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
-
-		// Create a timeout for error handling if no response is received within 5 seconds
-		var wikiRequestTimeout = setTimeout(function(){
-        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-   		}, 5000);
-
-		// Request the resources
-		$.ajax({
-			dataType: "jsonp",
-			url: wikiURL
-		}).done(function(data){
-
-			// Log the response to the console for testing
-			console.log(data);
-
-			// Store the correct place of response in a variable for easy access
-			var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
-
-			// Grab the title of the Wikipedia Article
-			var wikiTitle = wikiObject.title;
-
-			// Remove any previous title
-			$('#wikiTitle').remove();
-
-			// Check if wikipedia's missing key does not exist
-			// If not present, link to the article, or else
-			// let the user know there are no articles
-			if (!("missing" in wikiObject)){
-				// Success
-				$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
-			} else {
-				// Error
-				$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
-			}
-
-			// Since the request was successful, stop the
-			// timeout request from above
-        	clearTimeout(wikiRequestTimeout);
-
-		}).fail(function(data){
-
-			// If no response, let the user know
-			alert("Failed to get WikiPedia resources.");
-
-		});
-
 		// Foursquare api
-		// Grab the venueID for the location - necessary to access API
-		var venueID = locationData[index].foursquareVenueID;
+		function getFourSquare(){
 
-		// Create the proper URL for the Foursquare API according to the docs
-		var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+			// Grab the venueID for the location - necessary to access API
+			var venueID = locationData[index].foursquareVenueID;
 
-		// Request data
-		$.ajax({
-			dataType: "jsonp",
-			url: "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare"
-		}).done(function(data){
+			// Create the proper URL for the Foursquare API according to the docs
+			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
-			// Log the data for testing
-			console.log(data);
+			// Request data
+			$.ajax({
+				dataType: "jsonp",
+				url: "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare"
+			}).done(function(data){
 
-			// If no venue key exists in the response, let the user
-			// that no Foursquare data exists for the location
-			if(!("venue" in data.response)) {
+				// Log the data for testing
+				console.log(data);
 
-				// Remove any previous Foursquare data appended to the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				// If no venue key exists in the response, let the user
+				// that no Foursquare data exists for the location
+				if(!("venue" in data.response)) {
 
-				// Error message
-				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
+					// Remove any previous Foursquare data appended to the infoWindow
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
-			} else {
+					// Error message
+					$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
-				// Grab the venue from the response info for reasy access
-				var venueInfo = data.response.venue;
+				} else {
 
-				// Grab the first photo of the venue in the response
-				var photoGrab = data.response.venue.photos.groups[0].items[0];
+					// Grab the venue from the response info for reasy access
+					var venueInfo = data.response.venue;
 
-				// Remove any previous Foursquare data appended to the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+					// Grab the first photo of the venue in the response
+					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-				// Append the address from 4sq to the infoWindow
-				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+					// Remove any previous Foursquare data appended to the infoWindow
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
-				// Append the website from 4sq to the infoWindow
-				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					// Append the address from 4sq to the infoWindow
+					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
-				// Append the first image from 4sq to the infoWindow
-				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+					// Append the website from 4sq to the infoWindow
+					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-			}
+					// Append the first image from 4sq to the infoWindow
+					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
-		  // If no response, let the user know
-		}).fail(function(){
+				}
 
-			// Remove any previous 4sq info from the infoWindow
-			$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+			  // If no response, let the user know
+			}).fail(function(){
 
-			//Error message
-			$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
+				// Remove any previous 4sq info from the infoWindow
+				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
-		});
+				//Error message
+				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 
-		if (allMarkers[listItemIndex].getAnimation() !== null) {
-				allMarkers[listItemIndex].setAnimation(null);
-			} else {
-				allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
-				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
-				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750)
+			});
+
 		};
 
-		// Close the nav if li is clicked on mobile
-		// Check if the width of the window is 768px (mobile)
-		if ($(window).width() < 768) {
-		   self.closeNav();
+		// WikiPedia API
+		function getWiki(){
+
+			// Create the correct URL from the Wikipedia API according to the docs
+			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
+
+			// Create a timeout for error handling if no response is received within 5 seconds
+			var wikiRequestTimeout = setTimeout(function(){
+	        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+	   		}, 5000);
+
+			// Request the resources
+			$.ajax({
+				dataType: "jsonp",
+				url: wikiURL
+			}).done(function(data){
+
+				// Log the response to the console for testing
+				console.log(data);
+
+				// Store the correct place of response in a variable for easy access
+				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
+
+				// Grab the title of the Wikipedia Article
+				var wikiTitle = wikiObject.title;
+
+				// Remove any previous title
+				$('#wikiTitle').remove();
+
+				// Check if wikipedia's missing key does not exist
+				// If not present, link to the article, or else
+				// let the user know there are no articles
+				if (!("missing" in wikiObject)){
+					// Success
+					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+				} else {
+					// Error
+					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
+				}
+
+				// Since the request was successful, stop the
+				// timeout request from above
+	        	clearTimeout(wikiRequestTimeout);
+
+			}).fail(function(data){
+
+				// If no response, let the user know
+				alert("Failed to get WikiPedia resources.");
+
+			});
+
+		};
+
+		// Call the relevant API functions
+		getFourSquare();
+		getWiki();
+
+		// If there is animation, set it to none, else
+		// set it to the bounce animation
+		if (allMarkers[listItemIndex].getAnimation() !== null) {
+
+				allMarkers[listItemIndex].setAnimation(null);
+
+			} else {
+
+
+				allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
+
+				// Only bounce the pin one time
+				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750)
+
 		};
 
 	};

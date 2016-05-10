@@ -111,7 +111,7 @@ function createMarkers(){
 					// Success
 					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
 				} else {
-					?error
+					// Error
 					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
 
 				}
@@ -201,13 +201,17 @@ function createMarkers(){
 			// If there is animation, set it to none, else
 			// set it to the bounce animation
 			if (marker.getAnimation() !== null) {
+
 				marker.setAnimation(null);
+
 			} else {
+
 				marker.setAnimation(google.maps.Animation.BOUNCE);
 
 				// Only bounce the pin one time
 				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
 				setTimeout(function(){ marker.setAnimation(null); }, 750)
+
 			}
 		}
 
