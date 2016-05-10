@@ -1,4 +1,4 @@
-/* TODO:
+/* TODO: DONE
 1. Add full-screen map to the page. Check out resume tool and
 cross worship center.!
 2. Add markers. Check out resume project (I added markers there before)!
@@ -7,6 +7,12 @@ cross worship center.!
 5. Use others API's to provide info for the markers. Check ajax moving helper project (wikipedia/nytimes info)
 6. Animations. Find animation libraries to handle this?
 7. Error handling. Check out the ajax moving helper project again for .fail() with jquery ajax/getJSON
+*/
+
+/*
+Cache ajax requests so they only need to be loaded once?
+Refactor code?
+Create infowindows in only one spot?
 */
 
 var locationData = [
@@ -206,7 +212,7 @@ function createMarkers(){
 
 					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
-					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
 					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 				}
@@ -309,6 +315,8 @@ var ViewModel = function() {
 
 	this.search = function(value){
 
+
+		// Must be before the list filtering... for some reason
 		// Set the map to null for each marker
 
 		allMarkers.forEach(function(marker) {
@@ -512,7 +520,7 @@ var ViewModel = function() {
 
 				$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
-				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+				$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
 				$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 			}

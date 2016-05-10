@@ -17,8 +17,8 @@
 		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 		<!-- <select data-bind="options: filters, value: filter"></select> -->
 		<form class="searchForm">
-			<label for="searchField">Where'd ya wanna go?</label>
-			<input class="searchField" type="search" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+			<label for="searchField">Live Filter:</label>
+			<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 		</form>
 
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
@@ -27,7 +27,7 @@
 
 	</nav>
 
-	<div id="infoWindowNode">
+	<div id="infoWindowNode" class="infoWindowNode">
 	</div>
 
 	<div id="mapContainer" class="mapContainer">
