@@ -128,9 +128,14 @@ function createMarkers(){
 		    map: map,
 		    title: location.name,
 		    animation: null
-		});
+	});
 
 		allMarkers.push(marker);
+
+		var IF = function(){
+			this.textContent = location.name;
+			var infoWindow = new google.maps.InfoWindow
+		};
 
 		function createInfoWindow(){
 			$("#infoWindowName").remove();
@@ -284,9 +289,13 @@ var ViewModel = function() {
 		});
 	})();
 
+
+// Not using square brackets might have been issue in search for loop for location
 	this.locationList = ko.observableArray(this.locations);
 
 	this.locationData = ko.observableArray(locationData);
+
+	this.markerList = ko.observableArray([allMarkers]);
 
 	// locationData.forEach(function(location){
 	// 	self.locationList.push(new Location(location));
@@ -294,19 +303,56 @@ var ViewModel = function() {
 
 	// this.locations = ko.observableArray([]);
 	this.query = ko.observable('');
+	console.log(this.markerList());
 
 	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 
 	this.search = function(value){
-		self.locationList.removeAll();
 
-		for(var x in self.locationData()){
-			if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		var listItemsFOSHO = document.getElementsByClassName('listItem');
+		for (var i = 0; i < listItemsFOSHO.length; i++) {
+			listItemsFOSHO[i].style.display = "none";
+		}
+
+		for(var x in listItemsFOSHO) {
+
+			if(listItemsFOSHO[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 				// self.locationList.push(self.locationList()[x]);
 				// console.log(locationData[x]);
-				self.locationList.push(locationData[x]);
+				listItemsFOSHO[x].style.display = "table";
 			}
+
 		}
+
+		// for(var x in self.locationData()) {
+
+		// 	if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		// self.locationList.push(self.locationList()[x]);
+		// 		// console.log(locationData[x]);
+		// 		self.locationList.push(locationData[x]);
+		// 	}
+
+		// }
+
+		// // Set the map to null for each marker
+
+		// allMarkers.forEach(function(marker) {
+		// 	marker.setMap(null);
+		// });
+
+		// // if the title matches the query, set the map to the global map variable
+		// // thus displaying the marker on the page
+
+		// for(var x in allMarkers) {
+
+		// 	if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		// self.locationList.push(self.locationList()[x]);
+		// 		// console.log(locationData[x]);
+		// 		// self.locationList.push(locationData[x]);
+		// 		allMarkers[x].setMap(map);
+		// 	}
+
+		// }
 
 
 
@@ -357,25 +403,50 @@ var ViewModel = function() {
 
 	};
 
+	// this.getIndexes = function(index){
+	// 	var itemIndexes = [];
+	// 	for (var i = 0; i < locationData.length; i++) {
+	// 		var listItemIndex = index;
+	// 		itemIndexes.push(listItemIndex);
+	// 	}
+	// 	console.log(itemIndexes);
+	// }
+
 	var itemIndexes = [];
 
-	this.openInfoWindow = function(index){
+	locationData.forEach(function(location){
+			var listItemIndex = locationData.indexOf(location);
+			itemIndexes.push(listItemIndex);
+		});
+
+	console.log(itemIndexes);
+
+
+	this.openInfoWindow = function(index, event){
 
 		$("#infoWindowName").remove();
-		// Grab the index of the clicked item
-		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
-		var listItemIndex = index;
-		// TODO: Capture original index of each listItem, and then use that index to determine
-		// what infoWindow will open after a search
 
-		// for (var i = 0; i < locations.length; i++) {
+		// for (var i = 0; i < locationData.length; i++) {
 		// 	var listItemIndex = index;
 		// 	itemIndexes.push(listItemIndex);
 		// }
+		// Grab the index of the clicked item
+		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
+		var listItemIndex = index;
+
+		var target = $(event.target);
+		console.log(target);
+
+		// var $eventIndex = self.locationList().indexOf(target);
+		// console.log($eventIndex);
+
+		// TODO: Grab the target and find it's index in locationList
+		// and pass THAT index in all of the below paramaters
+		// console.log(self.locationList().indexOf(self.locationList()[0]));
+		// TODO: Capture original index of each listItem, and then use that index to determine
+		// what infoWindow will open after a search
 
 		var listItemName = locationData[listItemIndex].name;
-
-		console.log(itemIndexes);
 
 		// The index of the li will always match the index of the locationData array
 		self.infoWindowName.textContent = locationData[listItemIndex].name;
