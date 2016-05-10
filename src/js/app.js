@@ -357,25 +357,40 @@ var ViewModel = function() {
 
 	};
 
+	// this.getIndexes = function(index){
+	// 	var itemIndexes = [];
+	// 	for (var i = 0; i < locationData.length; i++) {
+	// 		var listItemIndex = index;
+	// 		itemIndexes.push(listItemIndex);
+	// 	}
+	// 	console.log(itemIndexes);
+	// }
+
 	var itemIndexes = [];
+
+	locationData.forEach(function(location){
+			var listItemIndex = locationData.indexOf(location);
+			itemIndexes.push(listItemIndex);
+		});
+
+	console.log(itemIndexes);
+
 
 	this.openInfoWindow = function(index){
 
 		$("#infoWindowName").remove();
+
+		// for (var i = 0; i < locationData.length; i++) {
+		// 	var listItemIndex = index;
+		// 	itemIndexes.push(listItemIndex);
+		// }
 		// Grab the index of the clicked item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
 		// TODO: Capture original index of each listItem, and then use that index to determine
 		// what infoWindow will open after a search
 
-		// for (var i = 0; i < locations.length; i++) {
-		// 	var listItemIndex = index;
-		// 	itemIndexes.push(listItemIndex);
-		// }
-
 		var listItemName = locationData[listItemIndex].name;
-
-		console.log(itemIndexes);
 
 		// The index of the li will always match the index of the locationData array
 		self.infoWindowName.textContent = locationData[listItemIndex].name;
