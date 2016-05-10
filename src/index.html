@@ -16,10 +16,15 @@
 		</form> -->
 		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 		<!-- <select data-bind="options: filters, value: filter"></select> -->
+		<form class="searchForm">
+			<label for="searchField">Where'd ya wanna go?</label>
+			<input class="searchField" type="search" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+		</form>
+
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
 			<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())"><a data-bind="text: name"></a></li>
 		</ul>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 	</nav>
 
 	<div id="infoWindowNode">
