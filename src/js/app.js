@@ -295,7 +295,7 @@ var ViewModel = function() {
 	// this.locations = ko.observableArray([]);
 	this.query = ko.observable('');
 
-	// TODO: Get names of locations to pop up afte filtering...
+	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 
 	this.search = function(value){
 		self.locationList.removeAll();
@@ -307,6 +307,8 @@ var ViewModel = function() {
 				self.locationList.push(locationData[x]);
 			}
 		}
+
+
 
 		// self.locationList.removeAll();
 
@@ -355,13 +357,25 @@ var ViewModel = function() {
 
 	};
 
+	var itemIndexes = [];
+
 	this.openInfoWindow = function(index){
 
 		$("#infoWindowName").remove();
 		// Grab the index of the clicked item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
+		// TODO: Capture original index of each listItem, and then use that index to determine
+		// what infoWindow will open after a search
+
+		// for (var i = 0; i < locations.length; i++) {
+		// 	var listItemIndex = index;
+		// 	itemIndexes.push(listItemIndex);
+		// }
+
 		var listItemName = locationData[listItemIndex].name;
+
+		console.log(itemIndexes);
 
 		// The index of the li will always match the index of the locationData array
 		self.infoWindowName.textContent = locationData[listItemIndex].name;

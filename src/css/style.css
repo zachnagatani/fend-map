@@ -155,10 +155,10 @@ body {
 		transition: .5s;
 	}
 
-	/*.locationList {
+	.locationList {
 		position: relative;
-		top: 50px;
-	}*/
+		top: 75px;
+	}
 
 	.locationList li {
 		font-size: 16px;
