@@ -309,6 +309,26 @@ var ViewModel = function() {
 
 	this.search = function(value){
 
+		// Set the map to null for each marker
+
+		allMarkers.forEach(function(marker) {
+			marker.setMap(null);
+		});
+
+		// if the title matches the query, set the map to the global map variable
+		// thus displaying the marker on the page
+
+		for(var x in allMarkers) {
+
+			if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+				// self.locationList.push(self.locationList()[x]);
+				// console.log(locationData[x]);
+				// self.locationList.push(locationData[x]);
+				allMarkers[x].setMap(map);
+			}
+
+		}
+
 		var listItemsFOSHO = document.getElementsByClassName('listItem');
 		for (var i = 0; i < listItemsFOSHO.length; i++) {
 			listItemsFOSHO[i].style.display = "none";
@@ -330,26 +350,6 @@ var ViewModel = function() {
 		// 		// self.locationList.push(self.locationList()[x]);
 		// 		// console.log(locationData[x]);
 		// 		self.locationList.push(locationData[x]);
-		// 	}
-
-		// }
-
-		// // Set the map to null for each marker
-
-		// allMarkers.forEach(function(marker) {
-		// 	marker.setMap(null);
-		// });
-
-		// // if the title matches the query, set the map to the global map variable
-		// // thus displaying the marker on the page
-
-		// for(var x in allMarkers) {
-
-		// 	if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-		// 		// self.locationList.push(self.locationList()[x]);
-		// 		// console.log(locationData[x]);
-		// 		// self.locationList.push(locationData[x]);
-		// 		allMarkers[x].setMap(map);
 		// 	}
 
 		// }
