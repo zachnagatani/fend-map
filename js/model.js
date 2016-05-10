@@ -1,4 +1,3 @@
-// Array of location data
 var locationData = [
 
 	{
