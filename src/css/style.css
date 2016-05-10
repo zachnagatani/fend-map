@@ -59,6 +59,7 @@ body {
 	display: table-cell;
 	vertical-align: middle;
 	width: 100%;
+	border-bottom: 2px solid #f0f0f0;
 }
 
 /*.locationList li {
