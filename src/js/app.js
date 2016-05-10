@@ -128,7 +128,7 @@ function createMarkers(){
 		    map: map,
 		    title: location.name,
 		    animation: null
-		});
+	});
 
 		allMarkers.push(marker);
 
@@ -284,9 +284,13 @@ var ViewModel = function() {
 		});
 	})();
 
+
+// Not using square brackets might have been issue in search for loop for location
 	this.locationList = ko.observableArray(this.locations);
 
 	this.locationData = ko.observableArray(locationData);
+
+	this.markerList = ko.observableArray([allMarkers]);
 
 	// locationData.forEach(function(location){
 	// 	self.locationList.push(new Location(location));
@@ -294,6 +298,7 @@ var ViewModel = function() {
 
 	// this.locations = ko.observableArray([]);
 	this.query = ko.observable('');
+	console.log(this.markerList());
 
 	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 
@@ -305,6 +310,24 @@ var ViewModel = function() {
 				// self.locationList.push(self.locationList()[x]);
 				// console.log(locationData[x]);
 				self.locationList.push(locationData[x]);
+			}
+		}
+
+		// Set the map to null for each marker
+
+		allMarkers.forEach(function(marker){
+			marker.setMap(null);
+		});
+
+		// if the title matches the query, set the map to the global map variable
+		// thus displaying on the page
+
+		for(var x in allMarkers){
+			if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+				// self.locationList.push(self.locationList()[x]);
+				// console.log(locationData[x]);
+				// self.locationList.push(locationData[x]);
+				allMarkers[x].setMap(map);
 			}
 		}
 
