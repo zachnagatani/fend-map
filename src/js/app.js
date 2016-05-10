@@ -232,10 +232,6 @@ var ViewModel = function() {
 		self.infoWindowName.textContent = locationData[listItemIndex].name;
 		self.infoWindowNode.appendChild(self.infoWindowName);
 
-		var infoWindow = new google.maps.InfoWindow({
-	    	content: self.infoWindowNode
-		});
-
 		// The index of the li will always match the index of the allMarkers array
 		infoWindow.open(map, allMarkers[listItemIndex]);
 
