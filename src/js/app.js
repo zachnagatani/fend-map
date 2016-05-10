@@ -132,6 +132,11 @@ function createMarkers(){
 
 		allMarkers.push(marker);
 
+		var IF = function(){
+			this.textContent = location.name;
+			var infoWindow = new google.maps.InfoWindow
+		};
+
 		function createInfoWindow(){
 			$("#infoWindowName").remove();
 			infoWindowName.textContent = location.name;
@@ -303,33 +308,51 @@ var ViewModel = function() {
 	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 
 	this.search = function(value){
-		self.locationList.removeAll();
 
-		for(var x in self.locationData()){
-			if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-				// self.locationList.push(self.locationList()[x]);
-				// console.log(locationData[x]);
-				self.locationList.push(locationData[x]);
-			}
+		var listItemsFOSHO = document.getElementsByClassName('listItem');
+		for (var i = 0; i < listItemsFOSHO.length; i++) {
+			listItemsFOSHO[i].style.display = "none";
 		}
 
-		// Set the map to null for each marker
+		for(var x in listItemsFOSHO) {
 
-		allMarkers.forEach(function(marker){
-			marker.setMap(null);
-		});
-
-		// if the title matches the query, set the map to the global map variable
-		// thus displaying on the page
-
-		for(var x in allMarkers){
-			if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if(listItemsFOSHO[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 				// self.locationList.push(self.locationList()[x]);
 				// console.log(locationData[x]);
-				// self.locationList.push(locationData[x]);
-				allMarkers[x].setMap(map);
+				listItemsFOSHO[x].style.display = "table";
 			}
+
 		}
+
+		// for(var x in self.locationData()) {
+
+		// 	if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		// self.locationList.push(self.locationList()[x]);
+		// 		// console.log(locationData[x]);
+		// 		self.locationList.push(locationData[x]);
+		// 	}
+
+		// }
+
+		// // Set the map to null for each marker
+
+		// allMarkers.forEach(function(marker) {
+		// 	marker.setMap(null);
+		// });
+
+		// // if the title matches the query, set the map to the global map variable
+		// // thus displaying the marker on the page
+
+		// for(var x in allMarkers) {
+
+		// 	if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+		// 		// self.locationList.push(self.locationList()[x]);
+		// 		// console.log(locationData[x]);
+		// 		// self.locationList.push(locationData[x]);
+		// 		allMarkers[x].setMap(map);
+		// 	}
+
+		// }
 
 
 
@@ -399,7 +422,7 @@ var ViewModel = function() {
 	console.log(itemIndexes);
 
 
-	this.openInfoWindow = function(index){
+	this.openInfoWindow = function(index, event){
 
 		$("#infoWindowName").remove();
 
@@ -410,6 +433,16 @@ var ViewModel = function() {
 		// Grab the index of the clicked item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
+
+		var target = $(event.target);
+		console.log(target);
+
+		// var $eventIndex = self.locationList().indexOf(target);
+		// console.log($eventIndex);
+
+		// TODO: Grab the target and find it's index in locationList
+		// and pass THAT index in all of the below paramaters
+		// console.log(self.locationList().indexOf(self.locationList()[0]));
 		// TODO: Capture original index of each listItem, and then use that index to determine
 		// what infoWindow will open after a search
 
