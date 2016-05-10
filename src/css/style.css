@@ -181,8 +181,26 @@ body {
 
 /* InfoWindow Styles */
 
+.infoWindowNode {
+	text-align: center;
+}
+
+.infoWindowNode a {
+	color: inherit;
+	font-weight: normal;
+}
+
+.infoWindowNode a:hover {
+	font-weight: bold;
+}
+
+.foursquareLink {
+	font-size: 16px;
+}
+
 .infoWindowImg {
 	max-width: 100%;
 	max-height: 200px;
 	display: block;
+	margin: 20px auto;
 }
