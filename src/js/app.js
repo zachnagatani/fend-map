@@ -295,6 +295,8 @@ var ViewModel = function() {
 	// this.locations = ko.observableArray([]);
 	this.query = ko.observable('');
 
+	// TODO: Get names of locations to pop up afte filtering...
+
 	this.search = function(value){
 		self.locationList.removeAll();
 
@@ -302,7 +304,7 @@ var ViewModel = function() {
 			if(self.locationData()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 				// self.locationList.push(self.locationList()[x]);
 				// console.log(locationData[x]);
-				self.locationList.push(self.locationData[x]);
+				self.locationList.push(locationData[x]);
 			}
 		}
 
