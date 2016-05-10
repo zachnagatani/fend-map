@@ -16,8 +16,10 @@
 		</form> -->
 		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 		<!-- <select data-bind="options: filters, value: filter"></select> -->
-
-		<input class="searchField" type="search" placeholder="search..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+		<form class="searchForm">
+			<label for="searchField">Where'd ya wanna go?</label>
+			<input class="searchField" type="search" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+		</form>
 
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
 			<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())"><a data-bind="text: name"></a></li>
