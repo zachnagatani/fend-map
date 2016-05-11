@@ -103,12 +103,12 @@ var ViewModel = function() {
 
 		// Loop through the listItemsList and add them back to the view
 		// if they match the search query entered by the user
-		for(var x in listItemsList) {
+		for(var i in listItemsList) {
 
-			if(locationData[x].type.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if(locationData[i].type.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
-				listItemsList[x].style.display = "flex";
+				listItemsList[i].style.display = "flex";
 
 			}
 
@@ -318,9 +318,9 @@ var ViewModel = function() {
 
 				// Only bounce the pin one time
 				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
-				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750)
+				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750);
 
-		};
+		}
 
 	};
 
