@@ -21,7 +21,8 @@ body {
 
 .mapContainer {
 	/*Add 27px to offset infoWindowNode's height*/
-	height: calc(100% + 27px);
+	/*height: calc(100% + 27px);*/
+	height: 100%;
 	width: 100%;
 	position: relative;
 
@@ -85,21 +86,23 @@ body {
 
 .listContainer {
 	position: absolute;
-	left: 0px;
+	/* Give the nav a small margin from the left of the screen */
+	left: 20px;
 	z-index: 10;
 	/* Map container stretches down an extra 27px
 	Use calc to offset this */
-	height: calc(100% + 27px);
 	width: 230px;
-	display: table;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	transition: .5s;
 }
 
 .locationList {
 	list-style: none;
-	display: table-cell;
-	vertical-align: middle;
 	width: 100%;
+	position: relative;
+	top: 50px;
 }
 
 /*.locationList li {
@@ -121,7 +124,7 @@ body {
 	display: table;
 	background: rgba(51,51,51,.75);
 	color: #fff;
-	margin: 0 0 20px 20px;
+	margin: 0 0 20px 0;
 }
 
 .locationList li a {
