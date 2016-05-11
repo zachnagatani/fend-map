@@ -10,6 +10,8 @@
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
 
 	</head>
 
@@ -18,19 +20,24 @@
 		<!-- Button to open nav on mobile -->
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
 
-		<!-- Navigation container -->
-		<nav id="listContainer" class="listContainer">
-
-			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+		<section class="searchSection">
 
 			<!-- Search Form -->
 			<form class="searchForm">
 
 				<label for="searchField">Live Filter:</label>
 
+				<i class="fa fa-search" aria-hidden="true"></i>
 				<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
 			</form>
+
+		</section>
+
+		<!-- Navigation container -->
+		<nav id="listContainer" class="listContainer">
+
+			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 
 			<!-- List of Locations -->
 			<ul id="locationList" class="locationList" data-bind="foreach: locationList">

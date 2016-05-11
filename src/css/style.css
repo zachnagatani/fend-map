@@ -33,6 +33,39 @@ body {
 	position: relative;
 }*/
 
+/* Search Section Styles */
+
+.searchSection {
+	height: 200px;
+	width: calc(100% - 230px);
+	position: fixed;
+	left: 230px;
+	z-index: 10;
+	background: rgba(255,255,255,.7);
+	display: table;
+	text-align: center;
+}
+
+.searchForm {
+	width: 300px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.searchForm label {
+	display: block;
+	margin: 0 0 20px 0;
+	font-size: 1.5em;
+}
+
+.searchField {
+	height: 30px;
+	width: 300px;
+	margin-left: 10px;
+}
+
+
+
 /* Nav Styles */
 
 .openNav {
@@ -103,23 +136,6 @@ body {
 	background: #f0f0f0;
 	color: #333;
 	font-weight: bold;
-}
-
-.searchForm {
-	position: absolute;
-	left: 20px;
-	top: 50px;
-	width: 190px;
-	text-align: center;
-}
-
-.searchForm label {
-	font-size: 18px;
-}
-
-.searchField {
-	height: 30px;
-	margin-top: 10px;
 }
 
 @media screen and (max-width: 768px) {
