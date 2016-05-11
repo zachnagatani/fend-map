@@ -38,33 +38,6 @@ var ViewModel = function() {
 	// Allow for easy access to 'this' aka the ViewModel itself
 	var self = this;
 
-	// this.locationList = ko.observableArray(locationData);
-
-	// // locationData.forEach(function(location){
-	// // 	self.locationList.push(new Location(location));
-	// // });
-
-	// this.locations = ko.observableArray(locationData);
-	// this.query = ko.observable('');
-
-	// this.search = function(value){
-	// 	// self.locationList.removeAll();
-
-	// 	for(var x in self.locationList()){
-	// 		if(self.locationList()[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-	// 			self.locationList.push(self.locationList()[x]);
-	// 		}
-	// 	}
-
-	// 	// console.log(self.locationList()[1].name.toLowerCase().indexOf(value.toLowerCase()));
-
-	// 	// self.locationList.forEach(function(location){
-	// 	// 	if(location.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-	// 	// 		self.locationList.push(location);
-	// 	// 	}
-	// 	// });
-	// };
-
 	// Create an empty array of locations
 	this.locations = [];
 
@@ -354,14 +327,3 @@ var ViewModel = function() {
 };
 
 ko.applyBindings(new ViewModel());
-
-
-
-
-
-
-
-// foursquareURL = https://api.foursquare.com/v2/venues/VENUE_ID
-
-// "https://api.foursquare.com/v2/venues/4a82147ef964a52082f81fe3?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A
-
