@@ -47,17 +47,17 @@ var locationData = [
 	},
 
 	{
-		name: "AZ Fine Art Gallery",
+		name: "Aqui Cal-Mex",
 
-		foursquareVenueID: "POOPER",
+		foursquareVenueID: "42cc7080f964a520ea251fe3",
 
-		type: "Art",
+		type: "Mexican",
 
 		coordinates: {
 
-			lat: 37.306385,
+			lat: 37.307547,
 
-			lng: -121.899933,
+			lng: -121.900875,
 		}
 	},
 
@@ -73,6 +73,51 @@ var locationData = [
 			lat: 37.308185,
 
 			lng: -121.900533,
+		}
+	},
+
+	{
+		name: "Bertucelli's La Villa",
+
+		foursquareVenueID: "4adf64f1f964a520387a21e3",
+
+		type: "Italian",
+
+		coordinates: {
+
+			lat: 37.304607,
+
+			lng: -121.898566,
+		}
+	},
+
+	{
+		name: "Bills Cafe",
+
+		foursquareVenueID: "528101f411d2b3a7b8645be8",
+
+		type: "Breakfast",
+
+		coordinates: {
+
+			lat: 37.308434,
+
+			lng: -121.901751,
+		}
+	},
+
+	{
+		name: "Bibo's NY Pizza",
+
+		foursquareVenueID: "528101f411d2b3a7b8645be8",
+
+		type: "Breakfast",
+
+		coordinates: {
+
+			lat: 37.306478,
+
+			lng: -121.891727,
 		}
 	}
 

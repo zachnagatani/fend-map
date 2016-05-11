@@ -49,14 +49,18 @@ function createMarkers(){
 	locationData.forEach(function(location){
 
 		var marker = new google.maps.Marker({
+
 			// Set the position to the location's lat and lng
 		    position: location.coordinates,
+
 		    // Set the marker on our map
 		    map: map,
+
 		    // Give the marker a title matching the location name
 		    title: location.name,
+
 		    // No animation on load
-		    animation: null
+		    animation: null,
 
 	});
 
