@@ -1,5 +1,6 @@
 /* Global Styles */
 
+/* Simple reset */
 * {
 	padding: 0;
 	margin: 0;
@@ -46,7 +47,9 @@ body {
 	position: absolute;
 	left: 0px;
 	z-index: 10;
-	height: 100%;
+	/* Map container stretches down an extra 27px
+	Use calc to offset this */
+	height: calc(100% + 27px);
 	width: 230px;
 	background: #333;
 	color: #f0f0f0;
