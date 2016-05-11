@@ -21,16 +21,18 @@
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
 
 		<section class="searchSection">
+			<div class="searchContainer">
+				<!-- Search Form -->
+				<form class="searchForm">
 
-			<!-- Search Form -->
-			<form class="searchForm">
+					<label for="searchField">Live Filter:</label><br>
 
-				<label for="searchField">Live Filter:</label>
+					<i class="fa fa-search" aria-hidden="true"></i>
+					<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
-				<i class="fa fa-search" aria-hidden="true"></i>
-				<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+				</form>
+			</div>
 
-			</form>
 
 		</section>
 

@@ -39,29 +39,34 @@ body {
 	height: 200px;
 	width: calc(100% - 230px);
 	position: fixed;
+	top: 50px;
 	left: 230px;
 	z-index: 10;
-	background: rgba(255,255,255,.7);
-	display: table;
-	text-align: center;
+}
+
+.searchContainer {
+	width: 500px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255,255,255, .75);
 }
 
 .searchForm {
-	width: 300px;
-	display: table-cell;
-	vertical-align: middle;
+	width: 500px;
+	text-align: center;
 }
 
 .searchForm label {
-	display: block;
-	margin: 0 0 20px 0;
 	font-size: 1.5em;
 }
 
 .searchField {
 	height: 30px;
 	width: 300px;
-	margin-left: 10px;
+	margin: 20px 0 0 10px;
 }
 
 
@@ -95,7 +100,6 @@ body {
 	display: table-cell;
 	vertical-align: middle;
 	width: 100%;
-	border-bottom: 2px solid #f0f0f0;
 }
 
 /*.locationList li {
