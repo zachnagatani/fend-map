@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Neighborhood Map</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
 
-	<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
-	<nav id="listContainer" class="listContainer">
-		<!-- <form>
-			<input type="text">
-			<input type="submit">
-		</form> -->
-		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
-		<!-- <select data-bind="options: filters, value: filter"></select> -->
-		<form class="searchForm">
-			<label for="searchField">Live Filter:</label>
-			<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-		</form>
+	<head>
 
-		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
-			<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())"><a data-bind="text: name"></a></li>
-		</ul>
+		<title>Neighborhood Map</title>
 
-	</nav>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<div id="infoWindowNode" class="infoWindowNode">
-	</div>
+		<meta charset="utf-8">
 
-	<div id="mapContainer" class="mapContainer">
-	</div>
+		<link rel="stylesheet" href="css/style.css">
 
-	<script src="js/knockout.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/model.js"></script>
-	<script src="js/initMap.js"></script>
-	<script
-      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap">
-    </script>
-    <script src="js/app.js"></script>
+	</head>
 
-</body>
+	<body>
+
+		<!-- Button to open nav on mobile -->
+		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
+
+		<!-- Navigation container -->
+		<nav id="listContainer" class="listContainer">
+
+			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+
+			<!-- Search Form -->
+			<form class="searchForm">
+
+				<label for="searchField">Live Filter:</label>
+
+				<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+
+			</form>
+
+			<!-- List of Locations -->
+			<ul id="locationList" class="locationList" data-bind="foreach: locationList">
+
+				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+
+					<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+
+				</li>
+			</ul>
+
+		</nav>
+
+		<!-- Div to contain infoWindow data -->
+		<div id="infoWindowNode" class="infoWindowNode">
+		</div>
+
+		<!-- Div to contain map -->
+		<div id="mapContainer" class="mapContainer">
+		</div>
+
+	<!-- Allow us to first utilize KO, then jquery, then load our data, initialize the map, reach the Google Maps api to be able to access the needed google variables utilized in app.js -->
+		<script src="js/knockout.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/model.js"></script>
+		<script src="js/initMap.js"></script>
+		<script
+	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap">
+	    </script>
+	    <script src="js/app.js"></script>
+
+	</body>
+
 </html>
