@@ -172,7 +172,7 @@ var ViewModel = function() {
 
 	};
 
-	this.closeNavOnSelect = function() {
+	this.closeNavOnSelect = function(){
 
 		// Close the nav if li is clicked on mobile
 		// Check if the width of the window is 768px (mobile)
@@ -329,7 +329,7 @@ var ViewModel = function() {
 
 		};
 
-		// Call the relevant API functions
+		// Call relevant API functions
 		getFourSquare();
 		getWiki();
 
@@ -340,7 +340,6 @@ var ViewModel = function() {
 				allMarkers[listItemIndex].setAnimation(null);
 
 			} else {
-
 
 				allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
 

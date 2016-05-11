@@ -22,7 +22,7 @@
 		</form>
 
 		<ul id="locationList" class="locationList" data-bind="foreach: locationList">
-			<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index()), click:$parent.closeNavOnSelect"><a data-bind="text: name"></a></li>
+			<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())"><a data-bind="text: name, click: $parent.closeNavOnSelect"></a></li>
 		</ul>
 
 	</nav>
