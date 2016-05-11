@@ -135,7 +135,7 @@ var ViewModel = function() {
 			if(listItemsList[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
-				listItemsList[x].style.display = "table";
+				listItemsList[x].style.display = "flex";
 
 			}
 

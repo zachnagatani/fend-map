@@ -28,6 +28,11 @@ function initMap(){
     	map.setCenter(mapCenter);
 	});
 
+	// Recenter map on window resize - responsive centering
+	google.maps.event.addDomListener(window, 'scroll', function() {
+	});
+
+
 };
 
 function createMarkers(){

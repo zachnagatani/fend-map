@@ -77,7 +77,7 @@ var locationData = [
 	},
 
 	{
-		name: "Bills Cafe",
+		name: "Bill's Cafe",
 
 		foursquareVenueID: "528101f411d2b3a7b8645be8",
 
