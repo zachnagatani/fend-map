@@ -6,7 +6,7 @@ var locationData = [
 
 		foursquareVenueID: "4a82147ef964a52082f81fe3",
 
-		type: "Food",
+		type: "Pizza",
 
 		coordinates: {
 
@@ -21,7 +21,7 @@ var locationData = [
 
 		foursquareVenueID: "4b11fc05f964a520d78723e3",
 
-		type: "Food",
+		type: "Candy",
 
 		coordinates: {
 
@@ -32,32 +32,17 @@ var locationData = [
 	},
 
 	{
-		name: "Hicklebee's Bookstore",
+		name: "Aqui Cal-Mex",
 
-		foursquareVenueID: "4a85d37bf964a5205eff1fe3",
+		foursquareVenueID: "42cc7080f964a520ea251fe3",
 
-		type: "Art",
-
-		coordinates: {
-
-			lat: 37.304035,
-
-			lng: -121.897363,
-		}
-	},
-
-	{
-		name: "AZ Fine Art Gallery",
-
-		foursquareVenueID: "POOPER",
-
-		type: "Art",
+		type: "Mexican",
 
 		coordinates: {
 
-			lat: 37.306385,
+			lat: 37.307547,
 
-			lng: -121.899933,
+			lng: -121.900875,
 		}
 	},
 
@@ -66,13 +51,133 @@ var locationData = [
 
 		foursquareVenueID: "54373d95498e5b5416738404",
 
-		type: "Food",
+		type: "Burgers",
 
 		coordinates: {
 
 			lat: 37.308185,
 
 			lng: -121.900533,
+		}
+	},
+
+	{
+		name: "Bertucelli's La Villa",
+
+		foursquareVenueID: "4adf64f1f964a520387a21e3",
+
+		type: "Italian",
+
+		coordinates: {
+
+			lat: 37.304607,
+
+			lng: -121.898566,
+		}
+	},
+
+	{
+		name: "Bill's Cafe",
+
+		foursquareVenueID: "528101f411d2b3a7b8645be8",
+
+		type: "Breakfast",
+
+		coordinates: {
+
+			lat: 37.308434,
+
+			lng: -121.901751,
+		}
+	},
+
+	{
+		name: "Bibo's NY Pizza",
+
+		foursquareVenueID: "528101f411d2b3a7b8645be8",
+
+		type: "Pizza",
+
+		coordinates: {
+
+			lat: 37.306478,
+
+			lng: -121.891727,
+		}
+	},
+
+	{
+		name: "Blue Water Seafood and Crab",
+
+		foursquareVenueID: "50ac1ab48acafb3b1f9264eb",
+
+		type: "Seafood",
+
+		coordinates: {
+
+			lat: 37.310160,
+
+			lng: -121.896185,
+		}
+	},
+
+	{
+		name: "Cafe Gourmet",
+
+		foursquareVenueID: "52f818f0498ed4d1e7d6eb36",
+
+		type: "Cafe",
+
+		coordinates: {
+
+			lat: 37.310152,
+
+			lng: -121.895612,
+		}
+	},
+
+	{
+		name: "Cafe San Jose",
+
+		foursquareVenueID: "528101f411d2b3a7b8645be8",
+
+		type: "Breakfast",
+
+		coordinates: {
+
+			lat: 37.294926,
+
+			lng: -121.913635,
+		}
+	},
+
+	{
+		name: "Crepevine",
+
+		foursquareVenueID: "502bc80fe4b0bea491f917d4",
+
+		type: "Crepes",
+
+		coordinates: {
+
+			lat: 37.308185,
+
+			lng: -121.900533,
+		}
+	},
+
+	{
+		name: "Dry Creek Grill",
+
+		foursquareVenueID: "4f1b9a33e4b0d9f8b9925075",
+
+		type: "American",
+
+		coordinates: {
+
+			lat: 37.293331,
+
+			lng: -121.912942,
 		}
 	}
 
