@@ -21,7 +21,8 @@ body {
 
 .mapContainer {
 	/*Add 27px to offset infoWindowNode's height*/
-	height: calc(100% + 27px);
+	/*height: calc(100% + 27px);*/
+	height: 100%;
 	width: 100%;
 	position: relative;
 
@@ -32,6 +33,44 @@ body {
 	width: 100%;
 	position: relative;
 }*/
+
+/* Search Section Styles */
+
+.searchSection {
+	height: 200px;
+	width: 100%;
+	position: fixed;
+	top: 50px;
+	z-index: 10;
+}
+
+.searchContainer {
+	width: 500px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255,255,255, .75);
+}
+
+.searchForm {
+	width: 500px;
+	text-align: center;
+}
+
+.searchForm label {
+	font-size: 1.5em;
+}
+
+.searchField {
+	height: 40px;
+	width: 300px;
+	margin: 20px 0 0 10px;
+	padding: 10px;
+	border: 1px solid #333;
+	color: black;
+}
 
 /* Nav Styles */
 
@@ -45,24 +84,26 @@ body {
 
 .listContainer {
 	position: absolute;
-	left: 0px;
+	/* Give the nav a small margin from the left of the screen */
+	left: 20px;
 	z-index: 10;
 	/* Map container stretches down an extra 27px
 	Use calc to offset this */
-	height: calc(100% + 27px);
 	width: 230px;
-	background: #333;
-	color: #f0f0f0;
-	display: table;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	transition: .5s;
 }
 
 .locationList {
 	list-style: none;
-	display: table-cell;
-	vertical-align: middle;
 	width: 100%;
-	border-bottom: 2px solid #f0f0f0;
+	height: 500px;
+	overflow: auto;
+	position: relative;
+	top: 50px;
 }
 
 /*.locationList li {
@@ -77,49 +118,22 @@ body {
 
 .locationList li {
 	text-align: center;
-	border-top: 2px solid #f0f0f0;
+	border: 2px solid #f0f0f0;
 	width: 100%;
 	height: 100px;
 	cursor: pointer;
-	display: table;
-}
-
-.locationList li a {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.locationList li:last-of-type {
-	border-bottom: 2px solid #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(51,51,51,.75);
+	color: #fff;
+	margin: 0 0 20px 0;
 }
 
 .locationList li:hover {
-	background: #f0f0f0;
+	background: #fff;
 	color: #333;
 	font-weight: bold;
-}
-
-.locationList li:focus {
-	background: #f0f0f0;
-	color: #333;
-	font-weight: bold;
-}
-
-.searchForm {
-	position: absolute;
-	left: 20px;
-	top: 50px;
-	width: 190px;
-	text-align: center;
-}
-
-.searchForm label {
-	font-size: 18px;
-}
-
-.searchField {
-	height: 30px;
-	margin-top: 10px;
 }
 
 @media screen and (max-width: 768px) {
