@@ -272,7 +272,7 @@ var ViewModel = function() {
 					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
 					// Error message
-					$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
+					$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 				} else {
 
@@ -286,13 +286,15 @@ var ViewModel = function() {
 					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
 
 					// Append the address from 4sq to the infoWindow
-					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+					$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 					// Append the website from 4sq to the infoWindow
-					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
 					// Append the first image from 4sq to the infoWindow
-					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+					$('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+
+					$('#infoWindowContentContainer').append('<div class="iw-bottom-gradient"></div>');
 
 					// $('#infowWindowNode')[0].style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + ")";
 				}
@@ -304,7 +306,7 @@ var ViewModel = function() {
 				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
 
 				//Error message
-				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
+				$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
 
 			});
 
