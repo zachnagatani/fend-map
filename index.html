@@ -10,6 +10,8 @@
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
 
 	</head>
 
@@ -18,19 +20,26 @@
 		<!-- Button to open nav on mobile -->
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
 
+		<section class="searchSection">
+			<div class="searchContainer">
+				<!-- Search Form -->
+				<form class="searchForm">
+
+					<label for="searchField">Search For Food In Willow Glen:</label><br>
+
+					<i class="fa fa-search" aria-hidden="true"></i>
+					<input class="searchField" type="Where're you goin?" placeholder="ex. Mexican" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+
+				</form>
+			</div>
+
+
+		</section>
+
 		<!-- Navigation container -->
 		<nav id="listContainer" class="listContainer">
 
 			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
-
-			<!-- Search Form -->
-			<form class="searchForm">
-
-				<label for="searchField">Live Filter:</label>
-
-				<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-
-			</form>
 
 			<!-- List of Locations -->
 			<ul id="locationList" class="locationList" data-bind="foreach: locationList">
@@ -40,6 +49,7 @@
 					<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
 
 				</li>
+
 			</ul>
 
 		</nav>
@@ -53,8 +63,8 @@
 		</div>
 
 	<!-- Allow us to first utilize KO, then jquery, then load our data, initialize the map, reach the Google Maps api to be able to access the needed google variables utilized in app.js -->
-		<script src="js/knockout.js"></script>
-		<script src="js/jquery.min.js"></script>
+		<script src="knockout/knockout.js"></script>
+		<script src="jquery/jquery.min.js"></script>
 		<script src="js/model.js"></script>
 		<script src="js/initMap.js"></script>
 		<script
