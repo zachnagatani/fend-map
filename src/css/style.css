@@ -227,6 +227,7 @@ body {
 
 .foursquareLink {
 	font-size: 16px;
+	margin-top: 20px;
 }
 
 .infoWindowImg {
@@ -234,6 +235,10 @@ body {
 	max-height: 200px;
 	display: block;
 	margin: 20px auto;
+}
+
+.foursquareRatingHeader {
+	margin-top: 20px;
 }
 
 /*http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html*/

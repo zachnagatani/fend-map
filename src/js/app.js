@@ -50,6 +50,9 @@ google.maps.event.addListener(infoWindow, 'domready', function() {
    // Remove the white background DIV
    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
+   iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px', 'z-index' : '1'});
+
+
    // iwOuter.parent().parent().css({left: '115px'});
 
    iwBackground.children(':nth-child(3)').find('div').children().css({'z-index' : '1'});
@@ -69,7 +72,7 @@ google.maps.event.addListener(infoWindow, 'domready', function() {
 	  height: "25px",
 	  opacity: '1', // by default the close button has an opacity of 0.7
 	  right: '-75px', top: '6px', // button repositioning
-	  border: '1px solid #333', // increasing button border and new color
+	  border: '1px solid #019CDE', // increasing button border and new color
 	  'border-radius': '13px', // circular effect
 	  'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
 	  background: '#fff'
@@ -301,6 +304,14 @@ var ViewModel = function() {
 					// var infoWindowContentContainer = document.getElementById('infoWindowContentContainer');
 
 					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+
+					$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+					$('#foursquareRating').css({
+						padding: '10px',
+						'border-radius': '3px',
+						background: '#' + venueInfo.ratingColor,
+						color: '#fff'
+					});
 
 				}
 
