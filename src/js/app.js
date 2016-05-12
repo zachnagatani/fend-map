@@ -292,11 +292,16 @@ var ViewModel = function() {
 					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
 					// Append the first image from 4sq to the infoWindow
-					$('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+					// $('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
-					$('#infoWindowContentContainer').append('<div class="iw-bottom-gradient"></div>');
+					// $('#infoWindowContentContainer').append('<div class="iw-bottom-gradient"></div>');
 
 					// $('#infowWindowNode')[0].style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + ")";
+
+					// var infoWindowContentContainer = document.getElementById('infoWindowContentContainer');
+
+					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+
 				}
 
 			  // If no response, let the user know

@@ -101,6 +101,7 @@ body {
 	list-style: none;
 	width: 100%;
 	height: 800px;
+	padding-right: 20px;
 	overflow: auto;
 	position: relative;
 }
@@ -221,6 +222,7 @@ body {
 
 .infoWindowContentContainer {
 	padding: 20px;
+	background: rgba(255,255,255,.75);
 }
 
 .foursquareLink {
