@@ -32,6 +32,64 @@ var infoWindow = new google.maps.InfoWindow({
 		    	content: infoWindowNode
 });
 
+// http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html
+google.maps.event.addListener(infoWindow, 'domready', function() {
+
+   // Reference to the DIV which receives the contents of the infowindow using jQuery
+   var iwOuter = $('.gm-style-iw');
+
+   /* The DIV we want to change is above the .gm-style-iw DIV.
+    * So, we use jQuery and create a iwBackground variable,
+    * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+    */
+   var iwBackground = iwOuter.prev();
+
+   // Remove the background shadow DIV
+   iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+   // Remove the white background DIV
+   iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+   // iwOuter.parent().parent().css({left: '115px'});
+
+   iwBackground.children(':nth-child(3)').find('div').children().css({'z-index' : '1'});
+
+   // Taking advantage of the already established reference to
+	// div .gm-style-iw with iwOuter variable.
+	// You must set a new variable iwCloseBtn.
+	// Using the .next() method of JQuery you reference the following div to .gm-style-iw.
+	// Is this div that groups the close button elements.
+	var iwCloseBtn = iwOuter.next();
+
+	var iwCloseBtnX = iwCloseBtn.next();
+
+	// Apply the desired effect to the close button
+	iwCloseBtn.css({
+	  width: "25px",
+	  height: "25px",
+	  opacity: '1', // by default the close button has an opacity of 0.7
+	  right: '-75px', top: '6px', // button repositioning
+	  border: '1px solid #333', // increasing button border and new color
+	  'border-radius': '13px', // circular effect
+	  'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
+	  background: '#fff'
+	  });
+
+	// Hide Image Used By Default for X in close button
+	iwCloseBtn.children(':nth-child(1)').css({
+		top: '-330px',
+		left: '3px'
+	});
+
+	// The API automatically applies 0.7 opacity to the button after the mouseout event.
+	// This function reverses this event to the desired value.
+	iwCloseBtn.mouseout(function(){
+	  $(this).css({opacity: '1'});
+	});
+
+
+});
+
 // KO ViewModel
 var ViewModel = function() {
 
@@ -123,6 +181,7 @@ var ViewModel = function() {
 	this.infoWindowName = document.createElement('h1');
 	this.infoWindowName.id = "infoWindowName";
 	this.infoWindowNode = document.getElementById('infoWindowNode');
+	this.infoWindowHeader = document.getElementById('infoWindowHeader');
 
 	// Functionality to open navbar on mobile
 	this.openNav = function(){
@@ -181,7 +240,7 @@ var ViewModel = function() {
 		// Set the textContent of the infoWindowName to match the location name
 		// The index of the li will always match the index of the locationData
 		self.infoWindowName.textContent = listItemName;
-		self.infoWindowNode.appendChild(self.infoWindowName);
+		self.infoWindowHeader.appendChild(self.infoWindowName);
 
 		// Open the infoWindow on our map and over the correct marker
 		// The index of the li will always match the index of the allMarkers array
@@ -235,6 +294,7 @@ var ViewModel = function() {
 					// Append the first image from 4sq to the infoWindow
 					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
+					// $('#infowWindowNode')[0].style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + ")";
 				}
 
 			  // If no response, let the user know

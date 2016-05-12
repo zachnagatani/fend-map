@@ -199,6 +199,9 @@ body {
 
 .infoWindowNode {
 	text-align: center;
+	background: #fff;
+	overflow: auto;
+	border-radius: 6px;
 }
 
 .infoWindowNode a {
@@ -219,4 +222,16 @@ body {
 	max-height: 200px;
 	display: block;
 	margin: 20px auto;
+}
+
+/*http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html*/
+.gm-style-iw {
+   width: 350px !important;
+   top: 17px !important;
+   left: 115px !important;
+}
+
+.infoWindowHeader {
+	background: #333;
+	color: #fff;
 }
