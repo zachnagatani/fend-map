@@ -179,6 +179,111 @@ var locationData = [
 
 			lng: -121.912942,
 		}
+	},
+
+	{
+		name: "Edna Ray Chinese Restaurant",
+
+		foursquareVenueID: "4ae75b52f964a520a8aa21e3",
+
+		type: "Chinese",
+
+		coordinates: {
+
+			lat: 37.306937,
+
+			lng: -121.900352,
+		}
+	},
+
+	{
+		name: "Flower Flour",
+
+		foursquareVenueID: "4b9435d1f964a520cc6e34e3",
+
+		type: "Bakery",
+
+		coordinates: {
+
+			lat: 37.310140,
+
+			lng: -121.896966,
+		}
+	},
+
+	{
+		name: "Great Wall Restaurant",
+
+		foursquareVenueID: "4b36baeef964a5207b3b25e3",
+
+		type: "Chinese",
+
+		coordinates: {
+
+			lat: 37.306566,
+
+			lng: -121.890645,
+		}
+	},
+
+	{
+		name: "Jake's of Willow Glen",
+
+		foursquareVenueID: "42cc7080f964a520ec251fe3",
+
+		type: "Pizza",
+
+		coordinates: {
+
+			lat: 37.309892,
+
+			lng: -121.901521,
+		}
+	},
+
+	{
+		name: "John's of Willow Glen",
+
+		foursquareVenueID: "4aa52f0cf964a520884720e3",
+
+		type: "American",
+
+		coordinates: {
+
+			lat: 37.306215,
+
+			lng: -121.899164,
+		}
+	},
+
+	{
+		name: "Le Boulanger",
+
+		foursquareVenueID: "4ad8c2b9f964a5206e1421e3",
+
+		type: "Sandwiches",
+
+		coordinates: {
+
+			lat: 37.304172,
+
+			lng: -121.898244,
+		}
+	},
+
+	{
+		name: "New Indian Cuisine",
+
+		foursquareVenueID: "4b1c765df964a5209c0724e3",
+
+		type: "Indian",
+
+		coordinates: {
+
+			lat: 37.310486,
+
+			lng: -121.897076,
+		}
 	}
 
 ];
