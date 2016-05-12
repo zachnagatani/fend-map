@@ -219,7 +219,7 @@ function createMarkers(){
 
 				// Only bounce the pin one time
 				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
-				setTimeout(function(){ marker.setAnimation(null); }, 750)
+				setTimeout(function(){ marker.setAnimation(null); }, 750);
 
 			}
 		}
