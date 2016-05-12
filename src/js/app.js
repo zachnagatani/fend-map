@@ -250,62 +250,62 @@ var ViewModel = function() {
 
 		};
 
-		// WikiPedia API
-		function getWiki(){
+		// // WikiPedia API
+		// function getWiki(){
 
-			// Create the correct URL from the Wikipedia API according to the docs
-			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
+		// 	// Create the correct URL from the Wikipedia API according to the docs
+		// 	var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
 
-			// Create a timeout for error handling if no response is received within 5 seconds
-			var wikiRequestTimeout = setTimeout(function(){
-	        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-	   		}, 5000);
+		// 	// Create a timeout for error handling if no response is received within 5 seconds
+		// 	var wikiRequestTimeout = setTimeout(function(){
+	 //        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+	 //   		}, 5000);
 
-			// Request the resources
-			$.ajax({
-				dataType: "jsonp",
-				url: wikiURL
-			}).done(function(data){
+		// 	// Request the resources
+		// 	$.ajax({
+		// 		dataType: "jsonp",
+		// 		url: wikiURL
+		// 	}).done(function(data){
 
-				// Log the response to the console for testing
-				console.log(data);
+		// 		// Log the response to the console for testing
+		// 		console.log(data);
 
-				// Store the correct place of response in a variable for easy access
-				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
+		// 		// Store the correct place of response in a variable for easy access
+		// 		var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 
-				// Grab the title of the Wikipedia Article
-				var wikiTitle = wikiObject.title;
+		// 		// Grab the title of the Wikipedia Article
+		// 		var wikiTitle = wikiObject.title;
 
-				// Remove any previous title
-				$('#wikiTitle').remove();
+		// 		// Remove any previous title
+		// 		$('#wikiTitle').remove();
 
-				// Check if wikipedia's missing key does not exist
-				// If not present, link to the article, or else
-				// let the user know there are no articles
-				if (!("missing" in wikiObject)){
-					// Success
-					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
-				} else {
-					// Error
-					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
-				}
+		// 		// Check if wikipedia's missing key does not exist
+		// 		// If not present, link to the article, or else
+		// 		// let the user know there are no articles
+		// 		if (!("missing" in wikiObject)){
+		// 			// Success
+		// 			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+		// 		} else {
+		// 			// Error
+		// 			$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
+		// 		}
 
-				// Since the request was successful, stop the
-				// timeout request from above
-	        	clearTimeout(wikiRequestTimeout);
+		// 		// Since the request was successful, stop the
+		// 		// timeout request from above
+	 //        	clearTimeout(wikiRequestTimeout);
 
-			}).fail(function(data){
+		// 	}).fail(function(data){
 
-				// If no response, let the user know
-				alert("Failed to get WikiPedia resources.");
+		// 		// If no response, let the user know
+		// 		alert("Failed to get WikiPedia resources.");
 
-			});
+		// 	});
 
-		};
+		// };
 
 		// Call relevant API functions
 		getFourSquare();
-		getWiki();
+		// getWiki();
 
 		// If there is animation, set it to none, else
 		// set it to the bounce animation
