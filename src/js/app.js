@@ -132,7 +132,7 @@ var ViewModel = function() {
 		// if they match the search query entered by the user
 		for(var x in listItemsList) {
 
-			if(locationData[x].type.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if(listItemsList[x].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
 				listItemsList[x].style.display = "flex";
