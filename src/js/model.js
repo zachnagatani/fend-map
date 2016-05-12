@@ -16,20 +16,20 @@ var locationData = [
 		}
 	},
 
-	{
-		name: "Powell's Sweet Shoppe",
+	// {
+	// 	name: "Powell's Sweet Shoppe",
 
-		foursquareVenueID: "4b11fc05f964a520d78723e3",
+	// 	foursquareVenueID: "4b11fc05f964a520d78723e3",
 
-		type: "Candy",
+	// 	type: "Candy",
 
-		coordinates: {
+	// 	coordinates: {
 
-			lat: 37.307686,
+	// 		lat: 37.307686,
 
-			lng: -121.900156,
-		}
-	},
+	// 		lng: -121.900156,
+	// 	}
+	// },
 
 	{
 		name: "Aqui Cal-Mex",

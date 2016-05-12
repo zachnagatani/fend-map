@@ -267,12 +267,15 @@ var ViewModel = function() {
 				// Log the data for testing
 				console.log(data);
 
+				$('#infoWindowContentContainer').remove();
+				$('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
+
 				// If no venue key exists in the response, let the user
 				// that no Foursquare data exists for the location
 				if(!("venue" in data.response)) {
 
 					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
 
 					// Error message
 					$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
@@ -286,13 +289,17 @@ var ViewModel = function() {
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
 					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+
+					$('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
 
 					// Append the address from 4sq to the infoWindow
 					$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 					// Append the website from 4sq to the infoWindow
 					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+					$('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
 
 					// Append the first image from 4sq to the infoWindow
 					// $('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
@@ -305,12 +312,14 @@ var ViewModel = function() {
 
 					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+					$('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
+
+					if(venueInfo.rating != undefined) {
+						$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+					}
+
 					$('#foursquareRating').css({
-						padding: '10px',
-						'border-radius': '3px',
-						background: '#' + venueInfo.ratingColor,
-						color: '#fff'
+						background: '#' + venueInfo.ratingColor
 					});
 
 				}

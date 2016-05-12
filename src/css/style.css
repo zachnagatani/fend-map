@@ -238,7 +238,22 @@ body {
 }
 
 .foursquareRatingHeader {
-	margin-top: 20px;
+	margin: 20px 0;
+}
+
+.foursquareRating {
+	padding: 10px;
+	border-radius: 3px;
+	color: '#fff';
+}
+
+.foursquareStatus {
+	font-size: 16px;
+}
+
+.foursquareContact {
+	margin: 20px 0;
+	font-size: 18px;
 }
 
 /*http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html*/
