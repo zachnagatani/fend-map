@@ -199,7 +199,7 @@ function createMarkers(){
 
 			});
 
-			getWiki();
+			// getWiki();
 
 		};
 
