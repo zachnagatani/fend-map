@@ -256,6 +256,7 @@ body {
 	font-size: 18px;
 }
 
+
 /*http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html*/
 .gm-style-iw {
    width: 350px !important;
@@ -272,4 +273,22 @@ body {
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+}
+
+/* Intro Search Styles */
+
+.introSearchContainer {
+	position: absolute;
+	z-index: 11;
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.introFlex {
+	text-align: center;
+	max-width: 50%;
 }

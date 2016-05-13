@@ -17,6 +17,23 @@
 
 	<body>
 
+		<div id="introSearchContainer" class="introSearchContainer">
+
+			<div id="introFlex" class="introFlex">
+
+				<h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
+				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p>
+
+				<form id="introSearchForm" class="introSearchForm">
+
+					<input id="introSearchInput" class="introSearchInput searchField" type="text" placeholder="ex 12345 Reading Rainbow Drive San Jose, CA">
+					<a id="introSearchSubmit" class="introSearchSubmit">Search</a>
+
+				</form>
+			</div>
+
+		</div>
+
 		<!-- Button to open nav on mobile -->
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
 
@@ -28,7 +45,7 @@
 					<label for="searchField">Search For Food In Willow Glen:</label><br>
 
 					<i class="fa fa-search" aria-hidden="true"></i>
-					<input class="searchField" type="Where're you goin?" placeholder="Search here!" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					<input class="searchField" type="text" placeholder="Where're you goin?" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
 				</form>
 			</div>
