@@ -10,11 +10,16 @@
 html, body {
 	height: 100%;
 	width: 100%;
+	color: #333;
 }
 
 body {
 	font-family: 'news-goth', Helvetica, sans-serif;
 	font-size: 20px;
+}
+
+.btn {
+	border: 1px solid gray;
 }
 
 /* Map Styles */
@@ -25,7 +30,6 @@ body {
 	height: 100%;
 	width: 100%;
 	position: relative;
-
 }
 
 /*.mapContainer {
@@ -134,7 +138,6 @@ body {
 .locationList li:hover {
 	background: #fff;
 	color: #333;
-	font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {
@@ -283,12 +286,52 @@ body {
 	width: 100%;
 	height: 100%;
 	background: rgba(255,255,255,.8);
+	/*background: rgba(0,0,0,.9);*/
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	/*color: #fff;*/
+	transition: 1s;
+}
+
+.introSearchHeader {
+	font-weight: normal;
 }
 
 .introFlex {
 	text-align: center;
 	max-width: 50%;
+	margin-top: 300px;
+}
+
+.introSearchForm {
+	font-size: 18px;
+	margin: 20px 0 0 0;
+}
+
+.introFlex p {
+	font-size: 24px;
+	line-height: 36px;
+}
+
+.introSearchInput, .introSearchButton {
+	display: inline-block;
+	font-size: 16px;
+	padding: 10px;
+}
+
+.introSearchInput {
+	width: 500px;
+}
+
+.introSearchButton {
+	background: rgba(1,156,222, .75);
+	color: #fff;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.introSearchButton:hover {
+	background: #016D9B;
+	transition: .5s;
 }

@@ -412,6 +412,23 @@ var ViewModel = function() {
 
 	};
 
+	this.introSearch = function() {
+
+		var introSearchContainer = document.getElementById('introSearchContainer');
+
+		// Use opacity so that the div can utilize CSS transitions
+		introSearchContainer.style.opacity = "0";
+
+		// After one second, change the display to "none" so that
+		// the user can access the rest of the app
+		var displayTimeout = setTimeout(function(){
+
+			introSearchContainer.style.display = "none";
+
+		}, 1000);
+
+	};
+
 };
 
 ko.applyBindings(new ViewModel());
