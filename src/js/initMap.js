@@ -75,20 +75,20 @@ function createMarkers(){
 
 	// });
 
-	foursquareVenues.forEach(function(venue){
+	foursquareVenues.forEach(function(location){
 
-		venue.coordinates = {"lat": venue.location.lat,"lng": venue.location.lng};
+		location.coordinates = {"lat": location.location.lat,"lng": location.location.lng};
 
 			var marker = new google.maps.Marker({
 
 			// Set the position to the location's lat and lng
-			position: venue.coordinates,
+			position: location.coordinates,
 
 			// Set the marker on our map
 			map: map,
 
 			// Give the marker a title matching the location name
-			title: venue.name,
+			title: location.name,
 
 			// No animation on load
 			animation: null,
@@ -167,7 +167,7 @@ function createMarkers(){
 		function getFourSquare(){
 
 			// Grab the venueID for the location - necessary to access API
-			var venueID = location.foursquareVenueID;
+			var venueID = location.id;
 
 			// Create the proper URL for the Foursquare API according to the docs
 			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
