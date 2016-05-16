@@ -115,8 +115,12 @@ var ViewModel = function() {
 	// Push this.locations into Observable Array
 	this.locationList = ko.observableArray(this.locations);
 
+	this.foursquareVenues = ko.observableArray([]);
+
 	// Push locationData from model.js into OA
 	this.locationData = ko.observableArray(locationData);
+
+	this.foursquareVenuesList = ko.observableArray([foursquareVenues]);
 
 	// Push global marker array into OA
 	this.markerList = ko.observableArray([allMarkers]);
@@ -167,7 +171,7 @@ var ViewModel = function() {
 		for(var i in listItemsList) {
 
 
-			if(locationData[i].type.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if(foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
 				listItemsList[i].style.display = "flex";
@@ -238,7 +242,7 @@ var ViewModel = function() {
 		var listItemIndex = index;
 
 		// Grab the name of the location from the model
-		var listItemName = locationData[listItemIndex].name;
+		var listItemName = foursquareVenues[listItemIndex].name;
 
 		// Set the textContent of the infoWindowName to match the location name
 		// The index of the li will always match the index of the locationData
@@ -253,7 +257,7 @@ var ViewModel = function() {
 		function getFourSquare(){
 
 			// Grab the venueID for the location - necessary to access API
-			var venueID = locationData[index].foursquareVenueID;
+			var venueID = foursquareVenues[index].id;
 
 			// Create the proper URL for the Foursquare API according to the docs
 			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
@@ -261,7 +265,7 @@ var ViewModel = function() {
 			// Request data
 			$.ajax({
 				dataType: "jsonp",
-				url: "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare"
+				url: foursquareURL
 			}).done(function(data){
 
 				// Log the data for testing
@@ -328,7 +332,7 @@ var ViewModel = function() {
 			}).fail(function(){
 
 				// Remove any previous 4sq info from the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
 				//Error message
 				$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
@@ -414,18 +418,67 @@ var ViewModel = function() {
 
 	this.introSearch = function() {
 
-		var introSearchContainer = document.getElementById('introSearchContainer');
+		var introSearchInput = document.getElementById('introSearchInput');
+		userCity = introSearchInput.value;
 
-		// Use opacity so that the div can utilize CSS transitions
-		introSearchContainer.style.opacity = "0";
+		function getFoursquareVenues(){
 
-		// After one second, change the display to "none" so that
-		// the user can access the rest of the app
-		var displayTimeout = setTimeout(function(){
+			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
-			introSearchContainer.style.display = "none";
+			$.ajax({
+				dataType: "jsonp",
+				url: foursquareVenuesURL
 
-		}, 1000);
+			}).done(function(data){
+				console.log(data);
+
+				var foursquareVenueResponseArray = data.response.groups[0].items;
+
+				foursquareVenueResponseArray.forEach(function(venue){
+
+					foursquareVenues.push(venue.venue);
+
+				});
+
+				initMap();
+
+				closeSearch();
+
+					(function(){
+
+						foursquareVenues.forEach(function(venue){
+							self.foursquareVenues.push(venue);
+						});
+
+						console.log(self.foursquareVenues());
+
+					})();
+
+				var typeSearchLabel = document.getElementById('typeSearchLabel')
+				typeSearchLabel.textContent = typeSearchLabel.textContent + userCity + ":";
+
+			});
+
+		};
+
+		function closeSearch() {
+
+			var introSearchContainer = document.getElementById('introSearchContainer');
+
+			// Use opacity so that the div can utilize CSS transitions
+			introSearchContainer.style.opacity = "0";
+
+			// After one second, change the display to "none" so that
+			// the user can access the rest of the app
+			var displayTimeout = setTimeout(function(){
+
+				introSearchContainer.style.display = "none";
+
+			}, 1000);
+
+		}
+
+		getFoursquareVenues();
 
 	};
 
