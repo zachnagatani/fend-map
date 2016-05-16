@@ -1,6 +1,7 @@
 // Global map variable, to allow the google maps "map" to be accessible from anywhere
 var map;
 var geocoder;
+var geocoder2;
 var userCity = "";
 var userCityGeocode = {};
 
@@ -106,7 +107,7 @@ function createMarkers(){
 			title: location.name,
 
 			// No animation on load
-			animation: null,
+			animation: google.maps.Animation.DROP,
 
 		});
 
