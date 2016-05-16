@@ -423,7 +423,7 @@ var ViewModel = function() {
 
 		function getFoursquareVenues(){
 
-			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 			$.ajax({
 				dataType: "jsonp",
@@ -453,6 +453,9 @@ var ViewModel = function() {
 						console.log(self.foursquareVenues());
 
 					})();
+
+				var typeSearchLabel = document.getElementById('typeSearchLabel')
+				typeSearchLabel.textContent = typeSearchLabel.textContent + userCity + ":";
 
 			});
 
