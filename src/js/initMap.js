@@ -2,7 +2,7 @@
 var map;
 var geocoder;
 var userCity = "";
-var userCityGeocode;
+var userCityGeocode = {};
 
 // Global markers array - accessible from anywhere
 var allMarkers = [];
@@ -34,6 +34,7 @@ function initMap(){
 			if(status == google.maps.GeocoderStatus.OK) {
 				if(status != google.maps.GeocoderStatus.ZERO_RESULTS) {
 					map.setCenter(results[0].geometry.location);
+					userCityGeocode = results[0].geometry.location;
 				}
 			}
 		});
@@ -44,7 +45,7 @@ function initMap(){
 
 	// Recenter map on window resize - responsive centering
 	google.maps.event.addDomListener(window, 'resize', function() {
-    	map.setCenter(mapCenter);
+    	map.setCenter(userCityGeocode);
 	});
 
 	// Recenter map on window resize - responsive centering
