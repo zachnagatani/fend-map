@@ -414,18 +414,36 @@ var ViewModel = function() {
 
 	this.introSearch = function() {
 
-		var introSearchContainer = document.getElementById('introSearchContainer');
+		// var introSearchContainer = document.getElementById('introSearchContainer');
 
-		// Use opacity so that the div can utilize CSS transitions
-		introSearchContainer.style.opacity = "0";
+		// // Use opacity so that the div can utilize CSS transitions
+		// introSearchContainer.style.opacity = "0";
 
-		// After one second, change the display to "none" so that
-		// the user can access the rest of the app
-		var displayTimeout = setTimeout(function(){
+		// // After one second, change the display to "none" so that
+		// // the user can access the rest of the app
+		// var displayTimeout = setTimeout(function(){
 
-			introSearchContainer.style.display = "none";
+		// 	introSearchContainer.style.display = "none";
 
-		}, 1000);
+		// }, 1000);
+
+	var introSearchInput = document.getElementById('introSearchInput');
+
+		function getFoursquareVenues(){
+
+			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+
+			$.ajax({
+				dataType: "jsonp",
+				url: foursquareVenuesURL
+
+			}).done(function(data){
+				console.log(data);
+			});
+
+		};
+
+	getFoursquareVenues();
 
 	};
 
