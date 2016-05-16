@@ -419,6 +419,7 @@ var ViewModel = function() {
 	this.introSearch = function() {
 
 		var introSearchInput = document.getElementById('introSearchInput');
+		userCity = introSearchInput.value;
 
 		function getFoursquareVenues(){
 

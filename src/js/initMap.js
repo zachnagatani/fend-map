@@ -1,5 +1,8 @@
 // Global map variable, to allow the google maps "map" to be accessible from anywhere
 var map;
+var geocoder;
+var userCity = "";
+var userCityGeocode;
 
 // Global markers array - accessible from anywhere
 var allMarkers = [];
@@ -12,6 +15,7 @@ function callBackDummy(){
 // Initialize the map on load
 function initMap(){
 
+	geocoder = new google.maps.Geocoder();
 	// Location for map to be centered on
 	// Snippet taken from: https://gist.github.com/magnificode/6113759
 	var mapCenter = {lat: 37.3036, lng: -121.8974};
@@ -24,6 +28,16 @@ function initMap(){
 		// Neighborhood level zoom
 		zoom: 12
 	});
+
+	if(geocoder) {
+		geocoder.geocode({'address': userCity}, function(results, status){
+			if(status == google.maps.GeocoderStatus.OK) {
+				if(status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+					map.setCenter(results[0].geometry.location);
+				}
+			}
+		});
+	}
 
 	// Call createMarkers()
 	createMarkers();
