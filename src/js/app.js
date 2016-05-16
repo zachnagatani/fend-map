@@ -414,6 +414,35 @@ var ViewModel = function() {
 
 	this.introSearch = function() {
 
+		var introSearchInput = document.getElementById('introSearchInput');
+
+		function getFoursquareVenues(){
+
+			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+
+			$.ajax({
+				dataType: "jsonp",
+				url: foursquareVenuesURL
+
+			}).done(function(data){
+				console.log(data);
+
+				var foursquareVenueResponseArray = data.response.groups[0].items;
+
+				foursquareVenueResponseArray.forEach(function(venue){
+
+					foursquareVenues.push(venue.venue);
+
+				});
+
+				initMap();
+
+			});
+
+		};
+
+		getFoursquareVenues();
+
 		// var introSearchContainer = document.getElementById('introSearchContainer');
 
 		// // Use opacity so that the div can utilize CSS transitions
@@ -426,24 +455,6 @@ var ViewModel = function() {
 		// 	introSearchContainer.style.display = "none";
 
 		// }, 1000);
-
-	var introSearchInput = document.getElementById('introSearchInput');
-
-		function getFoursquareVenues(){
-
-			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
-
-			$.ajax({
-				dataType: "jsonp",
-				url: foursquareVenuesURL
-
-			}).done(function(data){
-				console.log(data);
-			});
-
-		};
-
-	getFoursquareVenues();
 
 	};
 
