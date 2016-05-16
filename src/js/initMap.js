@@ -39,6 +39,7 @@ function createMarkers(){
 
 	// Grab the infowWindow div from the DOM
 	var infoWindowNode = document.getElementById('infoWindowNode');
+	var infoWindowHeader = document.getElementById('infoWindowHeader');
 
 	// Create the element to hold title of location
 	var infoWindowName = document.createElement('h1');
@@ -79,63 +80,63 @@ function createMarkers(){
 			// Set the infoWindowName to the new location's name
 			infoWindowName.textContent = location.name;
 			// Append the correct name to the infoWindow
-			infoWindowNode.appendChild(infoWindowName);
+			infoWindowHeader.appendChild(infoWindowName);
 
 			// Open the infoWindow on our map and over the correct marker
 			infoWindow.open(map, marker);
 		};
 
 		// WikiPedia API
-		function getWiki(){
-			// Create the correct URL from the Wikipedia API according to the docs
-			var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
+		// function getWiki(){
+		// 	// Create the correct URL from the Wikipedia API according to the docs
+		// 	var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
 
-			// Create a timeout for error handling if no response is received within 5 seconds
-			var wikiRequestTimeout = setTimeout(function(){
-			       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-			    }, 5000);
+		// 	// Create a timeout for error handling if no response is received within 5 seconds
+		// 	var wikiRequestTimeout = setTimeout(function(){
+		// 	       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
+		// 	    }, 5000);
 
-			// Request the resources
-			$.ajax({
-				dataType: "jsonp",
-				url: wikiURL
-			}).done(function(data){
+		// 	// Request the resources
+		// 	$.ajax({
+		// 		dataType: "jsonp",
+		// 		url: wikiURL
+		// 	}).done(function(data){
 
-				// Log the response to the console for testing
-				console.log(data);
+		// 		// Log the response to the console for testing
+		// 		console.log(data);
 
-				// Store the correct place of response in a variable for easy access
-				var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
+		// 		// Store the correct place of response in a variable for easy access
+		// 		var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
 
-				// Grab the title of the Wikipedia Article
-				var wikiTitle = wikiObject.title;
+		// 		// Grab the title of the Wikipedia Article
+		// 		var wikiTitle = wikiObject.title;
 
-				// Remove any previous title
-				$('#wikiTitle').remove();
+		// 		// Remove any previous title
+		// 		$('#wikiTitle').remove();
 
-				// Check if wikipedia's missing key does not exist
-				// If not present, link to the article, or else
-				// let the user know there are no articles
-				if (!("missing" in wikiObject)){
-					// Success
-					$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
-				} else {
-					// Error
-					$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
+		// 		// Check if wikipedia's missing key does not exist
+		// 		// If not present, link to the article, or else
+		// 		// let the user know there are no articles
+		// 		if (!("missing" in wikiObject)){
+		// 			// Success
+		// 			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
+		// 		} else {
+		// 			// Error
+		// 			$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
 
-				}
+		// 		}
 
-				// Since the request was successful, stop the
-				// timeout request from above
-	        	clearTimeout(wikiRequestTimeout);
+		// 		// Since the request was successful, stop the
+		// 		// timeout request from above
+	 //        	clearTimeout(wikiRequestTimeout);
 
-			}).fail(function(data){
+		// 	}).fail(function(data){
 
-				// If no response, let the user know
-				alert("Failed to get WikiPedia resources.");
+		// 		// If no response, let the user know
+		// 		alert("Failed to get WikiPedia resources.");
 
-			});
-		};
+		// 	});
+		// };
 
 		// Foursquare api
 		function getFourSquare(){
@@ -156,15 +157,18 @@ function createMarkers(){
 				// Log the data for testing
 				console.log(data);
 
+				$('#infoWindowContentContainer').remove();
+				$('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
+
 				// If no venue key exists in the response, let the user
 				// that no Foursquare data exists for the location
 				if(!("venue" in data.response)) {
 
 				// Remove any previous Foursquare data appended to the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
 
 				// Error message
-				$('#infoWindowNode').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
+				$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 				} else {
 
@@ -175,16 +179,32 @@ function createMarkers(){
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
 					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+
+					$('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
 
 					// Append the address from 4sq to the infoWindow
-					$('#infoWindowNode').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+					$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
 					// Append the website from 4sq to the infoWindow
-					$('#infoWindowNode').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+
+					$('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
 
 					// Append the first image from 4sq to the infoWindow
-					$('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+					// $('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+
+					infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+
+					$('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
+
+					if(venueInfo.rating != undefined) {
+						$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+					}
+
+					$('#foursquareRating').css({
+						background: '#' + venueInfo.ratingColor
+					});
 
 				}
 
@@ -192,7 +212,7 @@ function createMarkers(){
 			}).fail(function(){
 
 				// Remove any previous 4sq info from the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
 				//Error message
 				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");

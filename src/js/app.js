@@ -328,7 +328,7 @@ var ViewModel = function() {
 			}).fail(function(){
 
 				// Remove any previous 4sq info from the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg').remove();
+				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
 				//Error message
 				$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
