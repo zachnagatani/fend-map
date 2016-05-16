@@ -171,7 +171,7 @@ var ViewModel = function() {
 		for(var i in listItemsList) {
 
 
-			if(locationData[i].type.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if(foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
 				listItemsList[i].style.display = "flex";
