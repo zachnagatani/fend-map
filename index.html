@@ -23,11 +23,11 @@
 
 				<!-- <h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
 				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p> -->
-				<p>Enter an Address Below to Find Some Food</p>
+				<p>Enter Your City to Begin Your Feast</p>
 
 				<form id="introSearchForm" class="introSearchForm">
 
-					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex 12345 Reading Rainbow Drive San Jose, CA">
+					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: San Jose, CA">
 					<a id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</a>
 
 				</form>
@@ -43,7 +43,7 @@
 				<!-- Search Form -->
 				<form class="searchForm">
 
-					<label for="searchField">Search For Food In Willow Glen:</label><br>
+					<label id="typeSearchLabel" for="searchField">Search For Food In </label><br>
 
 					<i class="fa fa-search" aria-hidden="true"></i>
 					<input class="searchField" type="text" placeholder="Where're you goin?" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
@@ -60,7 +60,7 @@
 			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 
 			<!-- List of Locations -->
-			<ul id="locationList" class="locationList" data-bind="foreach: locationList">
+			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
 
 				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
 
@@ -88,7 +88,7 @@
 		<script src="js/model.js"></script>
 		<script src="js/initMap.js"></script>
 		<script
-	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap">
+	      src="https://maps.googleapis.com/maps/api/js?libraries=places">
 	    </script>
 	    <script src="js/app.js"></script>
 
