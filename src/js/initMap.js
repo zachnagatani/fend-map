@@ -4,6 +4,11 @@ var map;
 // Global markers array - accessible from anywhere
 var allMarkers = [];
 
+// TRICK THAT DUMB GMAP API, FOO!
+function callBackDummy(){
+	console.log("GOTCHYA!");
+}
+
 // Initialize the map on load
 function initMap(){
 
@@ -17,7 +22,7 @@ function initMap(){
 		// Center it in location of choosing
 		center: mapCenter,
 		// Neighborhood level zoom
-		zoom: 16
+		zoom: 12
 	});
 
 	// Call createMarkers()
@@ -52,23 +57,43 @@ function createMarkers(){
 	var listListLength = listList.length;
 
 	// Create a new GMaps marker for each location in model.js
-	locationData.forEach(function(location){
+	// locationData.forEach(function(location){
 
-		var marker = new google.maps.Marker({
+	// 	var marker = new google.maps.Marker({
+
+	// 		// Set the position to the location's lat and lng
+	// 	    position: location.coordinates,
+
+	// 	    // Set the marker on our map
+	// 	    map: map,
+
+	// 	    // Give the marker a title matching the location name
+	// 	    title: location.name,
+
+	// 	    // No animation on load
+	// 	    animation: null,
+
+	// });
+
+	foursquareVenues.forEach(function(venue){
+
+		venue.coordinates = {"lat": venue.location.lat,"lng": venue.location.lng};
+
+			var marker = new google.maps.Marker({
 
 			// Set the position to the location's lat and lng
-		    position: location.coordinates,
+			position: venue.coordinates,
 
-		    // Set the marker on our map
-		    map: map,
+			// Set the marker on our map
+			map: map,
 
-		    // Give the marker a title matching the location name
-		    title: location.name,
+			// Give the marker a title matching the location name
+			title: venue.name,
 
-		    // No animation on load
-		    animation: null,
+			// No animation on load
+			animation: null,
 
-	});
+		});
 
 		// Push each marker created into the global allMarkers array
 		allMarkers.push(marker);
