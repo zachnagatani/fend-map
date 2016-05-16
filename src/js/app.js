@@ -115,8 +115,12 @@ var ViewModel = function() {
 	// Push this.locations into Observable Array
 	this.locationList = ko.observableArray(this.locations);
 
+	this.foursquareVenues = ko.observableArray([]);
+
 	// Push locationData from model.js into OA
 	this.locationData = ko.observableArray(locationData);
+
+	this.foursquareVenuesList = ko.observableArray([foursquareVenues]);
 
 	// Push global marker array into OA
 	this.markerList = ko.observableArray([allMarkers]);
@@ -437,24 +441,40 @@ var ViewModel = function() {
 
 				initMap();
 
+				closeSearch();
+
+					(function(){
+
+						foursquareVenues.forEach(function(venue){
+							self.foursquareVenues.push(venue);
+						});
+
+						console.log(self.foursquareVenues());
+
+					})();
+
 			});
 
 		};
 
+		function closeSearch() {
+
+			var introSearchContainer = document.getElementById('introSearchContainer');
+
+			// Use opacity so that the div can utilize CSS transitions
+			introSearchContainer.style.opacity = "0";
+
+			// After one second, change the display to "none" so that
+			// the user can access the rest of the app
+			var displayTimeout = setTimeout(function(){
+
+				introSearchContainer.style.display = "none";
+
+			}, 1000);
+
+		}
+
 		getFoursquareVenues();
-
-		// var introSearchContainer = document.getElementById('introSearchContainer');
-
-		// // Use opacity so that the div can utilize CSS transitions
-		// introSearchContainer.style.opacity = "0";
-
-		// // After one second, change the display to "none" so that
-		// // the user can access the rest of the app
-		// var displayTimeout = setTimeout(function(){
-
-		// 	introSearchContainer.style.display = "none";
-
-		// }, 1000);
 
 	};
 
