@@ -1,17 +1,11 @@
 // Global map variable, to allow the google maps "map" to be accessible from anywhere
 var map;
 var geocoder;
-var geocoder2;
 var userCity = "";
 var userCityGeocode = {};
 
 // Global markers array - accessible from anywhere
 var allMarkers = [];
-
-// TRICK THAT DUMB GMAP API, FOO!
-function callBackDummy(){
-	console.log("GOTCHYA!");
-}
 
 // Initialize the map on load
 function initMap(){
@@ -27,7 +21,7 @@ function initMap(){
 		// Center it in location of choosing
 		center: mapCenter,
 		// Neighborhood level zoom
-		zoom: 12
+		zoom: 14
 	});
 
 	if(geocoder) {
