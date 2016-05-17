@@ -113,16 +113,6 @@ var ViewModel = function() {
 	// Allow for easy access to 'this' aka the ViewModel itself
 	var self = this;
 
-	// Create an empty array of locations
-	this.locations = [];
-
-	// Push each location from model.js into this.locations
-	(function(){
-		locationData.forEach(function(location){
-			self.locations.push(location);
-		});
-	})();
-
 
 // Not using square brackets might have been issue in search for loop for location
 
@@ -321,8 +311,7 @@ var ViewModel = function() {
 
 					// Grab the first photo of the venue in the response
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
-
-					// Remove any previous Foursquare data appended to the infoWindow
+					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
 					self.venuePrice(venueInfo.attributes.groups[0].summary);
 
@@ -331,17 +320,6 @@ var ViewModel = function() {
 					self.foursquareLink.href = venueInfo.url;
 
 					self.foursquareContact(venueInfo.contact.formattedPhone);
-
-					// Append the first image from 4sq to the infoWindow
-					// $('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
-
-					// $('#infoWindowContentContainer').append('<div class="iw-bottom-gradient"></div>');
-
-					// $('#infowWindowNode')[0].style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + ")";
-
-					// var infoWindowContentContainer = document.getElementById('infoWindowContentContainer');
-
-					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
 					self.foursquareStatus(venueInfo.hours.status);
 
@@ -368,62 +346,8 @@ var ViewModel = function() {
 
 		};
 
-		// // WikiPedia API
-		// function getWiki(){
-
-		// 	// Create the correct URL from the Wikipedia API according to the docs
-		// 	var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + listItemName + "&prop=revisions&rvprop=content&format=json";
-
-		// 	// Create a timeout for error handling if no response is received within 5 seconds
-		// 	var wikiRequestTimeout = setTimeout(function(){
-	 //        	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-	 //   		}, 5000);
-
-		// 	// Request the resources
-		// 	$.ajax({
-		// 		dataType: "jsonp",
-		// 		url: wikiURL
-		// 	}).done(function(data){
-
-		// 		// Log the response to the console for testing
-		// 		console.log(data);
-
-		// 		// Store the correct place of response in a variable for easy access
-		// 		var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
-
-		// 		// Grab the title of the Wikipedia Article
-		// 		var wikiTitle = wikiObject.title;
-
-		// 		// Remove any previous title
-		// 		$('#wikiTitle').remove();
-
-		// 		// Check if wikipedia's missing key does not exist
-		// 		// If not present, link to the article, or else
-		// 		// let the user know there are no articles
-		// 		if (!("missing" in wikiObject)){
-		// 			// Success
-		// 			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
-		// 		} else {
-		// 			// Error
-		// 			$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
-		// 		}
-
-		// 		// Since the request was successful, stop the
-		// 		// timeout request from above
-	 //        	clearTimeout(wikiRequestTimeout);
-
-		// 	}).fail(function(data){
-
-		// 		// If no response, let the user know
-		// 		alert("Failed to get WikiPedia resources.");
-
-		// 	});
-
-		// };
-
 		// Call relevant API functions
 		getFourSquare();
-		// getWiki();
 
 		// If there is animation, set it to none, else
 		// set it to the bounce animation
@@ -453,10 +377,12 @@ var ViewModel = function() {
 			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 			$.ajax({
+
 				dataType: "jsonp",
 				url: foursquareVenuesURL
 
 			}).done(function(data){
+
 				console.log(data);
 
 				var foursquareVenueResponseArray = data.response.groups[0].items;
