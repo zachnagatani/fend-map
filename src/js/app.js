@@ -15,6 +15,20 @@ Refactor code?
 Create infowindows in only one spot?
 */
 
+/*
+
+TODO:
+1. Responsiveness
+2. Make filter "error free"
+3. Proper use of KO. Don't update the DOM manually
+4. All API's are retrieved ASYNC
+5. Error handling for google maps
+6. Finalize design for infoWindows
+7. README
+8. Comments
+
+*/
+
 
 // var Location = function (data){
 
@@ -128,6 +142,8 @@ var ViewModel = function() {
 	// Create empty string Observable for search functioniality
 	this.query = ko.observable('');
 
+	this.userAddress = ko.observable();
+
 	// Live search for filtering list and markers
 	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 	this.search = function(value){
@@ -190,6 +206,9 @@ var ViewModel = function() {
 	this.infoWindowNode = document.getElementById('infoWindowNode');
 	this.infoWindowHeader = document.getElementById('infoWindowHeader');
 
+	// Observable to update the header of IW
+	this.venueName = ko.observable();
+
 	// Functionality to open navbar on mobile
 	this.openNav = function(){
 
@@ -231,23 +250,34 @@ var ViewModel = function() {
 
 	// console.log(itemIndexes);
 
+	this.venuePrice = ko.observable();
+	this.foursquareLocation = ko.observable();
+	this.foursquareWebsite = ko.observable();
+	this.foursquareContact = ko.observable();
+	this.foursquareStatus = ko.observable();
+	this.foursquareRating = ko.observable();
+	this.foursquareLink = document.getElementById('foursquareLink');
+
 	// Open the instance of InfoWindow from a listItem
 	this.openInfoWindow = function(index){
 
+		self.infoWindowNode.style.display = "block";
 		// Remove the location's name from the infoWindow
-		$("#infoWindowName").remove();
+		// $("#infoWindowName").remove();
 
 		// Grab the index of the clicked list item
 		// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
 		var listItemIndex = index;
 
 		// Grab the name of the location from the model
-		var listItemName = foursquareVenues[listItemIndex].name;
+
+		// Update the IW header via data-bind
+		self.venueName(foursquareVenues[listItemIndex].name);
 
 		// Set the textContent of the infoWindowName to match the location name
 		// The index of the li will always match the index of the locationData
-		self.infoWindowName.textContent = listItemName;
-		self.infoWindowHeader.appendChild(self.infoWindowName);
+		// self.infoWindowName.textContent = listItemName;
+		// self.infoWindowHeader.appendChild(self.infoWindowName);
 
 		// Open the infoWindow on our map and over the correct marker
 		// The index of the li will always match the index of the allMarkers array
@@ -271,15 +301,15 @@ var ViewModel = function() {
 				// Log the data for testing
 				console.log(data);
 
-				$('#infoWindowContentContainer').remove();
-				$('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
+				// $('#infoWindowContentContainer').remove();
+				// $('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
 
 				// If no venue key exists in the response, let the user
 				// that no Foursquare data exists for the location
 				if(!("venue" in data.response)) {
 
 					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
+					$('#infoWindowContentContainer').empty();
 
 					// Error message
 					$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
@@ -293,17 +323,14 @@ var ViewModel = function() {
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
 
 					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
-					$('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
+					self.venuePrice(venueInfo.attributes.groups[0].summary);
 
-					// Append the address from 4sq to the infoWindow
-					$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+					self.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 
-					// Append the website from 4sq to the infoWindow
-					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+					self.foursquareLink.href = venueInfo.url;
 
-					$('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
+					self.foursquareContact(venueInfo.contact.formattedPhone);
 
 					// Append the first image from 4sq to the infoWindow
 					// $('#infoWindowContentContainer').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
@@ -316,10 +343,10 @@ var ViewModel = function() {
 
 					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					$('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
+					self.foursquareStatus(venueInfo.hours.status);
 
 					if(venueInfo.rating != undefined) {
-						$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+						self.foursquareRating(venueInfo.rating);
 					}
 
 					$('#foursquareRating').css({
@@ -332,7 +359,7 @@ var ViewModel = function() {
 			}).fail(function(){
 
 				// Remove any previous 4sq info from the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+				$('#infoWindowContentContainer').empty();
 
 				//Error message
 				$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
@@ -455,7 +482,10 @@ var ViewModel = function() {
 					})();
 
 				var typeSearchLabel = document.getElementById('typeSearchLabel')
-				typeSearchLabel.textContent = typeSearchLabel.textContent + userCity + ":";
+				// typeSearchLabel.textContent = typeSearchLabel.textContent + userCity + ":";
+
+				// Set the value of self.userAddress to the address inputed
+				self.userAddress(userCity);
 
 			});
 

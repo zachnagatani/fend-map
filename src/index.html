@@ -43,7 +43,7 @@
 				<!-- Search Form -->
 				<form class="searchForm">
 
-					<label id="typeSearchLabel" for="searchField">Search For Food In </label><br>
+					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress"></small></label><br>
 
 					<i class="fa fa-search" aria-hidden="true"></i>
 					<input class="searchField" type="text" placeholder="Where're you goin?" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
@@ -74,7 +74,30 @@
 
 		<!-- Div to contain infoWindow data -->
 		<div id="infoWindowNode" class="infoWindowNode">
-			<div id="infoWindowHeader" class="infoWindowHeader">
+			<div id="infoWindowHeader" class="infoWindowHeader" data-bind="text: venueName">
+			</div>
+			<div id="infoWindowContentContainer" class="infoWindowContentContainer">
+
+				<h3 id='foursquarePrice' class='foursquarePrice' data-bind="text: venuePrice"></h3>
+
+				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
+
+				<!-- WHY YOU NO WORK MR ANCHOR?! -->
+				<a target='_blank' id='foursquareLink' class='foursquareLink' href='#'>Visit Website</a>
+
+				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
+
+				<p id='foursquareStatus' class='foursquareStatus' data-bind='text: foursquareStatus'></p>
+
+				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+
+
+
+
+
+
+
+
 			</div>
 		</div>
 
