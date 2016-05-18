@@ -1,3 +1,73 @@
+// Create one global instance if InfoWindow
+// This allows the infoWindow to auto close upon a different
+// location being selected
+var infoWindow = new google.maps.InfoWindow({
+		    	content: infoWindowNode
+});
+
+// http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html
+google.maps.event.addListener(infoWindow, 'domready', function() {
+
+   // Reference to the DIV which receives the contents of the infowindow using jQuery
+   var iwOuter = $('.gm-style-iw');
+
+   /* The DIV we want to change is above the .gm-style-iw DIV.
+    * So, we use jQuery and create a iwBackground variable,
+    * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+    */
+   var iwBackground = iwOuter.prev();
+
+   // Remove the background shadow DIV
+   iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+   // Remove the white background DIV
+   iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+   iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px', 'z-index' : '1'});
+
+
+   // iwOuter.parent().parent().css({left: '115px'});
+
+   iwBackground.children(':nth-child(3)').find('div').children().css({'z-index' : '1'});
+
+   // Taking advantage of the already established reference to
+	// div .gm-style-iw with iwOuter variable.
+	// You must set a new variable iwCloseBtn.
+	// Using the .next() method of JQuery you reference the following div to .gm-style-iw.
+	// Is this div that groups the close button elements.
+	var iwCloseBtn = iwOuter.next();
+
+	var iwCloseBtnX = iwCloseBtn.next();
+
+	// Apply the desired effect to the close button
+	iwCloseBtn.css({
+	  width: "25px",
+	  height: "25px",
+	  opacity: '1', // by default the close button has an opacity of 0.7
+	  right: '-75px', top: '6px', // button repositioning
+	  border: '1px solid #019CDE', // increasing button border and new color
+	  'border-radius': '13px', // circular effect
+	  'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
+	  background: '#fff'
+	  });
+
+	// Hide Image Used By Default for X in close button
+	iwCloseBtn.children(':nth-child(1)').css({
+		top: '-330px',
+		left: '3px'
+	});
+
+	// The API automatically applies 0.7 opacity to the button after the mouseout event.
+	// This function reverses this event to the desired value.
+	iwCloseBtn.mouseout(function(){
+	  $(this).css({opacity: '1'});
+	});
+
+
+});
+
+
+// KO ViewModel
 var ViewModel = {
 
 	foursquareVenues: ko.observableArray([]),
@@ -63,10 +133,6 @@ var ViewModel = {
 
 	},
 
-	infoWindowNode: document.getElementById('infoWindowNode'),
-
-	infoWindowHeader: document.getElementById('infoWindowHeader'),
-
 	venueName: ko.observable(),
 
 	openNav: function() {
@@ -99,6 +165,10 @@ var ViewModel = {
 	foursquareContact: ko.observable(),
 	foursquareStatus: ko.observable(),
 	foursquareRating: ko.observable(),
+
+	infoWindowNode: document.getElementById('infoWindowNode'),
+
+	infoWindowHeader: document.getElementById('infoWindowHeader'),
 
 	openInfoWindow: function(index) {
 
@@ -169,7 +239,7 @@ var ViewModel = {
 
 					ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 
-					ViewModel.foursquareLink.href = venueInfo.url;
+					document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 
 					ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 
@@ -296,7 +366,7 @@ var ViewModel = {
 
 	}
 
-}
+} //ViewModel Closing Brace
 
 ko.applyBindings(ViewModel);
 

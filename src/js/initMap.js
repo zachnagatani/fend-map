@@ -50,9 +50,9 @@ function initMap(){
 
 };
 
-document.getElementById('introSearchButton').addEventListener('click', function(){
-	ViewModel.introSearch();
-});
+// document.getElementById('introSearchButton').addEventListener('click', function(){
+// 	ViewModel.introSearch();
+// });
 
 function createMarkers(){
 
