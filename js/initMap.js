@@ -50,6 +50,10 @@ function initMap(){
 
 };
 
+// document.getElementById('introSearchButton').addEventListener('click', function(){
+// 	ViewModel.introSearch();
+// });
+
 function createMarkers(){
 
 	// Grab the infowWindow div from the DOM

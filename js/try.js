@@ -1,44 +1,3 @@
-/* TODO: DONE
-1. Add full-screen map to the page. Check out resume tool and
-cross worship center.!
-2. Add markers. Check out resume project (I added markers there before)!
-3. Create a list with those markers' locations. Check out cat-clicker!
-4. Filter option.. figure that out
-5. Use others API's to provide info for the markers. Check ajax moving helper project (wikipedia/nytimes info)
-6. Animations. Find animation libraries to handle this?
-7. Error handling. Check out the ajax moving helper project again for .fail() with jquery ajax/getJSON
-*/
-
-/*
-Cache ajax requests so they only need to be loaded once?
-Refactor code?
-Create infowindows in only one spot?
-*/
-
-/*
-
-TODO:
-1. Responsiveness
-2. Make filter "error free"
-3. Proper use of KO. Don't update the DOM manually
-4. All API's are retrieved ASYNC
-5. Error handling for google maps
-6. Finalize design for infoWindows
-7. README
-8. Comments
-
-*/
-
-
-// var Location = function (data){
-
-// 	this.name = ko.observable(data.name);
-// 	this.lat = ko.observable(data.lat);
-// 	this.lng = ko.observable(data.lng);
-
-// };
-
-
 // Create one global instance if InfoWindow
 // This allows the infoWindow to auto close upon a different
 // location being selected
@@ -107,38 +66,23 @@ google.maps.event.addListener(infoWindow, 'domready', function() {
 
 });
 
+
 // KO ViewModel
-var ViewModel = function() {
+var ViewModel = {
 
-	// Allow for easy access to 'this' aka the ViewModel itself
-	var self = this;
+	foursquareVenues: ko.observableArray([]),
 
+	foursquareVenuesList: ko.observableArray([foursquareVenues]),
 
-// Not using square brackets might have been issue in search for loop for location
+	markerList: ko.observableArray([allMarkers]),
 
-	// Push this.locations into Observable Array
-	this.locationList = ko.observableArray(this.locations);
+	query: ko.observable(''),
 
-	this.foursquareVenues = ko.observableArray([]);
+	subscribeToSearch: function() {
+		ViewModel.query.subscribe(ViewModel.search);
+	},
 
-	// Push locationData from model.js into OA
-	this.locationData = ko.observableArray(locationData);
-
-	this.foursquareVenuesList = ko.observableArray([foursquareVenues]);
-
-	// Push global marker array into OA
-	this.markerList = ko.observableArray([allMarkers]);
-
-	// Create empty string Observable for search functioniality
-	this.query = ko.observable('');
-
-	this.userAddress = ko.observable();
-
-	// Live search for filtering list and markers
-	// http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
-	this.search = function(value){
-
-
+	search: function() {
 		// Marker functionality must be before the list filtering... for some reason
 		// TODO: Figure out why ^^^
 
@@ -151,9 +95,9 @@ var ViewModel = function() {
 
 		// If the marker.title matches the query, set the map to map (global map variable)
 		// thus displaying the marker on the page
-		for(var x in allMarkers) {
+		for (var x in allMarkers) {
 
-			if(allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if (allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				allMarkers[x].setMap(map);
 
@@ -162,6 +106,7 @@ var ViewModel = function() {
 		}
 
 		// Grab the listItems from the DOM and store in array
+		// TODO: Maybe move out of function. Analyze and optimize if needed
 		var listItemsList = document.getElementsByClassName('listItem');
 
 		// Set each listItem's display property to none, removing them
@@ -174,10 +119,10 @@ var ViewModel = function() {
 
 		// Loop through the listItemsList and add them back to the view
 		// if they match the search query entered by the user
-		for(var i in listItemsList) {
+		for (var i in listItemsList) {
 
 
-			if(foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			if (foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 				// Match the display for the class .listItem in style.css
 				listItemsList[i].style.display = "flex";
@@ -186,72 +131,48 @@ var ViewModel = function() {
 
 		}
 
-	};
+	},
 
-	// Run the search function whenever query is updated
-	this.query.subscribe(self.search);
+	venueName: ko.observable(),
 
-	this.infoWindowName = document.createElement('h1');
-	this.infoWindowName.id = "infoWindowName";
-	this.infoWindowNode = document.getElementById('infoWindowNode');
-	this.infoWindowHeader = document.getElementById('infoWindowHeader');
-
-	// Observable to update the header of IW
-	this.venueName = ko.observable();
-
-	// Functionality to open navbar on mobile
-	this.openNav = function(){
-
+	openNav: function() {
 		// Move the nav back into view on mobile
 		document.getElementById('listContainer').style = "left: 0";
 
 		// Push the map over to match the nav and stay in view
 		document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
+	},
 
-	};
-
-	// Functionality to close navbar on mobile
-	this.closeNav = function(){
-
+	closeNav: function() {
 		// Move the navbar out of sight
 		document.getElementById('listContainer').style = "left: -230px";
 
 		// Move the map back along with the navbar
 		document.getElementById('mapContainer').style = "transition: .25s; left: 0px";
+	},
 
-	};
-
-	this.closeNavOnSelect = function(){
-
+	closeNavOnSelect: function() {
 		// Close the nav if li is clicked on mobile
 		// Check if the width of the window is 768px (mobile)
 		if ($(window).width() < 768) {
-		   self.closeNav();
-		};
+			ViewModel.closeNav();
+		}
+	},
 
-	};
+	venuePrice: ko.observable(),
+	foursquareLocation: ko.observable(),
+	foursquareWebsite: ko.observable(),
+	foursquareContact: ko.observable(),
+	foursquareStatus: ko.observable(),
+	foursquareRating: ko.observable(),
 
-	// var itemIndexes = [];
+	infoWindowNode: document.getElementById('infoWindowNode'),
 
-	// locationData.forEach(function(location){
-	// 		var listItemIndex = locationData.indexOf(location);
-	// 		itemIndexes.push(listItemIndex);
-	// 	});
+	infoWindowHeader: document.getElementById('infoWindowHeader'),
 
-	// console.log(itemIndexes);
+	openInfoWindow: function(index) {
 
-	this.venuePrice = ko.observable();
-	this.foursquareLocation = ko.observable();
-	this.foursquareWebsite = ko.observable();
-	this.foursquareContact = ko.observable();
-	this.foursquareStatus = ko.observable();
-	this.foursquareRating = ko.observable();
-	this.foursquareLink = document.getElementById('foursquareLink');
-
-	// Open the instance of InfoWindow from a listItem
-	this.openInfoWindow = function(index){
-
-		self.infoWindowNode.style.display = "block";
+		ViewModel.infoWindowNode.style.display = "block";
 		// Remove the location's name from the infoWindow
 		// $("#infoWindowName").remove();
 
@@ -262,19 +183,19 @@ var ViewModel = function() {
 		// Grab the name of the location from the model
 
 		// Update the IW header via data-bind
-		self.venueName(foursquareVenues[listItemIndex].name);
+		ViewModel.venueName(foursquareVenues[listItemIndex].name);
 
 		// Set the textContent of the infoWindowName to match the location name
 		// The index of the li will always match the index of the locationData
-		// self.infoWindowName.textContent = listItemName;
-		// self.infoWindowHeader.appendChild(self.infoWindowName);
+		// ViewModel.infoWindowName.textContent = listItemName;
+		// ViewModel.infoWindowHeader.appendChild(ViewModel.infoWindowName);
 
 		// Open the infoWindow on our map and over the correct marker
 		// The index of the li will always match the index of the allMarkers array
 		infoWindow.open(map, allMarkers[listItemIndex]);
 
 		// Foursquare api
-		function getFourSquare(){
+		function getFourSquare() {
 
 			// Grab the venueID for the location - necessary to access API
 			var venueID = foursquareVenues[index].id;
@@ -286,7 +207,7 @@ var ViewModel = function() {
 			$.ajax({
 				dataType: "jsonp",
 				url: foursquareURL
-			}).done(function(data){
+			}).done(function(data) {
 
 				// Log the data for testing
 				console.log(data);
@@ -296,7 +217,7 @@ var ViewModel = function() {
 
 				// If no venue key exists in the response, let the user
 				// that no Foursquare data exists for the location
-				if(!("venue" in data.response)) {
+				if (!("venue" in data.response)) {
 
 					// Remove any previous Foursquare data appended to the infoWindow
 					$('#infoWindowContentContainer').empty();
@@ -311,20 +232,21 @@ var ViewModel = function() {
 
 					// Grab the first photo of the venue in the response
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
-					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					self.venuePrice(venueInfo.attributes.groups[0].summary);
+					ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					self.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+					ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 
-					self.foursquareLink.href = venueInfo.url;
+					ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 
-					self.foursquareContact(venueInfo.contact.formattedPhone);
+					document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 
-					self.foursquareStatus(venueInfo.hours.status);
+					ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 
-					if(venueInfo.rating != undefined) {
-						self.foursquareRating(venueInfo.rating);
+					ViewModel.foursquareStatus(venueInfo.hours.status);
+
+					if (venueInfo.rating != undefined) {
+						ViewModel.foursquareRating(venueInfo.rating);
 					}
 
 					$('#foursquareRating').css({
@@ -333,8 +255,8 @@ var ViewModel = function() {
 
 				}
 
-			  // If no response, let the user know
-			}).fail(function(){
+				// If no response, let the user know
+			}).fail(function() {
 
 				// Remove any previous 4sq info from the infoWindow
 				$('#infoWindowContentContainer').empty();
@@ -344,7 +266,7 @@ var ViewModel = function() {
 
 			});
 
-		};
+		}
 
 		// Call relevant API functions
 		getFourSquare();
@@ -353,26 +275,35 @@ var ViewModel = function() {
 		// set it to the bounce animation
 		if (allMarkers[listItemIndex].getAnimation() !== null) {
 
+			allMarkers[listItemIndex].setAnimation(null);
+
+		} else {
+
+			allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
+
+			// Only bounce the pin one time
+			// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+			setTimeout(function() {
 				allMarkers[listItemIndex].setAnimation(null);
-
-			} else {
-
-				allMarkers[listItemIndex].setAnimation(google.maps.Animation.BOUNCE);
-
-				// Only bounce the pin one time
-				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
-				setTimeout(function(){ allMarkers[listItemIndex].setAnimation(null); }, 750);
+			}, 750);
 
 		}
 
-	};
+	},
 
-	this.introSearch = function() {
+	userAddress: ko.observable(),
+
+	alertMeBaby: function() {
+		var poo = "doo";
+		alert(poo);
+	},
+
+	introSearch: function() {
 
 		var introSearchInput = document.getElementById('introSearchInput');
 		userCity = introSearchInput.value;
 
-		function getFoursquareVenues(){
+		function getFoursquareVenues() {
 
 			var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
@@ -387,7 +318,7 @@ var ViewModel = function() {
 
 				var foursquareVenueResponseArray = data.response.groups[0].items;
 
-				foursquareVenueResponseArray.forEach(function(venue){
+				foursquareVenueResponseArray.forEach(function(venue) {
 
 					foursquareVenues.push(venue.venue);
 
@@ -397,47 +328,46 @@ var ViewModel = function() {
 
 				closeSearch();
 
-					(function(){
+				(function(){
 
-						foursquareVenues.forEach(function(venue){
-							self.foursquareVenues.push(venue);
-						});
+					foursquareVenues.forEach(function(venue){
+						ViewModel.foursquareVenues.push(venue);
+					});
 
-						console.log(self.foursquareVenues());
+					console.log(ViewModel.foursquareVenues());
 
-					})();
-
-				var typeSearchLabel = document.getElementById('typeSearchLabel')
-				// typeSearchLabel.textContent = typeSearchLabel.textContent + userCity + ":";
+				})();
 
 				// Set the value of self.userAddress to the address inputed
-				self.userAddress(userCity);
+				ViewModel.userAddress(userCity);
+
+				function closeSearch() {
+
+					var introSearchContainer = document.getElementById('introSearchContainer');
+
+					// Use opacity so that the div can utilize CSS transitions
+					introSearchContainer.style.opacity = "0";
+
+					// After one second, change the display to "none" so that
+					// the user can access the rest of the app
+					var displayTimeout = setTimeout(function() {
+
+						introSearchContainer.style.display = "none";
+
+					}, 1000);
+
+				}
 
 			});
-
-		};
-
-		function closeSearch() {
-
-			var introSearchContainer = document.getElementById('introSearchContainer');
-
-			// Use opacity so that the div can utilize CSS transitions
-			introSearchContainer.style.opacity = "0";
-
-			// After one second, change the display to "none" so that
-			// the user can access the rest of the app
-			var displayTimeout = setTimeout(function(){
-
-				introSearchContainer.style.display = "none";
-
-			}, 1000);
 
 		}
 
 		getFoursquareVenues();
 
-	};
+	}
 
-};
+} //ViewModel Closing Brace
 
-ko.applyBindings(new ViewModel());
+ko.applyBindings(ViewModel);
+
+ViewModel.subscribeToSearch();
