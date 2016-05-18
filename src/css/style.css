@@ -207,6 +207,7 @@ body {
 	background: #fff;
 	overflow: auto;
 	border-radius: 6px;
+	display: none;
 }
 
 .infoWindowNode a {
