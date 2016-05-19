@@ -7,49 +7,6 @@ var userCityGeocode = {};
 // Global markers array - accessible from anywhere
 var allMarkers = [];
 
-// Initialize the map on load
-function initMap(){
-
-	geocoder = new google.maps.Geocoder();
-	// Location for map to be centered on
-	// Snippet taken from: https://gist.github.com/magnificode/6113759
-	var mapCenter = {lat: 37.3036, lng: -121.8974};
-
-	// Create the map instance
-	map = new google.maps.Map(document.getElementById('mapContainer'), {
-
-		// Center it in location of choosing
-		center: mapCenter,
-		// Neighborhood level zoom
-		zoom: 14
-	});
-
-	if(geocoder) {
-		geocoder.geocode({'address': userCity}, function(results, status){
-			if(status == google.maps.GeocoderStatus.OK) {
-				if(status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-					map.setCenter(results[0].geometry.location);
-					userCityGeocode = results[0].geometry.location;
-				}
-			}
-		});
-	}
-
-	// Call createMarkers()
-	createMarkers();
-
-	// Recenter map on window resize - responsive centering
-	google.maps.event.addDomListener(window, 'resize', function() {
-    	map.setCenter(userCityGeocode);
-	});
-
-	// Recenter map on window resize - responsive centering
-	google.maps.event.addDomListener(window, 'scroll', function() {
-	});
-
-
-};
-
 // document.getElementById('introSearchButton').addEventListener('click', function(){
 // 	ViewModel.introSearch();
 // });
@@ -178,89 +135,89 @@ function createMarkers(){
 		// };
 
 		// Foursquare api
-		function getFourSquare(){
+		// function getFourSquare(){
 
-			// Grab the venueID for the location - necessary to access API
-			var venueID = location.id;
+		// 	// Grab the venueID for the location - necessary to access API
+		// 	var venueID = location.id;
 
-			// Create the proper URL for the Foursquare API according to the docs
-			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+		// 	// Create the proper URL for the Foursquare API according to the docs
+		// 	var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 
-			// Request data
-			$.ajax({
-				dataType: "jsonp",
-				url: foursquareURL
-			}).done(function(data){
+		// 	// Request data
+		// 	$.ajax({
+		// 		dataType: "jsonp",
+		// 		url: foursquareURL
+		// 	}).done(function(data){
 
-				// Log the data for testing
-				console.log(data);
+		// 		// Log the data for testing
+		// 		console.log(data);
 
-				$('#infoWindowContentContainer').remove();
-				$('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
+		// 		$('#infoWindowContentContainer').remove();
+		// 		$('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
 
-				// If no venue key exists in the response, let the user
-				// that no Foursquare data exists for the location
-				if(!("venue" in data.response)) {
+		// 		// If no venue key exists in the response, let the user
+		// 		// that no Foursquare data exists for the location
+		// 		if(!("venue" in data.response)) {
 
-				// Remove any previous Foursquare data appended to the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
+		// 		// Remove any previous Foursquare data appended to the infoWindow
+		// 		$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
 
-				// Error message
-				$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
+		// 		// Error message
+		// 		$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
-				} else {
+		// 		} else {
 
-					// Grab the venue from the response info for reasy access
-					var venueInfo = data.response.venue;
+		// 			// Grab the venue from the response info for reasy access
+		// 			var venueInfo = data.response.venue;
 
-					// Grab the first photo of the venue in the response
-					var photoGrab = data.response.venue.photos.groups[0].items[0];
+		// 			// Grab the first photo of the venue in the response
+		// 			var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-					// Remove any previous Foursquare data appended to the infoWindow
-					$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+		// 			// Remove any previous Foursquare data appended to the infoWindow
+		// 			$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
-					$('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
+		// 			$('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
 
-					// Append the address from 4sq to the infoWindow
-					$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
+		// 			// Append the address from 4sq to the infoWindow
+		// 			$('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
 
-					// Append the website from 4sq to the infoWindow
-					$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
+		// 			// Append the website from 4sq to the infoWindow
+		// 			$('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
 
-					$('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
+		// 			$('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
 
-					// Append the first image from 4sq to the infoWindow
-					// $('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
+		// 			// Append the first image from 4sq to the infoWindow
+		// 			// $('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
 
-					infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+		// 			infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					$('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
+		// 			$('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
 
-					if(venueInfo.rating != undefined) {
-						$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
-					}
+		// 			if(venueInfo.rating != undefined) {
+		// 				$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
+		// 			}
 
-					$('#foursquareRating').css({
-						background: '#' + venueInfo.ratingColor
-					});
+		// 			$('#foursquareRating').css({
+		// 				background: '#' + venueInfo.ratingColor
+		// 			});
 
-				}
+		// 		}
 
-			  // If no response, let the user know
-			}).fail(function(){
+		// 	  // If no response, let the user know
+		// 	}).fail(function(){
 
-				// Remove any previous 4sq info from the infoWindow
-				$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+		// 		// Remove any previous 4sq info from the infoWindow
+		// 		$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
 
-				//Error message
-				$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
+		// 		//Error message
+		// 		$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 
-			});
+		// 	});
 
-			// getWiki();
+		// 	// getWiki();
 
-		};
+		// };
 
 		// https://developers.google.com/maps/documentation/javascript/markers#animate
 		// Animate marker when selected
@@ -286,9 +243,11 @@ function createMarkers(){
 		// Add click event to each marker that calls relevant functions
 		marker.addListener('click', function(){
 
-			createInfoWindow();
+			// createInfoWindow();
 
-			getFourSquare();
+			// getFourSquare();
+
+			ViewModel.openInfoWindow();
 
 			toggleBounce();
 
