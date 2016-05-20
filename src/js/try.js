@@ -185,7 +185,7 @@ var ViewModel = {
 		// Grab the name of the location from the model
 
 		// Update the IW header via data-bind
-		ViewModel.venueName(ViewModel.foursquareVenues()[0].name);
+		ViewModel.venueName(ViewModel.foursquareVenues()[listItemIndex].name);
 
 		// Set the textContent of the infoWindowName to match the location name
 		// The index of the li will always match the index of the locationData
@@ -194,13 +194,13 @@ var ViewModel = {
 
 		// Open the infoWindow on our map and over the correct marker
 		// The index of the li will always match the index of the allMarkers array
-		infoWindow.open(map, allMarkers[0]);
+		infoWindow.open(map, allMarkers[listItemIndex]);
 
 		// Foursquare api
 		function getFourSquare() {
 
 			// Grab the venueID for the location - necessary to access API
-			var venueID = ViewModel.foursquareVenues()[0].id;
+			var venueID = ViewModel.foursquareVenues()[listItemIndex].id;
 
 			// Create the proper URL for the Foursquare API according to the docs
 			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
