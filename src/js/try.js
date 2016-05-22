@@ -82,7 +82,7 @@ var ViewModel = {
 		ViewModel.query.subscribe(ViewModel.search);
 	},
 
-	search: function() {
+	search: function(value) {
 		// Marker functionality must be before the list filtering... for some reason
 		// TODO: Figure out why ^^^
 
