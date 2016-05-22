@@ -1,4 +1,10 @@
 // KO ViewModel
+
+// Wait for window load
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
 function googleMapsTimeout() {
 
 	var googleMapsTimeout = setTimeout(function() {
@@ -12,7 +18,7 @@ function googleMapsTimeout() {
 	}, 5000);
 }
 
-googleMapsTimeout();
+// googleMapsTimeout();
 
 // if(typeof google === 'object' && typeof google.maps === 'object') {
 // 		document.getElementById('loaderWrapper').style.display="none";
