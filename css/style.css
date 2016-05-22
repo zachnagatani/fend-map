@@ -94,6 +94,7 @@ body {
 	/* Give the nav a small margin from the left of the screen */
 	/*left: 20px;*/
 	z-index: 10;
+	margin-left: 20px;
 	/* Map container stretches down an extra 27px
 	Use calc to offset this */
 	width: 230px;
@@ -175,6 +176,7 @@ body {
 	.listContainer {
 		position: absolute;
 		top: 200px;
+		margin-left: 0;
 		/*left: -230px;*/
 		z-index: 0;
 		height: 100%;
@@ -320,6 +322,7 @@ body {
 .infoWindowHeader {
 	background: #019CDE;
 	color: #fff;
+	font-size: 2em;
 }
 
 .infoWindowContentContainer {
