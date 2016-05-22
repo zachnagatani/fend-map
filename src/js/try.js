@@ -141,6 +141,8 @@ var ViewModel = {
 
 	closeNavButton: document.getElementById('closeNav'),
 
+	searchSection: document.getElementById('searchSection'),
+
 	openNav: function() {
 		// Move the nav back into view on mobile
 		// ViewModel.listContainer.style.display = "block";
@@ -150,15 +152,20 @@ var ViewModel = {
 		ViewModel.openNavButton.style.display = "none";
 		ViewModel.closeNavButton.style.display = "block";
 
-
+		ViewModel.searchSection.style.zIndex = "3";
+		ViewModel.searchSection.style.opacity = "1";
 
 		// Push the map over to match the nav and stay in view
 		// document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
 	},
 
 	closeNav: function() {
+
 		ViewModel.listContainer.style.zIndex = "0";
 		ViewModel.listContainer.style.opacity = "0";
+
+		ViewModel.searchSection.style.zIndex = "0";
+		ViewModel.searchSection.style.opacity = "0";
 
 		ViewModel.closeNavButton.style.display = "none";
 		ViewModel.openNavButton.style.display = "block";
