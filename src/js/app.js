@@ -311,17 +311,66 @@ var ViewModel = function() {
 
 					// Grab the first photo of the venue in the response
 					var photoGrab = data.response.venue.photos.groups[0].items[0];
-					self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					self.venuePrice(venueInfo.attributes.groups[0].summary);
+					if(photoGrab){
 
-					self.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+						self.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
-					self.foursquareLink.href = venueInfo.url;
+					} else {
 
-					self.foursquareContact(venueInfo.contact.formattedPhone);
+						self.infoWindowNode.style.background = "#fff";
+					}
 
-					self.foursquareStatus(venueInfo.hours.status);
+
+					if(venueInfo.attributes.groups[0].summary) {
+
+						self.venuePrice(venueInfo.attributes.groups[0].summary);
+
+					} else {
+
+						self.venuePrice(null);
+
+					}
+
+					if(venueInfo.location.address && venueInfo.location.city && venueInfo.location.state) {
+
+						self.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+
+					} else {
+
+						self.foursquareLocation(null);
+
+					}
+
+					if(venueInfo.url) {
+
+						self.foursquareLink.href = venueInfo.url;
+
+					} else {
+
+						self.foursquareLink.href = '#';
+
+					}
+
+					if(venueInfo.contact.formattedPhone) {
+
+						self.foursquareContact(venueInfo.contact.formattedPhone);
+
+					} else {
+
+						self.foursquareContact(null);
+
+					}
+
+					if(venueInfo.hours) {
+
+						self.foursquareStatus(venueInfo.hours.status);
+
+					} else {
+
+						self.foursquareStatus(null);
+
+					}
 
 					if(venueInfo.rating != undefined) {
 						self.foursquareRating(venueInfo.rating);
