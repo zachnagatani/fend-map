@@ -46,6 +46,8 @@ body {
 	position: fixed;
 	top: 50px;
 	z-index: 10;
+	/*erase when done*/
+	display: none;
 }
 
 .searchContainer {
@@ -89,7 +91,7 @@ body {
 .listContainer {
 	position: absolute;
 	/* Give the nav a small margin from the left of the screen */
-	left: 20px;
+	/*left: 20px;*/
 	z-index: 10;
 	/* Map container stretches down an extra 27px
 	Use calc to offset this */
@@ -138,6 +140,55 @@ body {
 .locationList li:hover {
 	background: #fff;
 	color: #333;
+}
+
+@media screen and (max-width: 1000px) {
+
+	.openNav {
+		display: block;
+		position: absolute;
+		z-index: 3;
+		padding: 10px;
+		font-size: 30px;
+		background: rgba(1,156,222,.75);
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.closeNav {
+		display: block;
+		position: absolute;
+		z-index: 3;
+		font-size: 30px;
+		background: transparent;
+		color: #fff;
+		cursor: pointer;
+		width: 46.95px;
+		height: 60px;
+		line-height: 60px;
+		text-align: center;
+	}
+
+	.listContainer {
+		position: absolute;
+		/*left: -230px;*/
+		z-index: 0;
+		height: 100%;
+		width: 100%;
+		background: rgba(255,255,255, .75);
+		color: #f0f0f0;
+		display: table;
+		/*display: none;*/
+		opacity: 0;
+		transition: .5s;
+	}
+
+	.locationList {
+		height: 100%;
+		/*figure out proper padding*/
+		padding-right: 0;
+	}
+
 }
 
 /*@media screen and (max-width: 768px) {
@@ -343,7 +394,15 @@ body {
 	}
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
+
+	.introSearchContainer {
+		align-items: center;
+	}
+
+	.introFlex {
+		margin-top: 0;
+	}
 
 	.introSearchInput {
 		width: 100%;

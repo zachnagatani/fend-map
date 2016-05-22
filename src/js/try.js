@@ -135,20 +135,34 @@ var ViewModel = {
 
 	venueName: ko.observable(),
 
+	listContainer: document.getElementById('listContainer'),
+
+	openNavButton: document.getElementById('openNav'),
+
+	closeNavButton: document.getElementById('closeNav'),
+
 	openNav: function() {
 		// Move the nav back into view on mobile
-		document.getElementById('listContainer').style = "left: 0";
+		// ViewModel.listContainer.style.display = "block";
+		ViewModel.listContainer.style.zIndex = "2";
+		ViewModel.listContainer.style.opacity = "1";
+
+		ViewModel.openNavButton.style.display = "none";
+		ViewModel.closeNavButton.style.display = "block";
+
+
 
 		// Push the map over to match the nav and stay in view
-		document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
+		// document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
 	},
 
 	closeNav: function() {
-		// Move the navbar out of sight
-		document.getElementById('listContainer').style = "left: -230px";
+		ViewModel.listContainer.style.zIndex = "0";
+		ViewModel.listContainer.style.opacity = "0";
 
-		// Move the map back along with the navbar
-		document.getElementById('mapContainer').style = "transition: .25s; left: 0px";
+		ViewModel.closeNavButton.style.display = "none";
+		ViewModel.openNavButton.style.display = "block";
+
 	},
 
 	closeNavOnSelect: function() {
@@ -318,7 +332,9 @@ var ViewModel = {
 			// Center it in location of choosing
 			center: mapCenter,
 			// Neighborhood level zoom
-			zoom: 14
+			zoom: 14,
+
+			mapTypeControl: false
 		});
 
 		if(geocoder) {
@@ -658,7 +674,7 @@ var ViewModel = {
 
 		getFoursquareVenues();
 
-	}
+	},
 
 } //ViewModel Closing Brace
 
