@@ -275,18 +275,18 @@ var ViewModel = {
 
 		// If there is animation, set it to none, else
 		// set it to the bounce animation
-		if (allMarkers[0].getAnimation() !== null) {
+		if (allMarkers[index].getAnimation() !== null) {
 
-			allMarkers[0].setAnimation(null);
+			allMarkers[index].setAnimation(null);
 
 		} else {
 
-			allMarkers[0].setAnimation(google.maps.Animation.BOUNCE);
+			allMarkers[index].setAnimation(google.maps.Animation.BOUNCE);
 
 			// Only bounce the pin one time
 			// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
 			setTimeout(function() {
-				allMarkers[0].setAnimation(null);
+				allMarkers[index].setAnimation(null);
 			}, 750);
 
 		}
@@ -499,15 +499,9 @@ var ViewModel = {
 					// Log the data for testing
 					console.log(data);
 
-					// $('#infoWindowContentContainer').remove();
-					// $('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
-
 					// If no venue key exists in the response, let the user
 					// that no Foursquare data exists for the location
 					if(!("venue" in data.response)) {
-
-					// Remove any previous Foursquare data appended to the infoWindow
-					// $('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus').remove();
 
 					// Remove any previous Foursquare data appended to the infoWindow
 					$('#infoWindowContentContainer').empty();
@@ -542,38 +536,6 @@ var ViewModel = {
 						$('#foursquareRating').css({
 							background: '#' + venueInfo.ratingColor
 						});
-
-
-
-
-
-						// Remove any previous Foursquare data appended to the infoWindow
-						// $('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
-
-						// $('#infoWindowContentContainer').append("<h3 id='foursquarePrice' class='foursquarePrice'>" + venueInfo.attributes.groups[0].summary + "</h3>");
-
-						// // Append the address from 4sq to the infoWindow
-						// $('#infoWindowContentContainer').append("<h2 id='foursquareLocation'>" + venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state + "</h2>");
-
-						// // Append the website from 4sq to the infoWindow
-						// $('#infoWindowContentContainer').append("<a target='_blank' id='foursquareLink' class='foursquareLink' href='" + venueInfo.url + "'>" + "Visit Website</a>");
-
-						// $('#infoWindowContentContainer').append("<p id='foursquareContact' class='foursquareContact'>" + venueInfo.contact.formattedPhone + "</p>");
-
-						// // Append the first image from 4sq to the infoWindow
-						// // $('#infoWindowNode').append("<img id='foursquareImg' class='infoWindowImg' src='" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "'>");
-
-						// infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
-
-						// $('#infoWindowContentContainer').append("<p id='foursquareStatus' class='foursquareStatus'>" + venueInfo.hours.status + "</p>");
-
-						// if(venueInfo.rating != undefined) {
-						// 	$('#infoWindowContentContainer').append("<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: " + "<span id='foursquareRating' class='foursquareRating'>" + venueInfo.rating + "</span></h3>");
-						// }
-
-						// $('#foursquareRating').css({
-						// 	background: '#' + venueInfo.ratingColor
-						// });
 
 					}
 
