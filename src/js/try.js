@@ -419,6 +419,9 @@ var ViewModel = {
 				// infoWindowHeader.appendChild(infoWindowName);
 
 				// Open the infoWindow on our map and over the correct marker
+
+				ViewModel.infoWindowNode.style.display = "block";
+
 				infoWindow.open(map, marker);
 			};
 
