@@ -45,10 +45,10 @@
 				<!-- Search Form -->
 				<form class="searchForm">
 
-					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress"></small></label><br>
+					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress" class="addressText"></small></label><br>
 
 					<i class="fa fa-search" aria-hidden="true"></i>
-					<input class="searchField" type="text" placeholder="Where're you goin?" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					<input class="searchField" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
 				</form>
 			</div>
