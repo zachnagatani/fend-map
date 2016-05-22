@@ -37,6 +37,8 @@
 
 		<!-- Button to open nav on mobile -->
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
+		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+
 
 		<section id ="searchSection" class="searchSection">
 			<div class="searchContainer">
@@ -56,8 +58,6 @@
 
 		<!-- Navigation container -->
 		<nav id="listContainer" class="listContainer">
-
-			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 
 			<!-- List of Locations -->
 			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
