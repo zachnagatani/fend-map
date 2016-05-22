@@ -11,6 +11,49 @@ var allMarkers = [];
 // 	ViewModel.introSearch();
 // });
 
+// Initialize the map on load
+function initMap(){
+
+	geocoder = new google.maps.Geocoder();
+	// Location for map to be centered on
+	// Snippet taken from: https://gist.github.com/magnificode/6113759
+	var mapCenter = {lat: 37.3036, lng: -121.8974};
+
+	// Create the map instance
+	map = new google.maps.Map(document.getElementById('mapContainer'), {
+
+		// Center it in location of choosing
+		center: mapCenter,
+		// Neighborhood level zoom
+		zoom: 14
+	});
+
+	if(geocoder) {
+		geocoder.geocode({'address': userCity}, function(results, status){
+			if(status == google.maps.GeocoderStatus.OK) {
+				if(status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+					map.setCenter(results[0].geometry.location);
+					userCityGeocode = results[0].geometry.location;
+				}
+			}
+		});
+	}
+
+	// Call createMarkers()
+	ViewModel.createMarkers();
+
+	// Recenter map on window resize - responsive centering
+	google.maps.event.addDomListener(window, 'resize', function() {
+    	map.setCenter(userCityGeocode);
+	});
+
+	// Recenter map on window resize - responsive centering
+	google.maps.event.addDomListener(window, 'scroll', function() {
+	});
+
+
+}
+
 function createMarkers(){
 
 	// Grab the infowWindow div from the DOM

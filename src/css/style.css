@@ -140,7 +140,7 @@ body {
 	color: #333;
 }
 
-@media screen and (max-width: 768px) {
+/*@media screen and (max-width: 768px) {
 
 	.openNav {
 		display: block;
@@ -198,7 +198,7 @@ body {
 		width: 115px;
 	}
 
-}
+}*/
 
 /* InfoWindow Styles */
 
@@ -335,4 +335,22 @@ body {
 .introSearchButton:hover {
 	background: #016D9B;
 	transition: .5s;
+}
+
+@media screen and (max-width: 1160px) {
+	.introSearchInput {
+		width: 300px;
+	}
+}
+
+@media screen and (max-width: 760px) {
+
+	.introSearchInput {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	.introSearchButton {
+		width: 100%;
+	}
 }
