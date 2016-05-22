@@ -19,8 +19,8 @@ Create infowindows in only one spot?
 
 TODO:
 1. Responsiveness
-2. Make filter "error free"
-3. Proper use of KO. Don't update the DOM manually
+- 2. Make filter "error free." The only error is if a venue doesn't have a categories property
+ - 3. Proper use of KO. Don't update the DOM manually
 4. All API's are retrieved ASYNC
 5. Error handling for google maps
 6. Finalize design for infoWindows
