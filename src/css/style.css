@@ -148,8 +148,11 @@ body {
 	.openNav {
 		display: block;
 		position: absolute;
-		z-index: 3;
-		padding: 10px;
+		z-index: 4;
+		line-height: 60px;
+		text-align: center;
+		height: 60px;
+		width: 60px;
 		font-size: 30px;
 		background: rgba(1,156,222,.75);
 		color: #fff;
@@ -157,14 +160,13 @@ body {
 	}
 
 	.closeNav {
-		display: block;
 		position: absolute;
-		z-index: 3;
+		z-index: 4;
 		font-size: 30px;
-		background: transparent;
+		background: rgba(1,156,222,.75);
 		color: #fff;
 		cursor: pointer;
-		width: 46.95px;
+		width: 60px;
 		height: 60px;
 		line-height: 60px;
 		text-align: center;

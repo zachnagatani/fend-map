@@ -152,7 +152,7 @@ var ViewModel = {
 		ViewModel.openNavButton.style.display = "none";
 		ViewModel.closeNavButton.style.display = "block";
 
-		ViewModel.searchSection.style.zIndex = "2";
+		ViewModel.searchSection.style.zIndex = "3";
 		ViewModel.searchSection.style.opacity = "1";
 
 		// Push the map over to match the nav and stay in view
