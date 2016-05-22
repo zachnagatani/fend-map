@@ -220,7 +220,11 @@ body {
 	}
 
 	.searchForm label {
-		font-size: 1.5em;
+		font-size: 1em;
+	}
+
+	.addressText {
+		font-size: 1em;
 	}
 
 	.searchField {
