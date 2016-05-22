@@ -1,4 +1,20 @@
 // KO ViewModel
+function googleMapsTimeout() {
+
+	var googleMapsTimeout = setTimeout(function() {
+		var loaderWrapper = document.getElementById('loaderWrapper');
+		if (typeof google === 'object' && typeof google.maps === 'object') {
+			loaderWrapper.style.opacity = "0";
+			loaderWrapper.style.zIndex = "0";
+		} else {
+			alert('This is taking longer than usual... reload the page. Homie.');
+		}
+	}, 5000);
+
+}
+
+googleMapsTimeout();
+
 function initApplication() {
 
 	// Global map variable, to allow the google maps "map" to be accessible from anywhere
@@ -17,80 +33,80 @@ function initApplication() {
 		content: infoWindowNode
 	});
 
-	function styleInfoWindow(){
+	function styleInfoWindow() {
 
 		// http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html
-	google.maps.event.addListener(infoWindow, 'domready', function() {
+		google.maps.event.addListener(infoWindow, 'domready', function() {
 
-		// Reference to the DIV which receives the contents of the infowindow using jQuery
-		var iwOuter = $('.gm-style-iw');
+			// Reference to the DIV which receives the contents of the infowindow using jQuery
+			var iwOuter = $('.gm-style-iw');
 
-		/* The DIV we want to change is above the .gm-style-iw DIV.
-		 * So, we use jQuery and create a iwBackground variable,
-		 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
-		 */
-		var iwBackground = iwOuter.prev();
+			/* The DIV we want to change is above the .gm-style-iw DIV.
+			 * So, we use jQuery and create a iwBackground variable,
+			 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+			 */
+			var iwBackground = iwOuter.prev();
 
-		// Remove the background shadow DIV
-		iwBackground.children(':nth-child(2)').css({
-			'display': 'none'
-		});
-
-		// Remove the white background DIV
-		iwBackground.children(':nth-child(4)').css({
-			'display': 'none'
-		});
-
-		iwBackground.children(':nth-child(3)').find('div').children().css({
-			'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px',
-			'z-index': '1'
-		});
-
-
-		// iwOuter.parent().parent().css({left: '115px'});
-
-		iwBackground.children(':nth-child(3)').find('div').children().css({
-			'z-index': '1'
-		});
-
-		// Taking advantage of the already established reference to
-		// div .gm-style-iw with iwOuter variable.
-		// You must set a new variable iwCloseBtn.
-		// Using the .next() method of JQuery you reference the following div to .gm-style-iw.
-		// Is this div that groups the close button elements.
-		var iwCloseBtn = iwOuter.next();
-
-		var iwCloseBtnX = iwCloseBtn.next();
-
-		// Apply the desired effect to the close button
-		iwCloseBtn.css({
-			width: "25px",
-			height: "25px",
-			opacity: '1', // by default the close button has an opacity of 0.7
-			right: '-75px',
-			top: '6px', // button repositioning
-			border: '1px solid #019CDE', // increasing button border and new color
-			'border-radius': '13px', // circular effect
-			'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
-			background: '#fff'
-		});
-
-		// Hide Image Used By Default for X in close button
-		iwCloseBtn.children(':nth-child(1)').css({
-			top: '-330px',
-			left: '3px'
-		});
-
-		// The API automatically applies 0.7 opacity to the button after the mouseout event.
-		// This function reverses this event to the desired value.
-		iwCloseBtn.mouseout(function() {
-			$(this).css({
-				opacity: '1'
+			// Remove the background shadow DIV
+			iwBackground.children(':nth-child(2)').css({
+				'display': 'none'
 			});
+
+			// Remove the white background DIV
+			iwBackground.children(':nth-child(4)').css({
+				'display': 'none'
+			});
+
+			iwBackground.children(':nth-child(3)').find('div').children().css({
+				'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px',
+				'z-index': '1'
+			});
+
+
+			// iwOuter.parent().parent().css({left: '115px'});
+
+			iwBackground.children(':nth-child(3)').find('div').children().css({
+				'z-index': '1'
+			});
+
+			// Taking advantage of the already established reference to
+			// div .gm-style-iw with iwOuter variable.
+			// You must set a new variable iwCloseBtn.
+			// Using the .next() method of JQuery you reference the following div to .gm-style-iw.
+			// Is this div that groups the close button elements.
+			var iwCloseBtn = iwOuter.next();
+
+			var iwCloseBtnX = iwCloseBtn.next();
+
+			// Apply the desired effect to the close button
+			iwCloseBtn.css({
+				width: "25px",
+				height: "25px",
+				opacity: '1', // by default the close button has an opacity of 0.7
+				right: '-75px',
+				top: '6px', // button repositioning
+				border: '1px solid #019CDE', // increasing button border and new color
+				'border-radius': '13px', // circular effect
+				'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
+				background: '#fff'
+			});
+
+			// Hide Image Used By Default for X in close button
+			iwCloseBtn.children(':nth-child(1)').css({
+				top: '-330px',
+				left: '3px'
+			});
+
+			// The API automatically applies 0.7 opacity to the button after the mouseout event.
+			// This function reverses this event to the desired value.
+			iwCloseBtn.mouseout(function() {
+				$(this).css({
+					opacity: '1'
+				});
+			});
+
+
 		});
-
-
-	});
 
 	}
 
@@ -221,7 +237,7 @@ function initApplication() {
 
 			openInfoWindow: function(index) {
 
-				// TODO: Change all the zeroes back to listItemIndex but figure out how to freaking call this thing yo! It has to do with the data-binding $index()
+				// TODO: Change all the zeroes back to index but figure out how to freaking call this thing yo! It has to do with the data-binding $index()
 
 				ViewModel.infoWindowNode.style.display = "block";
 				// Remove the location's name from the infoWindow
@@ -229,27 +245,19 @@ function initApplication() {
 
 				// Grab the index of the clicked list item
 				// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
-				var listItemIndex = index;
-
-				// Grab the name of the location from the model
 
 				// Update the IW header via data-bind
-				ViewModel.venueName(ViewModel.foursquareVenues()[listItemIndex].name);
-
-				// Set the textContent of the infoWindowName to match the location name
-				// The index of the li will always match the index of the locationData
-				// ViewModel.infoWindowName.textContent = listItemName;
-				// ViewModel.infoWindowHeader.appendChild(ViewModel.infoWindowName);
+				ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 
 				// Open the infoWindow on our map and over the correct marker
 				// The index of the li will always match the index of the allMarkers array
-				infoWindow.open(map, allMarkers[listItemIndex]);
+				infoWindow.open(map, allMarkers[index]);
 
 				// Foursquare api
 				function getFourSquare() {
 
 					// Grab the venueID for the location - necessary to access API
-					var venueID = ViewModel.foursquareVenues()[listItemIndex].id;
+					var venueID = ViewModel.foursquareVenues()[index].id;
 
 					// Create the proper URL for the Foursquare API according to the docs
 					var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
@@ -422,25 +430,6 @@ function initApplication() {
 				// Variable for looping through listList
 				var listListLength = listList.length;
 
-				// Create a new GMaps marker for each location in model.js
-				// locationData.forEach(function(location){
-
-				// 	var marker = new google.maps.Marker({
-
-				// 		// Set the position to the location's lat and lng
-				// 	    position: location.coordinates,
-
-				// 	    // Set the marker on our map
-				// 	    map: map,
-
-				// 	    // Give the marker a title matching the location name
-				// 	    title: location.name,
-
-				// 	    // No animation on load
-				// 	    animation: null,
-
-				// });
-
 				foursquareVenues.forEach(function(location) {
 
 					location.coordinates = {
@@ -468,13 +457,6 @@ function initApplication() {
 					allMarkers.push(marker);
 
 					function createInfoWindow() {
-						// Remove the location name when infoWindow is repopulated with info
-						// $("#infoWindowName").remove();
-
-						// Set the infoWindowName to the new location's name
-						// infoWindowName.textContent = location.name;
-						// Append the correct name to the infoWindow
-						// infoWindowHeader.appendChild(infoWindowName);
 
 						// Open the infoWindow on our map and over the correct marker
 
@@ -482,58 +464,6 @@ function initApplication() {
 
 						infoWindow.open(map, marker);
 					};
-
-					// WikiPedia API
-					// function getWiki(){
-					// 	// Create the correct URL from the Wikipedia API according to the docs
-					// 	var wikiURL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + location.name + "&prop=revisions&rvprop=content&format=json";
-
-					// 	// Create a timeout for error handling if no response is received within 5 seconds
-					// 	var wikiRequestTimeout = setTimeout(function(){
-					// 	       	$("#infoWindowNode").append("<h3 id='wikiTitle'>Failed to get WikiPedia sources.</h3>");
-					// 	    }, 5000);
-
-					// 	// Request the resources
-					// 	$.ajax({
-					// 		dataType: "jsonp",
-					// 		url: wikiURL
-					// 	}).done(function(data){
-
-					// 		// Log the response to the console for testing
-					// 		console.log(data);
-
-					// 		// Store the correct place of response in a variable for easy access
-					// 		var wikiObject = data.query.pages[Object.keys(data.query.pages)[0]];
-
-					// 		// Grab the title of the Wikipedia Article
-					// 		var wikiTitle = wikiObject.title;
-
-					// 		// Remove any previous title
-					// 		$('#wikiTitle').remove();
-
-					// 		// Check if wikipedia's missing key does not exist
-					// 		// If not present, link to the article, or else
-					// 		// let the user know there are no articles
-					// 		if (!("missing" in wikiObject)){
-					// 			// Success
-					// 			$('#infoWindowNode').append("<h3 id='wikiTitle'>Read All About: <a target=_blank href='https://en.wikipedia.org/wiki/" + wikiTitle + "'>" + wikiTitle + "</a>!</h3>");
-					// 		} else {
-					// 			// Error
-					// 			$("#infoWindowNode").append("<h3 id='wikiTitle'>Sorry; there are no WikiPedia articles for this location.</h3>");
-
-					// 		}
-
-					// 		// Since the request was successful, stop the
-					// 		// timeout request from above
-					//        	clearTimeout(wikiRequestTimeout);
-
-					// 	}).fail(function(data){
-
-					// 		// If no response, let the user know
-					// 		alert("Failed to get WikiPedia resources.");
-
-					// 	});
-					// };
 
 					// Foursquare api
 					function getFourSquare() {
@@ -608,8 +538,6 @@ function initApplication() {
 
 						});
 
-						// getWiki();
-
 					};
 
 					// https://developers.google.com/maps/documentation/javascript/markers#animate
@@ -641,8 +569,6 @@ function initApplication() {
 						createInfoWindow();
 
 						getFourSquare();
-
-						// ViewModel.openInfoWindow();
 
 						toggleBounce();
 
@@ -736,4 +662,4 @@ function initApplication() {
 
 	ViewModel.subscribeToSearch();
 
-} //IFFE END
+} //initApplication Closing Brace

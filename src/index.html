@@ -3,7 +3,7 @@
 
 	<head>
 
-		<title>Neighborhood Map</title>
+		<title>Feast On! | The Ultimate Feast Finder</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,17 +17,23 @@
 
 	<body>
 
+		<div id="loaderWrapper" class="loaderWrapper">
+
+			<h1>Feast On! is Loading...</h1>
+
+		</div>
+
 		<div id="introSearchContainer" class="introSearchContainer">
 
 			<div id="introFlex" class="introFlex">
 
 				<!-- <h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
 				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p> -->
-				<p>Enter Your City to Begin Your Feast</p>
+				<p>Enter an Address to Begin Your Feast</p>
 
 				<form id="introSearchForm" class="introSearchForm">
 
-					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: San Jose, CA">
+					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA">
 					<a id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</a>
 
 				</form>
