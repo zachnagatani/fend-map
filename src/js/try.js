@@ -68,8 +68,9 @@ function initApplication() {
 			});
 
 			iwBackground.children(':nth-child(3)').find('div').children().css({
-				'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px',
-				'z-index': '1'
+				'box-shadow': 'none',
+				'z-index': '1',
+				'background': 'rgba(255, 255, 255, 1)'
 			});
 
 			// iwOuter.parent().parent().css({left: '115px'});
@@ -226,13 +227,15 @@ function initApplication() {
 		closeNavOnSelect: function() {
 			// Close the nav if li is clicked on mobile
 			// Check if the width of the window is 768px (mobile)
-			if ($(window).width() < 768) {
+			var windowWidth = $(window).width();
+			if (windowWidth < 768) {
 				ViewModel.closeNav();
 			}
 		},
 
 		venuePrice: ko.observable(),
 		foursquareLocation: ko.observable(),
+		googleDirections: ko.observable(),
 		foursquareWebsite: ko.observable(),
 		foursquareContact: ko.observable(),
 		foursquareStatus: ko.observable(),
@@ -299,11 +302,15 @@ function initApplication() {
 						// Grab the first photo of the venue in the response
 						var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-						ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+						// ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
 						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 
 						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+
+						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+
+						document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
 
 						document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 
@@ -509,11 +516,15 @@ function initApplication() {
 							// Grab the first photo of the venue in the response
 							var photoGrab = data.response.venue.photos.groups[0].items[0];
 
-							ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+							// ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
 
 							ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 
 							ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+
+							var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+
+							document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
 
 							document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 

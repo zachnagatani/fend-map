@@ -72,7 +72,11 @@
 
 				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
 
-					<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+					<!-- <div id="anchorContainer" class="anchorContainer" data-bind="click: $parent.closeNavOnSelect"> -->
+
+						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+
+					<!-- </div> -->
 
 				</li>
 
@@ -88,18 +92,22 @@
 
 			<div id="infoWindowContentContainer" class="infoWindowContentContainer">
 
-				<h3 id='foursquarePrice' class='foursquarePrice' data-bind="text: venuePrice"></h3>
-
 				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
 
+				<a href="" target="_blank" id="googleDirections" class="googleDirections btn">Get Directions</a>
+
 				<!-- WHY YOU NO WORK MR ANCHOR?! -->
-				<a target='_blank' id='foursquareLink' class='foursquareLink'>Visit Website</a>
+				<a target='_blank' id='foursquareLink' class='foursquareLink btn'>Visit Website</a>
 
 				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
 
 				<p id='foursquareStatus' class='foursquareStatus' data-bind='text: foursquareStatus'></p>
 
+				<h3 id='foursquarePrice' class='foursquarePrice'>Price: <strong data-bind="text: venuePrice"></strong></h3>
+
 				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+
+				<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
 
 			</div>
 

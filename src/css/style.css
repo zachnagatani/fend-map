@@ -7,19 +7,45 @@
 	box-sizing: border-box;
 }
 
+/*h1,h2,h3,h4,h5,h6 {
+	font-family:;
+}*/
+
 html, body {
 	height: 100%;
 	width: 100%;
 	color: #333;
 }
 
+h3 {
+	font-size: 18px;
+}
+
 body {
-	font-family: 'news-goth', Helvetica, sans-serif;
+	font-family: Trebuchet, sans-serif;
 	font-size: 20px;
 }
 
 .btn {
-	border: 1px solid gray;
+	background: rgba(1,156,222, .75);
+	color: #fff;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 16px;
+	padding: 10px;
+}
+
+.btn:hover {
+	background: #016D9B;
+	transition: .5s;
+}
+
+@media screen and (max-width: 768px) {
+	.btn {
+		width: 100%;
+	}
 }
 
 /* Map Styles */
@@ -93,7 +119,7 @@ body {
 	position: absolute;
 	/* Give the nav a small margin from the left of the screen */
 	/*left: 20px;*/
-	z-index: 10;
+	z-index: 2;
 	margin-left: 20px;
 	/* Map container stretches down an extra 27px
 	Use calc to offset this */
@@ -143,6 +169,14 @@ body {
 	background: #fff;
 	color: #333;
 }
+
+/*.anchorContainer {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-itmes: center;
+	justify-content: center;
+}*/
 
 @media screen and (max-width: 1000px) {
 
@@ -310,29 +344,32 @@ body {
 	display: none;
 }
 
-.infoWindowNode a {
-	color: inherit;
-	font-weight: normal;
+.foursquareLocation {
+	margin-bottom: 20px;
 }
 
-.infoWindowNode a:hover {
+.foursquareLink, .googleDirections {
+	color: #fff;
+	font-weight: normal;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.foursquareLink:hover, .googleDirections:hover {
 	font-weight: bold;
+
 }
 
 .infoWindowHeader {
 	background: #019CDE;
 	color: #fff;
 	font-size: 2em;
+	padding: 10px;
 }
 
 .infoWindowContentContainer {
 	padding: 20px;
-	background: rgba(255,255,255,.75);
-}
-
-.foursquareLink {
-	font-size: 16px;
-	margin-top: 20px;
+	background: rgba(255,255,255,1);
 }
 
 .infoWindowImg {
@@ -353,12 +390,22 @@ body {
 }
 
 .foursquareStatus {
-	font-size: 16px;
+	font-size: 18px;
 }
 
 .foursquareContact {
 	margin: 20px 0;
 	font-size: 18px;
+}
+
+.foursquarePrice {
+	margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+	.googleDirections {
+		margin-bottom: 10px;
+	}
 }
 
 
@@ -389,6 +436,10 @@ body {
 	height: 100%;
 	background: rgba(255,255,255,1);
 	/*background: rgba(0,0,0,.9);*/
+/*	background: url('../images/food-bg.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;*/
 	display: flex;
 	justify-content: center;
 	/*color: #fff;*/
@@ -478,7 +529,8 @@ body {
 	justify-content: center;
 }
 
-/* Paste this css to your style sheet file or under head tag */
+
+/* http://smallenvelop.com/display-loading-icon-page-loads-completely/ */
 /* This only works with JavaScript,
 if it's not present, don't show loader */
 .no-js #loader { display: none;  }
