@@ -17,13 +17,7 @@
 
 	<body>
 
-		<!-- <div id="loaderWrapper" class="loaderWrapper">
-
-			<h1>Feast On! is Loading...</h1>
-
-		</div>
- -->
-<div class="se-pre-con"></div>
+		<div class="se-pre-con"></div>
 
 		<div id="introSearchContainer" class="introSearchContainer">
 
@@ -119,11 +113,11 @@
 		<div id="mapContainer" class="mapContainer">
 		</div>
 
-	<!-- Allow us to first utilize KO, then jquery, then load our data, initialize the map, reach the Google Maps api to be able to access the needed google variables utilized in app.js -->
+	<!-- Allow us to first utilize KO, then jquery, then load our data, then provide the callback function for the Google Maps API -->
 		<script src="knockout/knockout.js"></script>
 		<script src="jquery/jquery.min.js"></script>
 		<script src="js/model.js"></script>
-	    <script src="js/try.js"></script>
+	    <script src="js/main.js"></script>
 	    <script async defer
 	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initApplication">
 	    </script>
