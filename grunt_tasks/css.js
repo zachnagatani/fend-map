@@ -30,15 +30,27 @@ module.exports = function (grunt, config) {
 
 				files: {
 
-					'dist/css/style.min.css': ['src/css/style.css'],
-
-					'dist/css/font-awesome.min.css': ['src/css/font-awesome.min.css']
+					'dist/css/style.css': ['src/css/style.css'],
 
 				}
 
 			}
 
 		},
+
+		imagemin: {
+			jpgs: {
+				options: {
+					progressive: true
+				},
+				files: [{
+					expand: true,
+					cwd: 'src/images',
+					src: ['*.{jpg,png,gif}'],
+					dest: 'dist/images/',
+				}]
+			}
+		}
 
 	});
 

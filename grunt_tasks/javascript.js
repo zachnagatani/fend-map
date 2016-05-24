@@ -1,11 +1,35 @@
 module.exports = function(grunt, config) {
 	grunt.config.merge({
 
+		comments: {
+		    js: {
+		      options: {
+		        singleline: true,
+		        multiline: false
+		      },
+		      src: [ 'src/**/*.js' ]
+		    },
+		    css: {
+		      options: {
+		        singleline: true,
+		        multiline: true
+		      },
+		      src: [ 'src/css/*.css' ]
+		    }
+		 },
+
+		// concat: {
+		// 	dist: {
+		// 		src: [config.jsSrcDir + 'model.js', config.jsSrcDir + 'main.js',]
+		// 		dest: config.jsDiDir + 'scripts.js'
+		// 	},
+		// },
+
 		jshint: {
 
 			all: [
 
-				'Gruntfile.js',
+				'gruntfile.js',
 
 				'grunt_tasks/*.js',
 
@@ -27,9 +51,7 @@ module.exports = function(grunt, config) {
 
 				files: {
 
-					'dist/js/app.js': ['src/js/app.js'],
-
-					'dist/js/initMap.js': ['src/js/initMap.js'],
+					'dist/js/main.js': ['src/js/main.js'],
 
 					'dist/js/model.js': ['src/js/model.js'],
 

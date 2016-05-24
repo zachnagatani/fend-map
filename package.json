@@ -1,0 +1,30 @@
+{
+  "name": "fend-neighborhood-map",
+  "version": "1.0.0",
+  "description": "An interactive map for Udacity's Front-End Nanodegree\r Built with knockout, using foursquare",
+  "main": "gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-csslint": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-stripcomments": "^0.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachnagatani/fend-map.git"
+  },
+  "author": "Zach Nagatani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zachnagatani/fend-map/issues"
+  },
+  "homepage": "https://github.com/zachnagatani/fend-map#readme"
+}

@@ -10,10 +10,12 @@ module.exports = function (grunt) {
 
 
 	grunt.registerTask('default', [
+		'comments',
 		'jshint',
 		'uglify',
 		'csslint',
 		'cssmin',
+		'imagemin'
 	]);
 
 };
