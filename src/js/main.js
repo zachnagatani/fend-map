@@ -110,6 +110,11 @@ function initApplication() {
 		// Empty oberservable string for our filter
 		query: ko.observable(''),
 
+		// Don't refresh the page in the case someone uses the filter
+		// and hits enter
+		stopRefreshOnEnter: $(function() {
+		  	  $("form").submit(function() { return false; });
+			}),
 
 		// Hook our query to our search function
 		subscribeToSearch: function() {
