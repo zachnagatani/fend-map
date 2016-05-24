@@ -4,7 +4,7 @@ Project number seven of Udacity's Front-End Developer Nanodegree: an interactive
 
 ## About the Project
 
-Udacity provided us with a rubric/spec-sheet, but I decided to put my own spin on it to try and make the app more useful. Instead of hardcoded locations, I utilized the Foursquare Explore API to populate my model and then use that data for my functionality.
+Udacity provided us with a rubric/spec-sheet, but I decided to put my own spin on it to try and make the app more useful. Instead of hardcoded locations, I utilized the Foursquare Venues API to populate my model and then use that data for my functionality.
 
 ## Getting Started
 
