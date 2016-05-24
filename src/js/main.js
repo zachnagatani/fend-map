@@ -205,10 +205,8 @@ function initApplication() {
 		// Close the nav when a list item is selected on mobile
 		closeNavOnSelect: function() {
 
-			var windowWidth = $(window).width();
-
 			// Check for mobile width
-			if (windowWidth < 768) {
+			if ($(window).width() < 768) {
 				// Close the nav
 				ViewModel.closeNav();
 			}
@@ -237,7 +235,7 @@ function initApplication() {
 
 			// Update the venueName in the DOM with the right name
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
-
+			console.log(ViewModel.venueName());
 			// Open the infoWindow over the correct marker
 			infoWindow.open(map, allMarkers[index]);
 
@@ -336,9 +334,19 @@ function initApplication() {
 				lat: 37.3036,
 				lng: -121.8974
 			};
+
+			var zoomVal;
+
+			if($(window).width() <= 768) {
+				zoomVal = 11;
+			} else {
+				zoomVal = 14;
+			}
+
+			console.log(zoomVal);
 			map = new google.maps.Map(document.getElementById('mapContainer'), {
 				center: mapCenter,
-				zoom: 14,
+				zoom: zoomVal,
 
 				mapTypeControl: false
 			});
@@ -391,7 +399,6 @@ function initApplication() {
 
 				// Push the marker into our allMarkers array
 				allMarkers.push(marker);
-
 				// Allow an infoWindow to be created from the marker
 				function createInfoWindow() {
 
