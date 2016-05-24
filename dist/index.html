@@ -3,32 +3,54 @@
 
 	<head>
 
-		<title>Neighborhood Map</title>
+		<title>Feast On! | The Ultimate Feast Finder</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/font-awesome.min.css">
-
 
 	</head>
 
 	<body>
 
+		<div class="se-pre-con"></div>
+
+		<div id="introSearchContainer" class="introSearchContainer">
+
+			<div id="introFlex" class="introFlex">
+
+				<h1 id="feastOnHeader" class="feastOnHeader">FeastOn!</h1>
+
+				<!-- <h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
+				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p> -->
+				<p id="feastOnTag" class="feastOnTag">Enter an Address to Begin Your Feast</p>
+
+				<form id="introSearchForm" class="introSearchForm">
+
+					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA">
+					<a id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</a>
+
+				</form>
+			</div>
+
+		</div>
+
 		<!-- Button to open nav on mobile -->
 		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
+		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
 
-		<section class="searchSection">
+
+		<section id ="searchSection" class="searchSection">
 			<div class="searchContainer">
 				<!-- Search Form -->
 				<form class="searchForm">
 
-					<label for="searchField">Search For Food In Willow Glen:</label><br>
+					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress" class="addressText"></small></label><br>
 
 					<i class="fa fa-search" aria-hidden="true"></i>
-					<input class="searchField" type="Where're you goin?" placeholder="ex. Mexican" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					<input class="searchField" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
 				</form>
 			</div>
@@ -39,14 +61,16 @@
 		<!-- Navigation container -->
 		<nav id="listContainer" class="listContainer">
 
-			<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
-
 			<!-- List of Locations -->
-			<ul id="locationList" class="locationList" data-bind="foreach: locationList">
+			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
 
 				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
 
-					<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+					<!-- <div id="anchorContainer" class="anchorContainer" data-bind="click: $parent.closeNavOnSelect"> -->
+
+						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+
+					<!-- </div> -->
 
 				</li>
 
@@ -56,21 +80,45 @@
 
 		<!-- Div to contain infoWindow data -->
 		<div id="infoWindowNode" class="infoWindowNode">
+
+			<div id="infoWindowHeader" class="infoWindowHeader" data-bind="text: venueName">
+			</div>
+
+			<div id="infoWindowContentContainer" class="infoWindowContentContainer">
+
+				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
+
+				<a href="" target="_blank" id="googleDirections" class="googleDirections btn">Get Directions</a>
+
+				<!-- WHY YOU NO WORK MR ANCHOR?! -->
+				<a target='_blank' id='foursquareLink' class='foursquareLink btn'>Visit Website</a>
+
+				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
+
+				<p id='foursquareStatus' class='foursquareStatus' data-bind='text: foursquareStatus'></p>
+
+				<h3 id='foursquarePrice' class='foursquarePrice'>Price: <strong data-bind="text: venuePrice"></strong></h3>
+
+				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+
+				<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
+
+			</div>
+
 		</div>
 
 		<!-- Div to contain map -->
 		<div id="mapContainer" class="mapContainer">
 		</div>
 
-	<!-- Allow us to first utilize KO, then jquery, then load our data, initialize the map, reach the Google Maps api to be able to access the needed google variables utilized in app.js -->
+	<!-- Allow us to first utilize KO, then jquery, then load our data, then provide the callback function for the Google Maps API -->
 		<script src="knockout/knockout.js"></script>
 		<script src="jquery/jquery.min.js"></script>
 		<script src="js/model.js"></script>
-		<script src="js/initMap.js"></script>
-		<script
-	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap">
+	    <script src="js/main.js"></script>
+	    <script async defer
+	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initApplication">
 	    </script>
-	    <script src="js/app.js"></script>
 
 	</body>
 
