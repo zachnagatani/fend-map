@@ -16,7 +16,7 @@ Udacity provided us with a rubric/spec-sheet, but I decided to put my own spin o
 
 Checkout out the `package.json` file to view the developer dependencies used in this project.
 
-### Getting Up and Running as a User
+#### Getting Up and Running as a User
 
 1. Visit <a href="http://zachnagatani.github.io/fend-map/">http://zachnagatani.github.io/fend-map/</a>
 2. Enter in your location (an address or a city), and hit enter,
@@ -24,7 +24,7 @@ Checkout out the `package.json` file to view the developer dependencies used in 
 4. Use the input box to filter the locations by name or food type,
 5. Click a location in the list or select a marker on the map to see pertinent info about the location and to get directions to the restaurant!
 
-### Getting Up and Running as a Developer
+#### Getting Up and Running as a Developer
 
 Clone the repository onto your local machine: `git clone https://github.com/zachnagatani/fend-map.git`
 
