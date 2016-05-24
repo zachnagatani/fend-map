@@ -1,20 +1,11 @@
-// Create a loading screen for the app
-function preLoad() {
+// KO ViewModel
 
-	// On load, make the loading image fade-out slowly
+// Wait for window load
 	$(window).load(function() {
-		$(".se-pre-con").fadeOut("slow");
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
 	});
-
-}
-
-// Run the preLoader
-preLoad();
-
-
-// Error handling for google maps
 function googleMapsTimeout() {
-
 
 	var googleMapsTimeout = setTimeout(function() {
 		var loaderWrapper = document.getElementById('loaderWrapper');
@@ -27,22 +18,37 @@ function googleMapsTimeout() {
 	}, 5000);
 }
 
+// googleMapsTimeout();
 
-// Wrap app in a function for Google Maps API to callback
+// if(typeof google === 'object' && typeof google.maps === 'object') {
+// 		document.getElementById('loaderWrapper').style.display="none";
+// 		// clearTimeout(googleMapsTimeout);
+// };
+
 function initApplication() {
-	// "Global" variables for access by all parts of app
+
+	// Global map variable, to allow the google maps "map" to be accessible from anywhere
 	var map;
 	var geocoder;
 	var userCity = "";
 	var userCityGeocode = {};
+
+	// Global markers array - accessible from anywhere
 	var allMarkers = [];
+
+	// Create one global instance if InfoWindow
+	// This allows the infoWindow to auto close upon a different
+	// location being selected
 	var infoWindow = new google.maps.InfoWindow({
 		content: infoWindowNode
 	});
 
-	// Styling for the infoWindow: http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html
 	function styleInfoWindow() {
+
+		// http://en.marnoto.com/2014/09/5-formas-de-personalizar-infowindow.html
 		google.maps.event.addListener(infoWindow, 'domready', function() {
+
+			// Reference to the DIV which receives the contents of the infowindow using jQuery
 			var iwOuter = $('.gm-style-iw');
 
 			/* The DIV we want to change is above the .gm-style-iw DIV.
@@ -50,25 +56,38 @@ function initApplication() {
 			 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
 			 */
 			var iwBackground = iwOuter.prev();
+
+			// Remove the background shadow DIV
 			iwBackground.children(':nth-child(2)').css({
 				'display': 'none'
 			});
+
+			// Remove the white background DIV
 			iwBackground.children(':nth-child(4)').css({
 				'display': 'none'
 			});
 
 			iwBackground.children(':nth-child(3)').find('div').children().css({
-				'box-shadow': 'none',
-				'z-index': '1',
-				'background': 'rgba(255, 255, 255, 1)'
+				'box-shadow': 'rgba(1,156,222,.75) 0px 1px 6px',
+				'z-index': '1'
 			});
+
+			// iwOuter.parent().parent().css({left: '115px'});
 
 			iwBackground.children(':nth-child(3)').find('div').children().css({
 				'z-index': '1'
 			});
+
+			// Taking advantage of the already established reference to
+			// div .gm-style-iw with iwOuter variable.
+			// You must set a new variable iwCloseBtn.
+			// Using the .next() method of JQuery you reference the following div to .gm-style-iw.
+			// Is this div that groups the close button elements.
 			var iwCloseBtn = iwOuter.next();
 
 			var iwCloseBtnX = iwCloseBtn.next();
+
+			// Apply the desired effect to the close button
 			iwCloseBtn.css({
 				width: "25px",
 				height: "25px",
@@ -80,10 +99,15 @@ function initApplication() {
 				'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
 				background: '#fff'
 			});
+
+			// Hide Image Used By Default for X in close button
 			iwCloseBtn.children(':nth-child(1)').css({
 				top: '-330px',
 				left: '3px'
 			});
+
+			// The API automatically applies 0.7 opacity to the button after the mouseout event.
+			// This function reverses this event to the desired value.
 			iwCloseBtn.mouseout(function() {
 				$(this).css({
 					opacity: '1'
@@ -96,40 +120,35 @@ function initApplication() {
 
 	styleInfoWindow();
 
-	// KO ViewModel
 	var ViewModel = {
 
-		// Empty obersvableArray to store the venus provided by foursquare
 		foursquareVenues: ko.observableArray([]),
 
 		foursquareVenuesList: ko.observableArray([foursquareVenues]),
 
-		// Observable to store all the google maps markers
 		markerList: ko.observableArray([allMarkers]),
 
-		// Empty oberservable string for our filter
 		query: ko.observable(''),
 
-
-		// Hook our query to our search function
 		subscribeToSearch: function() {
 			ViewModel.query.subscribe(ViewModel.search);
 		},
 
-		// Filter function
 		search: function(value) {
+			// Marker functionality must be before the list filtering... for some reason
+			// TODO: Figure out why ^^^
 
-			// Remove the markers from the map upon calling of filter
+			// Set the map to null for each marker, removing them from the map
 			allMarkers.forEach(function(marker) {
 
 				marker.setMap(null);
 
 			});
 
-			// Filter markers
+			// If the marker.title matches the query, set the map to map (global map variable)
+			// thus displaying the marker on the page
 			for (var x in allMarkers) {
 
-				// If titles match the query, put them back on the map
 				if (allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
 					allMarkers[x].setMap(map);
@@ -138,22 +157,25 @@ function initApplication() {
 
 			}
 
-			// Grab the list of locations
+			// Grab the listItems from the DOM and store in array
+			// TODO: Maybe move out of function. Analyze and optimize if needed
 			var listItemsList = document.getElementsByClassName('listItem');
 
-			// Remove the list items from the DOM when search function is called
+			// Set each listItem's display property to none, removing them
+			// from the view
 			for (var i = 0; i < listItemsList.length; i++) {
 
 				listItemsList[i].style.display = "none";
 
 			}
 
-			// Filter the list items
+			// Loop through the listItemsList and add them back to the view
+			// if they match the search query entered by the user
 			for (var i in listItemsList) {
 
-				// If the name of the food type or the text content of the locations match, add them to the DOM again
 				if (foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
+					// Match the display for the class .listItem in style.css
 					listItemsList[i].style.display = "flex";
 
 				}
@@ -162,10 +184,8 @@ function initApplication() {
 
 		},
 
-		// Empty observable for the location name
 		venueName: ko.observable(),
 
-		// Store different DOM elements for easy access
 		listContainer: document.getElementById('listContainer'),
 
 		openNavButton: document.getElementById('openNav'),
@@ -174,10 +194,9 @@ function initApplication() {
 
 		searchSection: document.getElementById('searchSection'),
 
-		// Open nav function for mobile
 		openNav: function() {
-			// Opacity is used for transition affect
-			// Z-index is used to allow other elements to be selected
+			// Move the nav back into view on mobile
+			// ViewModel.listContainer.style.display = "block";
 			ViewModel.listContainer.style.zIndex = "2";
 			ViewModel.listContainer.style.opacity = "1";
 
@@ -186,9 +205,11 @@ function initApplication() {
 
 			ViewModel.searchSection.style.zIndex = "3";
 			ViewModel.searchSection.style.opacity = "1";
+
+			// Push the map over to match the nav and stay in view
+			// document.getElementById('mapContainer').style = "transition: 1s; left: 135px";
 		},
 
-		// Close nav function for mobile
 		closeNav: function() {
 
 			ViewModel.listContainer.style.zIndex = "0";
@@ -202,91 +223,94 @@ function initApplication() {
 
 		},
 
-		// Close the nav when a list item is selected on mobile
 		closeNavOnSelect: function() {
-
-			var windowWidth = $(window).width();
-
-			// Check for mobile width
-			if (windowWidth < 768) {
-				// Close the nav
+			// Close the nav if li is clicked on mobile
+			// Check if the width of the window is 768px (mobile)
+			if ($(window).width() < 768) {
 				ViewModel.closeNav();
 			}
 		},
 
-		// Observables for different location data items to update the DOM
 		venuePrice: ko.observable(),
 		foursquareLocation: ko.observable(),
-		googleDirections: ko.observable(),
 		foursquareWebsite: ko.observable(),
 		foursquareContact: ko.observable(),
 		foursquareStatus: ko.observable(),
 		foursquareRating: ko.observable(),
 
-		// DOM elements needed to access infoWindow div
-
 		infoWindowNode: document.getElementById('infoWindowNode'),
 
 		infoWindowHeader: document.getElementById('infoWindowHeader'),
 
-		// Open the infoWindow from the list items
 		openInfoWindow: function(index) {
 
-			// Display the infoWindowNode
-			ViewModel.infoWindowNode.style.display = "block";
+			// TODO: Change all the zeroes back to index but figure out how to freaking call this thing yo! It has to do with the data-binding $index()
 
-			// Update the venueName in the DOM with the right name
+			ViewModel.infoWindowNode.style.display = "block";
+			// Remove the location's name from the infoWindow
+			// $("#infoWindowName").remove();
+
+			// Grab the index of the clicked list item
+			// http://stackoverflow.com/questions/13237058/get-index-of-the-clicked-element-in-knockout
+
+			// Update the IW header via data-bind
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 
-			// Open the infoWindow over the correct marker
+			// Open the infoWindow on our map and over the correct marker
+			// The index of the li will always match the index of the allMarkers array
 			infoWindow.open(map, allMarkers[index]);
 
-			// Call the foursquare API
+			// Foursquare api
 			function getFourSquare() {
 
-				// Grab the venuID (needed to call the API) from the model
+				// Grab the venueID for the location - necessary to access API
 				var venueID = ViewModel.foursquareVenues()[index].id;
 
-				// Call the API
+				// Create the proper URL for the Foursquare API according to the docs
 				var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+
+				// Request data
 				$.ajax({
 					dataType: "jsonp",
 					url: foursquareURL
 				}).done(function(data) {
+
 					// Log the data for testing
 					console.log(data);
-					// Error handling in case there is the venue can't be found
+
+					// $('#infoWindowContentContainer').remove();
+					// $('#infoWindowNode').append('<div id="infoWindowContentContainer" class="infoWindowContentContainer"></div>');
+
+					// If no venue key exists in the response, let the user
+					// that no Foursquare data exists for the location
 					if (!("venue" in data.response)) {
+
+						// Remove any previous Foursquare data appended to the infoWindow
 						$('#infoWindowContentContainer').empty();
+
+						// Error message
 						$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 					} else {
 
-						// Store the venue for easy access
+						// Grab the venue from the response info for reasy access
 						var venueInfo = data.response.venue;
 
-						// Update the price in the DOM
+						// Grab the first photo of the venue in the response
+						var photoGrab = data.response.venue.photos.groups[0].items[0];
+
+						ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+
 						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 
-						// Update the address in the DOM
 						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 
-						// URL to send the user to google maps for directions
-						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-
-						// Set the href attribute to the proper URL so the user gets the correct directions
-						document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
-
-						// Set the href attribute to the correct URL for the location website
 						document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 
-						// Update the DOM with the correct phone number
 						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 
-						// Update the DOM with the correct status (closed, open, etc)
 						ViewModel.foursquareStatus(venueInfo.hours.status);
 
-						// If there is a rating, display it with the proper background
 						if (venueInfo.rating !== undefined) {
 							ViewModel.foursquareRating(venueInfo.rating);
 						}
@@ -296,18 +320,25 @@ function initApplication() {
 						});
 
 					}
-					// Error handling in case the API call fails
+
+					// If no response, let the user know
 				}).fail(function() {
+
+					// Remove any previous 4sq info from the infoWindow
 					$('#infoWindowContentContainer').empty();
+
+					//Error message
 					$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
 
 				});
 
 			}
 
+			// Call relevant API functions
 			getFourSquare();
 
-			// Add an animation bounce to the correct markers when clicked from a list item
+			// If there is animation, set it to none, else
+			// set it to the bounce animation
 			if (allMarkers[index].getAnimation() !== null) {
 
 				allMarkers[index].setAnimation(null);
@@ -315,6 +346,9 @@ function initApplication() {
 			} else {
 
 				allMarkers[index].setAnimation(google.maps.Animation.BOUNCE);
+
+				// Only bounce the pin one time
+				// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
 				setTimeout(function() {
 					allMarkers[index].setAnimation(null);
 				}, 750);
@@ -325,32 +359,43 @@ function initApplication() {
 
 		userAddress: ko.observable(),
 
-		// Initialize the google map
+		poo: function() {
+			ViewModel.openInfoWindow();
+		},
+
+		alertMeBaby: function() {
+			var poo = "doo";
+			alert(poo);
+		},
+
+		// Initialize the map on load
 		initMap: function() {
 
-			// Create a new geocoder instance
 			geocoder = new google.maps.Geocoder();
-
-			// Create a new map
+			// Location for map to be centered on
+			// Snippet taken from: https://gist.github.com/magnificode/6113759
 			var mapCenter = {
 				lat: 37.3036,
 				lng: -121.8974
 			};
+
+			// Create the map instance
 			map = new google.maps.Map(document.getElementById('mapContainer'), {
+
+				// Center it in location of choosing
 				center: mapCenter,
+				// Neighborhood level zoom
 				zoom: 14,
 
 				mapTypeControl: false
 			});
 
-			// Grab geocode from user inputted address
 			if (geocoder) {
 				geocoder.geocode({
 					'address': userCity
 				}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
-							// Set the map's center to the geocode
 							map.setCenter(results[0].geometry.location);
 							userCityGeocode = results[0].geometry.location;
 						}
@@ -358,97 +403,124 @@ function initApplication() {
 				});
 			}
 
-			// create the markers for the map
+			// Call createMarkers()
 			ViewModel.createMarkers();
 
-			// On resize, keep the map centered in the correct location
+			// Recenter map on window resize - responsive centering
 			google.maps.event.addDomListener(window, 'resize', function() {
 				map.setCenter(userCityGeocode);
 			});
 
+			// Recenter map on window resize - responsive centering
+			google.maps.event.addDomListener(window, 'scroll', function() {});
+
 		},
 
-		// Create the map markers
+		// document.getElementById('introSearchButton').addEventListener('click', function(){
+		// 	ViewModel.introSearch();
+		// });
+
 		createMarkers: function() {
 
-			// For each location...
+			// Grab the infowWindow div from the DOM
+			var infoWindowNode = document.getElementById('infoWindowNode');
+			var infoWindowHeader = document.getElementById('infoWindowHeader');
+
+			// Create the element to hold title of location
+			var infoWindowName = document.createElement('h1');
+			infoWindowName.id = "infoWindowName";
+
+			// Grab all listItems from DOM and store in Array
+			var listList = document.getElementsByClassName('listItem');
+
+			// Variable for looping through listList
+			var listListLength = listList.length;
+
 			foursquareVenues.forEach(function(location) {
 
-				// Set the coordinatesd for the marker
 				location.coordinates = {
 					"lat": location.location.lat,
 					"lng": location.location.lng
 				};
 
-				// Create a new marker
 				var marker = new google.maps.Marker({
+
+					// Set the position to the location's lat and lng
 					position: location.coordinates,
+
+					// Set the marker on our map
 					map: map,
+
+					// Give the marker a title matching the location name
 					title: location.name,
+
+					// No animation on load
 					animation: google.maps.Animation.DROP,
 
 				});
 
-				// Push the marker into our allMarkers array
+				// Push each marker created into the global allMarkers array
 				allMarkers.push(marker);
 
-				// Allow an infoWindow to be created from the marker
 				function createInfoWindow() {
+
+					// Open the infoWindow on our map and over the correct marker
 
 					ViewModel.infoWindowNode.style.display = "block";
 
 					infoWindow.open(map, marker);
-
 				}
 
-				// Call the foursquare API from the marker
+				// Foursquare api
 				function getFourSquare() {
 
-					// Update the DOM with the correct location name
 					ViewModel.venueName(marker.title);
 
-
+					// Grab the venueID for the location - necessary to access API
 					var venueID = location.id;
 
-					// Call the API
+					// Create the proper URL for the Foursquare API according to the docs
 					var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+
+					// Request data
 					$.ajax({
 						dataType: "jsonp",
 						url: foursquareURL
 					}).done(function(data) {
+
+						// Log the data for testing
 						console.log(data);
-						// Error handling if the venue can't be found
+
+						// If no venue key exists in the response, let the user
+						// that no Foursquare data exists for the location
 						if (!("venue" in data.response)) {
+
+							// Remove any previous Foursquare data appended to the infoWindow
 							$('#infoWindowContentContainer').empty();
+
+							// Error message
 							$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
 
 						} else {
 
-							// Store the venue from the response for easy access
+							// Grab the venue from the response info for easy access
 							var venueInfo = data.response.venue;
 
-							// Update the DOM with the correct price
+							// Grab the first photo of the venue in the response
+							var photoGrab = data.response.venue.photos.groups[0].items[0];
+
+							ViewModel.infoWindowNode.style.background = "url('" + photoGrab.prefix + photoGrab.width + "x" + photoGrab.height + photoGrab.suffix + "') no-repeat fixed center";
+
 							ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 
-							// Update the DOM with the correct address
 							ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 
-							// URL to send the user for google maps directions
-							var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-
-							// Set the href to the correct URL for directions
-							document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
-
-							// Set the href to the correct URL for location's website
 							document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
 
-							// Update the DOM with correct phone number
 							ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 
-							// Update the DOM with correct hours/status
 							ViewModel.foursquareStatus(venueInfo.hours.status);
 
-							// Update DOM with correct rating/color if it exists
 							if (venueInfo.rating !== undefined) {
 								ViewModel.foursquareRating(venueInfo.rating);
 							}
@@ -458,17 +530,26 @@ function initApplication() {
 							});
 
 						}
+
+						// If no response, let the user know
 					}).fail(function() {
-						// Error handling if API call fails
-						$("#infoWindowContentContainer").empty();
+
+						// Remove any previous 4sq info from the infoWindow
+						$('#foursquareLocation, #foursquareLink, #foursquareImg, #foursquareError, #foursquareRating, #foursquareRatingHeader, #foursquareStatus, #foursquareContact, #foursquarePrice').remove();
+
+						//Error message
 						$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
 
 					});
 
 				}
 
-				// Add animation to the markers upon click
+				// https://developers.google.com/maps/documentation/javascript/markers#animate
+				// Animate marker when selected
 				function toggleBounce() {
+
+					// If there is animation, set it to none, else
+					// set it to the bounce animation
 					if (marker.getAnimation() !== null) {
 
 						marker.setAnimation(null);
@@ -476,6 +557,9 @@ function initApplication() {
 					} else {
 
 						marker.setAnimation(google.maps.Animation.BOUNCE);
+
+						// Only bounce the pin one time
+						// http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
 						setTimeout(function() {
 							marker.setAnimation(null);
 						}, 750);
@@ -483,7 +567,7 @@ function initApplication() {
 					}
 				}
 
-				// Call the needed functions when a marker is clicked
+				// Add click event to each marker that calls relevant functions
 				marker.addListener('click', function() {
 
 					createInfoWindow();
@@ -498,22 +582,15 @@ function initApplication() {
 
 		},
 
-		// Search functionality up on app load
 		introSearch: function() {
 
-			// Grab the input element
 			var introSearchInput = document.getElementById('introSearchInput');
-
-			// Store the user's input into our "global" variable to be used in other functions
 			userCity = introSearchInput.value;
 
-			// Grab the locations from foursquare and populate our model
 			function getFoursquareVenues() {
 
-				// the correct API URL
 				var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
-				// Call the API
 				$.ajax({
 
 					dataType: "jsonp",
@@ -524,30 +601,28 @@ function initApplication() {
 					console.log(data);
 
 					if (!data.response.groups) {
-						// Error handling if a proper address isn't entered and foursquare can't send us data
 						alert('Error! Please enter a properly formatted address or city.');
 					} else {
 
-						// Array of locations
 						var foursquareVenueResponseArray = data.response.groups[0].items;
 
-						// For each location...
 						foursquareVenueResponseArray.forEach(function(venue) {
 
-							// Push the location into our model
 							foursquareVenues.push(venue.venue);
 
 						});
 
-						// Initialize our google map upon the populating our model
 						ViewModel.initMap();
 
-						// Close the search when the map is initalized
 						var closeSearch = function() {
 
-							// Opacity for transition, display none to remove it from the DOM after one second
 							var introSearchContainer = document.getElementById('introSearchContainer');
+
+							// Use opacity so that the div can utilize CSS transitions
 							introSearchContainer.style.opacity = "0";
+
+							// After one second, change the display to "none" so that
+							// the user can access the rest of the app
 							var displayTimeout = setTimeout(function() {
 
 								introSearchContainer.style.display = "none";
@@ -558,27 +633,23 @@ function initApplication() {
 
 						closeSearch();
 
-						// Immediately...
 						(function() {
 
-							// Push each venue into our obersvable array of venues
 							foursquareVenues.forEach(function(venue) {
 								ViewModel.foursquareVenues.push(venue);
 							});
 
-							// console.log for testing
 							console.log(ViewModel.foursquareVenues());
 
 						})();
 
-						// Update our obersvable of the user's address
+						// Set the value of self.userAddress to the address inputed
 						ViewModel.userAddress(userCity);
 
 					}
 
 				}).fail(function() {
 
-					// Error handling if the API can't be reached
 					alert("Sorry; the Foursquare servers could not be reached.");
 
 				});
