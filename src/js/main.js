@@ -73,7 +73,7 @@ function initApplication() {
 				width: "25px",
 				height: "25px",
 				opacity: '1', // by default the close button has an opacity of 0.7
-				right: '-75px',
+				right: '25px',
 				top: '6px', // button repositioning
 				border: '1px solid #019CDE', // increasing button border and new color
 				'border-radius': '13px', // circular effect
