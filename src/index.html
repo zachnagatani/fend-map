@@ -88,10 +88,10 @@
 
 				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
 
-				<a href="" target="_blank" id="googleDirections" class="googleDirections btn">Get Directions</a>
+				<a href="" target="_blank" id="googleDirections" class="googleDirections btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
 
 				<!-- WHY YOU NO WORK MR ANCHOR?! -->
-				<a target='_blank' id='foursquareLink' class='foursquareLink btn'>Visit Website</a>
+				<a target='_blank' id='foursquareLink' class='foursquareLink btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
 
 				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
 
@@ -100,6 +100,8 @@
 				<h3 id='foursquarePrice' class='foursquarePrice'>Price: <strong data-bind="text: venuePrice"></strong></h3>
 
 				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+
+				<h3 id='foursquareNoVenue' class='foursquareNoVenue' data-bind="text: foursquareNoVenue"></h3>
 
 				<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
 

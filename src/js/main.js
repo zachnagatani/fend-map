@@ -167,9 +167,12 @@ function initApplication() {
 		foursquareLocation: ko.observable(),
 		googleDirections: ko.observable(),
 		foursquareWebsite: ko.observable(),
+		foursquareURL: ko.observable(),
 		foursquareContact: ko.observable(),
 		foursquareStatus: ko.observable(),
 		foursquareRating: ko.observable(),
+		foursquareNoVenue: ko.observable(),
+		foursquareError: ko.observable(),
 
 		infoWindowNode: document.getElementById('infoWindowNode'),
 
@@ -189,15 +192,14 @@ function initApplication() {
 					console.log(data);
 					if (!("venue" in data.response)) {
 						$('#infoWindowContentContainer').empty();
-						$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
-
+						viewModel.foursquareNoVenue('Sorry! Foursquare data could not be found for this location');
 					} else {
 						var venueInfo = data.response.venue;
 						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-						document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
-						document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
+						ViewModel.googleDirections(googleDirectionsURL);
+						ViewModel.foursquareURL(venueInfo.url);
 						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 						ViewModel.foursquareStatus(venueInfo.hours.status);
 						if (venueInfo.rating !== undefined) {
@@ -212,6 +214,7 @@ function initApplication() {
 				}).fail(function() {
 					$('#infoWindowContentContainer').empty();
 					$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
+					// alert("Foursquare could not be reached at this time.");
 
 				});
 
