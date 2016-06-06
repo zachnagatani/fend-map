@@ -1,4 +1,3 @@
-
 function preLoad() {
 	$(window).load(function() {
 		$(".se-pre-con").fadeOut("slow");
@@ -19,6 +18,11 @@ function googleMapsTimeout() {
 		}
 	}, 5000);
 }
+
+function googleError() {
+	alert('Google maps failed to load. Please refresh the page and try again.');
+}
+
 function initApplication() {
 	var map;
 	var geocoder;
@@ -97,13 +101,13 @@ function initApplication() {
 		search: function(value) {
 			allMarkers.forEach(function(marker) {
 
-				marker.setMap(null);
+				marker.setVisible(false);
 
 			});
 			for (var x in allMarkers) {
 				if (allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
-					allMarkers[x].setMap(map);
+					allMarkers[x].setVisible(true);
 
 				}
 
