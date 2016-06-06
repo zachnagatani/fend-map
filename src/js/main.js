@@ -311,15 +311,15 @@ function initApplication() {
 						console.log(data);
 						if (!("venue" in data.response)) {
 							$('#infoWindowContentContainer').empty();
-							$('#infoWindowContentContainer').append("<h3 id='foursquareError'>Sorry! Foursquare data could not be found for this location.");
+							viewModel.foursquareNoVenue('Sorry! Foursquare data could not be found for this location');
 
 						} else {
 							var venueInfo = data.response.venue;
 							ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
 							ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
 							var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-							document.getElementById('googleDirections').setAttribute("href", googleDirectionsURL);
-							document.getElementById('foursquareLink').setAttribute("href", venueInfo.url);
+							ViewModel.googleDirections(googleDirectionsURL);
+							ViewModel.foursquareURL(venueInfo.url);
 							ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
 							ViewModel.foursquareStatus(venueInfo.hours.status);
 							if (venueInfo.rating !== undefined) {
@@ -365,11 +365,14 @@ function initApplication() {
 			});
 
 		},
+
+		introSearchInput: ko.observable(""),
 		introSearch: function() {
-			var introSearchInput = document.getElementById('introSearchInput');
-			userCity = introSearchInput.value;
+			// var introSearchInput = document.getElementById('introSearchInput');
+			userCity = ViewModel.introSearchInput();
+			console.log(userCity);
 			function getFoursquareVenues() {
-				var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + introSearchInput.value + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+				var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 				$.ajax({
 
 					dataType: "jsonp",

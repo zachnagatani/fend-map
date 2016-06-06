@@ -29,7 +29,7 @@
 
 				<form id="introSearchForm" class="introSearchForm">
 
-					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA">
+					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA" data-bind="value: introSearchInput, valueUpdate: 'input'">
 					<button type="submit" form="introSearchForm" id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</button>
 
 				</form>
