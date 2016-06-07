@@ -101,7 +101,7 @@ body {
 .locationList {
     list-style: none;
     width: 100%;
-    height: 800px;
+    height: 100%;
     padding-right: 20px;
     overflow: auto;
     position: relative;
