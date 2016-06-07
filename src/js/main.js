@@ -30,7 +30,7 @@ function initApplication() {
 	var userCityGeocode = {};
 	var allMarkers = [];
 	var infoWindow = new google.maps.InfoWindow({
-		content: infoWindowNode
+		content: "infowindow-node"
 	});
 	var foursquareVenueNames = [];
 
@@ -168,13 +168,13 @@ function initApplication() {
 
 		},
 		venueName: ko.observable(),
-		listContainer: document.getElementById('listContainer'),
+		listContainer: document.getElementById('list-container'),
 
-		openNavButton: document.getElementById('openNav'),
+		openNavButton: document.getElementById('open-nav'),
 
-		closeNavButton: document.getElementById('closeNav'),
+		closeNavButton: document.getElementById('close-nav'),
 
-		searchSection: document.getElementById('searchSection'),
+		searchSection: document.getElementById('search-section'),
 		openNav: function() {
 			ViewModel.listContainer.style.zIndex = "2";
 			ViewModel.listContainer.style.opacity = "1";
@@ -213,9 +213,9 @@ function initApplication() {
 		foursquareNoVenue: ko.observable(),
 		foursquareError: ko.observable(false),
 
-		infoWindowNode: document.getElementById('infoWindowNode'),
+		infoWindowNode: document.getElementById('infowindow-node'),
 
-		infoWindowHeader: document.getElementById('infoWindowHeader'),
+		infoWindowHeader: document.getElementById('infowindow-header'),
 		openInfoWindow: function(index) {
 			ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
@@ -245,7 +245,7 @@ function initApplication() {
 						ViewModel.foursquareRating(venueInfo.rating);
 					}
 
-					$('#foursquareRating').css({
+					$('#foursquare-rating').css({
 						background: '#' + venueInfo.ratingColor
 					});
 
@@ -258,7 +258,7 @@ function initApplication() {
 					ViewModel.foursquareContact('');
 					ViewModel.foursquareStatus('');
 					ViewModel.foursquareRating('');
-					$('#foursquareRating').css({
+					$('#foursquare-rating').css({
 						background: '#fff',
 					});
 
@@ -302,7 +302,7 @@ function initApplication() {
 			}
 
 			console.log(zoomVal);
-			map = new google.maps.Map(document.getElementById('mapContainer'), {
+			map = new google.maps.Map(document.getElementById('map-container'), {
 				center: mapCenter,
 				zoom: zoomVal,
 
@@ -370,7 +370,7 @@ function initApplication() {
 							ViewModel.foursquareRating(venueInfo.rating);
 						}
 
-						$('#foursquareRating').css({
+						$('#foursquare-rating').css({
 							background: '#' + venueInfo.ratingColor
 						});
 
@@ -384,7 +384,7 @@ function initApplication() {
 						ViewModel.foursquareContact('');
 						ViewModel.foursquareStatus('');
 						ViewModel.foursquareRating('');
-						$('#foursquareRating').css({
+						$('#foursquare-rating').css({
 							background: '#fff',
 						});
 
@@ -451,7 +451,7 @@ function initApplication() {
 						});
 						ViewModel.initMap();
 						var closeSearch = function() {
-							var introSearchContainer = document.getElementById('introSearchContainer');
+							var introSearchContainer = document.getElementById('intro-search-container');
 							introSearchContainer.style.opacity = "0";
 							var displayTimeout = setTimeout(function() {
 
