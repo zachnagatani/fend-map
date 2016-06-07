@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<!-- TODO: Closenavonselect only works when clicking directly on the letters. I need the anchor tag to fill the whole li -->
+
+	<head>
+
+		<title>Feast On! | The Ultimate Feast Finder</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta charset="utf-8">
+
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+
+
+	</head>
+
+	<body>
+
+		<!-- <div id="loaderWrapper" class="loaderWrapper">
+
+			<h1>Feast On! is Loading...</h1>
+
+		</div>
+ -->
+<div class="se-pre-con"></div>
+
+		<div id="introSearchContainer" class="introSearchContainer">
+
+			<div id="introFlex" class="introFlex">
+
+				<!-- <h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
+				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p> -->
+				<p>Enter an Address to Begin Your Feast</p>
+
+				<form id="introSearchForm" class="introSearchForm">
+
+					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA">
+					<a id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</a>
+
+				</form>
+			</div>
+
+		</div>
+
+		<!-- Button to open nav on mobile -->
+		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
+		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+
+
+		<section id ="searchSection" class="searchSection">
+			<div class="searchContainer">
+				<!-- Search Form -->
+				<form class="searchForm" id="searchForm">
+
+					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress" class="addressText"></small></label><br>
+
+					<i class="fa fa-search" aria-hidden="true"></i>
+					<input class="searchField" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+
+				</form>
+			</div>
+
+
+		</section>
+
+		<!-- Navigation container -->
+		<nav id="listContainer" class="listContainer">
+
+			<!-- List of Locations -->
+			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
+
+				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+
+					<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+
+				</li>
+
+			</ul>
+
+		</nav>
+
+		<!-- Div to contain infoWindow data -->
+		<div id="infoWindowNode" class="infoWindowNode">
+
+			<div id="infoWindowHeader" class="infoWindowHeader" data-bind="text: venueName">
+			</div>
+
+			<div id="infoWindowContentContainer" class="infoWindowContentContainer">
+
+				<h3 id='foursquarePrice' class='foursquarePrice' data-bind="text: venuePrice"></h3>
+
+				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
+
+				<!-- WHY YOU NO WORK MR ANCHOR?! -->
+				<a target='_blank' id='foursquareLink' class='foursquareLink'>Visit Website</a>
+
+				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
+
+				<p id='foursquareStatus' class='foursquareStatus' data-bind='text: foursquareStatus'></p>
+
+				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+
+			</div>
+
+		</div>
+
+		<!-- Div to contain map -->
+		<div id="mapContainer" class="mapContainer">
+		</div>
+
+	<!-- Allow us to first utilize KO, then jquery, then load our data, initialize the map, reach the Google Maps api to be able to access the needed google variables utilized in app.js -->
+		<script src="knockout/knockout.js"></script>
+		<script src="jquery/jquery.min.js"></script>
+		<script src="js/model.js"></script>
+	    <script src="js/try.js"></script>
+	    <script async defer
+	      src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initApplication">
+	    </script>
+
+	</body>
+
+</html>
