@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Feast On! | The Ultimate Feast Finder</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+
+		<link rel="shortcut icon" type="img/ico" href="images/favicon.ico">
+
+		<style>
+			.loader-wrapper,.se-pre-con,body,html{width:100%;height:100%}*{padding:0;margin:0;box-sizing:border-box}body,html{color:#333}.btn,.feast-on-header,.feast-on-tag,.intro-search-button{color:#fff}h3{font-size:18px}body{font-family:Trebuchet,sans-serif;font-size:20px}.btn{background:rgba(1,156,222,.75);border:1px solid transparent;border-radius:3px;cursor:pointer;display:inline-block;font-size:16px;padding:10px}.btn:hover{background:#016D9B;transition:.5s}@media screen and (max-width:768px){.btn{width:100%}}.loader-wrapper{position:absolute;z-index:6;background:#fff;transition:.5s;display:flex;align-items:center;justify-content:center}.no-js #loader{display:none}.js #loader{display:block;position:absolute;left:100px;top:0}.se-pre-con{position:fixed;left:0;top:0;z-index:9999;background:url(../images/burger1.gif) center no-repeat #333}.intro-search-container{position:absolute;z-index:5;width:100%;height:100%;background:url(../images/pizza-bg.jpg) 50% 50% no-repeat;background-size:cover;display:flex;justify-content:center;transition:1s}.intro-flex{text-align:center;max-width:50%;margin-top:300px}.feasst-on-tag{font-size:24px;line-height:36px;font-weight:700}.intro-search-form{font-size:18px;margin:20px 0 0}.intro-search-button,.intro-search-input{display:inline-block;font-size:16px;padding:10px;border-radius:3px}.intro-search-input{width:500px}.intro-search-button{background:rgba(1,156,222,1);border:1px solid transparent;border-radius:3px;cursor:pointer}.intro-search-button:hover{background:#016D9B;transition:.5s}@media screen and (max-width:1160px){.intro-search-input{width:300px}}@media screen and (max-width:768px){.intro-search-container{align-items:center}.intro-flex{margin-top:0}.intro-search-input{width:100%;margin-bottom:10px}.intro-search-button{width:100%}}.close-nav,.open-nav{display:none}.list-container{position:absolute;z-index:3;margin-left:20px;width:230px;height:100%;display:flex;align-items:center;justify-content:center;transition:.5s}.location-list{list-style:none;width:100%;height:100%;padding-right:20px;overflow:auto;position:relative}.location-list li{text-align:center;border:2px solid #f0f0f0;width:100%;height:100px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(1,156,222,.75);color:#fff;margin:0 0 20px}.location-list li:hover{background:#fff;color:#333}@media screen and (max-width:1000px){.close-nav,.open-nav{z-index:4;font-size:30px;background:rgba(1,156,222,.75);color:#fff;cursor:pointer;width:60px;height:60px;line-height:60px;text-align:center;position:absolute}.open-nav{display:block}.list-container{position:absolute;top:200px;margin-left:0;z-index:0;height:100%;width:100%;background:rgba(255,255,255,.75);color:#f0f0f0;display:table;opacity:0;transition:.5s}.location-list{height:100%;padding-right:0}}.search-section{height:200px;width:100%;position:fixed;top:50px;z-index:2;transition:.5s}.search-container{width:500px;height:100%;margin:auto;padding:10px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.75)}.search-form{width:500px;text-align:center}.search-form label{font-size:1.5em}.address-text{font-size:1em}.search-field{height:40px;width:300px;margin:20px 0 0 10px;padding:10px;border:1px solid #333;color:#000}@media screen and (max-width:1000px){.search-section{height:200px;width:100%;position:fixed;top:0;z-index:0;opacity:0;transition:.5s}.search-container{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.75)}.search-form{width:500px;text-align:center;position:relative;top:20px}.address-text,.search-form label{font-size:1em}.search-field{height:40px;width:300px;margin:20px 0 0 10px;padding:10px;border:1px solid #333;color:#000}}.infowindow-node{text-align:center;background:#fff;overflow:auto;border-radius:6px;display:none;position:relative;z-index:10}.infowindow-header{background:#019CDE;color:#fff;font-size:2em;padding:10px}.infowindow-content-container{padding:20px;background:rgba(255,255,255,1)}.foursquare-location{margin-bottom:20px}.foursquare-link,.google-directions{color:#fff;font-weight:400;font-size:16px;text-decoration:none}.foursquare-link:hover,.google-directions:hover{font-weight:700}.foursquare-contact{margin:20px 0;font-size:18px}.foursquare-status{font-size:18px}.foursquare-price{margin-top:20px}.foursquare-rating-header{margin:20px 0}.foursquare-rating{padding:10px;border-radius:3px;color:'#fff'}@media screen and (max-width:768px){.google-directions{margin-bottom:10px}}.gm-style-iw{width:350px!important;top:17px!important;left:15px!important}.iw-bottom-gradient{position:absolute;width:270px;height:25px;bottom:10px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0,rgba(255,255,255,1) 100%);background:-webkit-linear-gradient(top,rgba(255,255,255,0) 0,rgba(255,255,255,1) 100%);background:-moz-linear-gradient(top,rgba(255,255,255,0) 0,rgba(255,255,255,1) 100%);background:-ms-linear-gradient(top,rgba(255,255,255,0) 0,rgba(255,255,255,1) 100%)}.map-container{height:100%;width:100%;position:relative}
+			</style>
+	</head>
+
+	<body>
+		<div class="se-pre-con"></div>
+
+		<section id="intro-search-container" class="intro-search-container">
+			<div id="intro-flex" class="intro-flex">
+				<h1 id="feast-on-header" class="feast-on-header">FeastOn!</h1>
+
+				<p id="feast-on-tag" class="feast-on-tag">Enter an Address to Begin Your Feast</p>
+
+				<form id="intro-search-form" class="intro-search-form">
+					<input id="intro-search-input" class="intro-search-input" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA" data-bind="value: introSearchInput, valueUpdate: 'input'">
+					<button type="submit" form="intro-search-form" id="intro-search-button" class="btn intro-search-button" data-bind="click: introSearch">Search</button>
+				</form>
+			</div>
+		</section>
+
+		<a id="open-nav" class="open-nav" data-bind="click: openNav">&#9776;</a>
+		<a id="close-nav" class="close-nav" data-bind="click: closeNav">X</a>
+
+		<nav id="list-container" class="list-container">
+			<ul id="location-list" class="location-list" data-bind="foreach: foursquareVenues">
+				<li id="list-item" class="list-item" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+				</li>
+			</ul>
+		</nav>
+
+		<section id ="search-section" class="search-section">
+			<div class="search-container">
+				<form class="search-form">
+					<label id="type-search-label" for="search-field">Search For Food Near: <small data-bind="text: userAddress" class="address-text"></small></label><br>
+					<input id="search-field" class="search-field" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+				</form>
+			</div>
+		</section>
+
+		<main>
+			<section id="infoWindowNode" class="infowindow-node">
+				<div id="infowindow-header" class="infowindow-header" data-bind="text: venueName"></div>
+
+				<div id="infowindow-content-container" class="infowindow-content-container">
+					<h2 id='foursquare-location' class="foursquare-location" data-bind="text: foursquareLocation"></h2>
+
+					<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
+
+					<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
+
+					<p id='foursquare-contact' class='foursquare-contact' data-bind='text: foursquareContact'></p>
+
+					<p id='foursquare-status' class='foursquare-status' data-bind='text: foursquareStatus'></p>
+
+					<h3 id='foursquare-price' class='foursquare-price'>Price: <strong data-bind="text: venuePrice"></strong></h3>
+
+					<h3 id='foursquare-rating-header' class='foursquare-rating-header'>Foursquare Rating:<br><br><span id='foursquare-rating' class='foursquare-rating' data-bind="text: foursquareRating"></span></h3>
+
+					<h3 id='foursquare-no-venue' class='foursquare-no-venue' data-bind="text: foursquareNoVenue"></h3>
+
+					<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
+				</div>
+			</section>
+		</main>
+
+		<div id="map-container" class="map-container"></div>
+
+		<script src="js/libs/knockout.js"></script>
+		<script src="js/libs/jquery.min.js"></script>
+		<script src="js/model.js"></script>
+		<script src="js/preload.js"></script>
+		<script src="js/error.js"></script>
+		<script src="js/init.js"></script>
+	    <script src="js/main.js"></script>
+	    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initApplication" onerror="googleError()"></script>
+	</body>
+</html>
