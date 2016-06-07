@@ -1,4 +1,4 @@
-/* Global Styles */
+
 * {
     padding: 0;
     margin: 0;
@@ -42,8 +42,6 @@ body {
         width: 100%;
     }
 }
-
-/* Loading Screen Styles */
 .loader-wrapper {
     position: absolute;
     width: 100%;
@@ -76,8 +74,6 @@ body {
         z-index: 9999;
         background: url(../images/burger1.gif) center no-repeat #333;
     }
-
-/* Intro Search Styles */
 .intro-search-container {
     position: absolute;
     z-index: 5;
@@ -140,8 +136,6 @@ body {
                 background: #016D9B;
                 transition: .5s;
             }
-
-/* Inro Search Media Queries */
 @media screen and (max-width: 1160px) {
     .intro-search-input {
         width: 300px;
@@ -166,8 +160,6 @@ body {
                     width: 100%;
                 }
 }
-
-/* Nav Styles */
 .open-nav {
     display: none;
 }
@@ -268,10 +260,6 @@ body {
         }
 
 }
-
-
-
-/* Filter Styles */
 .search-section {
     height: 200px;
     width: 100%;
@@ -355,9 +343,6 @@ body {
                     color: black;
                 }
 }
-
-
-/* InfoWindow Styles */
 .infowindow-node {
     text-align: center;
     background: #fff;
@@ -442,8 +427,6 @@ body {
     background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
     background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
 }
-
-/* Map Styles */
 .map-container {
     height: 100%;
     width: 100%;

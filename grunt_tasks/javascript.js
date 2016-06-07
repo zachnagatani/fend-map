@@ -55,6 +55,12 @@ module.exports = function(grunt, config) {
 
 					'dist/js/model.js': ['src/js/model.js'],
 
+					'dist/js/preload.js': ['src/js/preload.js'],
+
+					'dist/js/error.js': ['src/js/error.js'],
+
+					'dist/js/init.js': ['src/js/init.js'],
+
 					'dist/knockout/knockout.js': ['src/knockout/knockout.js'],
 
 					'dist/jquery/jquery.min.js': ['src/jquery/jquery.min.js']
@@ -63,7 +69,17 @@ module.exports = function(grunt, config) {
 
 			}
 
-		},
+		}
+
+		// concat: {
+		//     options: {
+		//       separator: ';',
+		//     },
+		//     dist: {
+		//       src: ['src/js/model.js', 'src/js/preload.js', 'src/js/error.js', 'src/js/init.js', 'src/js/main.js'],
+		//       dest: 'dist/js/app.js',
+		//     },
+		// },
 
 	});
 };

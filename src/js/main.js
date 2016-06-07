@@ -89,11 +89,7 @@ function initViewModel(){
 			ViewModel.infoWindowNode.style.display = "block";
 
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
-
-			// Grab the name from the venue to grab the correct index
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
-
-			// Use correct index, otherwise index will be wrong when filter is in place
 			infoWindow.open(map, allMarkers[indexByName]);
 			function getFourSquare() {
 				var venueID = ViewModel.foursquareVenues()[index].id;
