@@ -39,14 +39,14 @@ body {
     }
 }
 
-.mapContainer {
+.map-container {
 
     height: 100%;
     width: 100%;
     position: relative;
 }
 
-.searchSection {
+.search-section {
     height: 200px;
     width: 100%;
     position: fixed;
@@ -54,7 +54,7 @@ body {
     z-index: 2;
     transition: .5s;
 }
-.searchContainer {
+.search-container {
     width: 500px;
     height: 100%;
     margin: auto;
@@ -63,14 +63,14 @@ body {
     justify-content: center;
     background: rgba(255, 255, 255, .75);
 }
-.searchForm {
+.search-form {
     width: 500px;
     text-align: center;
 }
-.searchForm label {
+.search-form label {
     font-size: 1.5em;
 }
-.searchField {
+.search-field {
     height: 40px;
     width: 300px;
     margin: 20px 0 0 10px;
@@ -79,13 +79,13 @@ body {
     color: black;
 }
 
-.openNav {
+.open-nav {
     display: none;
 }
-.closeNav {
+.close-nav {
     display: none;
 }
-.listContainer {
+.list-container {
     position: absolute;
 
     z-index: 2;
@@ -98,7 +98,7 @@ body {
     justify-content: center;
     transition: .5s;
 }
-.locationList {
+.location-list {
     list-style: none;
     width: 100%;
     height: 100%;
@@ -107,7 +107,7 @@ body {
     position: relative;
 }
 
-.locationList li {
+.location-list li {
     text-align: center;
     border: 2px solid #f0f0f0;
     width: 100%;
@@ -121,13 +121,13 @@ body {
     color: #fff;
     margin: 0 0 20px 0;
 }
-.locationList li:hover {
+.location-list li:hover {
     background: #fff;
     color: #333;
 }
 
 @media screen and (max-width: 1000px) {
-    .openNav {
+    .open-nav {
         display: block;
         position: absolute;
         z-index: 4;
@@ -140,7 +140,7 @@ body {
         color: #fff;
         cursor: pointer;
     }
-    .closeNav {
+    .close-nav {
         position: absolute;
         z-index: 4;
         font-size: 30px;
@@ -152,7 +152,7 @@ body {
         line-height: 60px;
         text-align: center;
     }
-    .listContainer {
+    .list-container {
         position: absolute;
         top: 200px;
         margin-left: 0;
@@ -167,12 +167,12 @@ body {
         opacity: 0;
         transition: .5s;
     }
-    .locationList {
+    .location-list {
         height: 100%;
 
         padding-right: 0;
     }
-    .searchSection {
+    .search-section {
         height: 200px;
         width: 100%;
         position: fixed;
@@ -181,7 +181,7 @@ body {
         opacity: 0;
         transition: .5s;
     }
-    .searchContainer {
+    .search-container {
         width: 100%;
         height: 100%;
         display: flex;
@@ -189,17 +189,17 @@ body {
         justify-content: center;
         background: rgba(255, 255, 255, .75);
     }
-    .searchForm {
+    .search-form {
         width: 500px;
         text-align: center;
     }
-    .searchForm label {
+    .search-form label {
         font-size: 1em;
     }
-    .addressText {
+    .address-text {
         font-size: 1em;
     }
-    .searchField {
+    .search-field {
         height: 40px;
         width: 300px;
         margin: 20px 0 0 10px;
@@ -209,63 +209,63 @@ body {
     }
 }
 
-.infoWindowNode {
+.infoWindow-node {
     text-align: center;
     background: #fff;
     overflow: auto;
     border-radius: 6px;
     display: none;
 }
-.foursquareLocation {
+.foursquare-location {
     margin-bottom: 20px;
 }
-.foursquareLink,
-.googleDirections {
+.foursquare-link,
+.google-directions {
     color: #fff;
     font-weight: normal;
     font-size: 16px;
     text-decoration: none;
 }
-.foursquareLink:hover,
-.googleDirections:hover {
+.foursquare-link:hover,
+.google-directions:hover {
     font-weight: bold;
 }
-.infoWindowHeader {
+.infowindow-header {
     background: #019CDE;
     color: #fff;
     font-size: 2em;
     padding: 10px;
 }
-.infoWindowContentContainer {
+.infowindow-content-container {
     padding: 20px;
     background: rgba(255, 255, 255, 1);
 }
-.infoWindowImg {
+.infowindow-img {
     max-width: 100%;
     max-height: 200px;
     display: block;
     margin: 20px auto;
 }
-.foursquareRatingHeader {
+.foursquare-rating-header {
     margin: 20px 0;
 }
-.foursquareRating {
+.foursquare-rating {
     padding: 10px;
     border-radius: 3px;
     color: '#fff';
 }
-.foursquareStatus {
+.foursquare-status {
     font-size: 18px;
 }
-.foursquareContact {
+.foursquare-contact {
     margin: 20px 0;
     font-size: 18px;
 }
-.foursquarePrice {
+.foursquare-price {
     margin-top: 20px;
 }
 @media screen and (max-width: 768px) {
-    .googleDirections {
+    .google-directions {
         margin-bottom: 10px;
     }
 }
@@ -286,7 +286,7 @@ body {
     background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
-.introSearchContainer {
+.intro-search-container {
     position: absolute;
     z-index: 5;
     width: 100%;
@@ -301,72 +301,72 @@ body {
 
     transition: 1s;
 }
-.introSearchHeader {
+.intro-search-header {
     font-weight: normal;
 }
-.introFlex {
+.intro-flex {
     text-align: center;
     max-width: 50%;
     margin-top: 300px;
 }
-.introSearchForm {
+.intro-search-form {
     font-size: 18px;
     margin: 20px 0 0 0;
 }
-.introFlex p {
+.intro-flex p {
     font-size: 24px;
     line-height: 36px;
 }
-.introSearchInput,
-.introSearchButton {
+.intro-search-input,
+.intro-search-button {
     display: inline-block;
     font-size: 16px;
     padding: 10px;
     border-radius: 3px;
 }
-.introSearchInput {
+.intro-search-input {
     width: 500px;
 }
-.introSearchButton {
+.intro-search-button {
     background: rgba(1, 156, 222, 1);
     border: 1px solid transparent;
     border-radius: 3px;
     cursor: pointer;
 }
-.introSearchButton:hover {
+.intro-search-button:hover {
     background: #016D9B;
     transition: .5s;
 }
-.feastOnHeader,
-.feastOnTag,
-.introSearchButton {
+.feast-on-header,
+.feast-on-tag,
+.intro-search-button {
     color: #fff;
 }
-.feastOnTag {
+.feast-on-tag {
     font-weight: bold;
 }
 @media screen and (max-width: 1160px) {
-    .introSearchInput {
+    .intro-search-input {
         width: 300px;
     }
 }
 @media screen and (max-width: 768px) {
-    .introSearchContainer {
+    .intro-search-container {
         align-items: center;
     }
-    .introFlex {
+    .intro-flex {
         margin-top: 0;
     }
-    .introSearchInput {
+    .intro-search-input {
         width: 100%;
         margin-bottom: 10px;
     }
-    .introSearchButton {
+    .intro-search-button {
         width: 100%;
     }
 }
 
-.loaderWrapper {
+.loader-wrapper {
     position: absolute;
     width: 100%;
     height: 100%;

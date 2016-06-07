@@ -17,20 +17,20 @@
 
 		<div class="se-pre-con"></div>
 
-		<div id="introSearchContainer" class="introSearchContainer">
+		<div id="intro-search-container" class="intro-search-container">
 
-			<div id="introFlex" class="introFlex">
+			<div id="intro-flex" class="intro-flex">
 
-				<h1 id="feastOnHeader" class="feastOnHeader">FeastOn!</h1>
+				<h1 id="feast-on-header" class="feast-on-header">FeastOn!</h1>
 
 				<!-- <h1 id="introSearchHeader" class="introSearchHeader">Hey there!</h1>
 				<p>You look hungry. (And <em>beautiful!</em>)<br>And that's a problem.<br>Enter an address below so you can just be beautiful.</p> -->
-				<p id="feastOnTag" class="feastOnTag">Enter an Address to Begin Your Feast</p>
+				<p id="feast-on-tag" class="feast-on-tag">Enter an Address to Begin Your Feast</p>
 
-				<form id="introSearchForm" class="introSearchForm">
+				<form id="intro-search-form" class="intro-search-form">
 
-					<input id="introSearchInput" class="introSearchInput" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA" data-bind="value: introSearchInput, valueUpdate: 'input'">
-					<button type="submit" form="introSearchForm" id="introSearchButton" class="btn introSearchButton" data-bind="click: introSearch">Search</button>
+					<input id="intro-search-input" class="intro-search-input" type="text" placeholder="ex: 12345 ABCD Lane San Jose, CA" data-bind="value: introSearchInput, valueUpdate: 'input'">
+					<button type="submit" form="intro-search-form" id="intro-search-button" class="btn intro-search-button" data-bind="click: introSearch">Search</button>
 
 				</form>
 			</div>
@@ -38,19 +38,19 @@
 		</div>
 
 		<!-- Button to open nav on mobile -->
-		<a id="openNav" class="openNav" data-bind="click: openNav">&#9776;</a>
-		<a id="closeNav" class="closeNav" data-bind="click: closeNav">X</a>
+		<a id="open-nav" class="open-nav" data-bind="click: openNav">&#9776;</a>
+		<a id="close-nav" class="close-nav" data-bind="click: closeNav">X</a>
 
 
-		<section id ="searchSection" class="searchSection">
-			<div class="searchContainer">
+		<section id ="search-section" class="search-section">
+			<div class="search-container">
 				<!-- Search Form -->
-				<form class="searchForm">
+				<form class="search-form">
 
-					<label id="typeSearchLabel" for="searchField">Search For Food Near: <small data-bind="text: userAddress" class="addressText"></small></label><br>
+					<label id="type-search-label" for="search-field">Search For Food Near: <small data-bind="text: userAddress" class="address-text"></small></label><br>
 
-					<i class="fa fa-search" aria-hidden="true"></i>
-					<input class="searchField" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					<!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+					<input class="search-field" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
 				</form>
 			</div>
@@ -59,12 +59,12 @@
 		</section>
 
 		<!-- Navigation container -->
-		<nav id="listContainer" class="listContainer">
+		<nav id="list-container" class="list-container">
 
 			<!-- List of Locations -->
-			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
+			<ul id="location-list" class="location-list" data-bind="foreach: foursquareVenues">
 
-				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+				<li id="list-item" class="list-item" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
 				<!-- <li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index()), style: { display: $parent.foursquareVenuesFilter() >= 0 ? 'flex' : 'none' }"> -->
 
 
@@ -81,29 +81,29 @@
 		</nav>
 
 		<!-- Div to contain infoWindow data -->
-		<div id="infoWindowNode" class="infoWindowNode">
+		<div id="infowindow-node" class="infowindow-node">
 
-			<div id="infoWindowHeader" class="infoWindowHeader" data-bind="text: venueName">
+			<div id="infowindow-header" class="infowindow-header" data-bind="text: venueName">
 			</div>
 
-			<div id="infoWindowContentContainer" class="infoWindowContentContainer">
+			<div id="infowindow-content-container" class="infowindow-content-container">
 
-				<h2 id='foursquareLocation' class="foursquareLocation" data-bind="text: foursquareLocation"></h2>
+				<h2 id='foursquare-location' class="foursquare-location" data-bind="text: foursquareLocation"></h2>
 
-				<a href="" target="_blank" id="googleDirections" class="googleDirections btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
+				<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
 
 				<!-- WHY YOU NO WORK MR ANCHOR?! -->
-				<a target='_blank' id='foursquareLink' class='foursquareLink btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
+				<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
 
-				<p id='foursquareContact' class='foursquareContact' data-bind='text: foursquareContact'></p>
+				<p id='foursquare-contact' class='foursquare-contact' data-bind='text: foursquareContact'></p>
 
-				<p id='foursquareStatus' class='foursquareStatus' data-bind='text: foursquareStatus'></p>
+				<p id='foursquare-status' class='foursquare-status' data-bind='text: foursquareStatus'></p>
 
-				<h3 id='foursquarePrice' class='foursquarePrice'>Price: <strong data-bind="text: venuePrice"></strong></h3>
+				<h3 id='foursquare-price' class='foursquare-price'>Price: <strong data-bind="text: venuePrice"></strong></h3>
 
-				<h3 id='foursquareRatingHeader' class='foursquareRatingHeader'>Foursquare Rating: <span id='foursquareRating' class='foursquareRating' data-bind="text: foursquareRating"></span></h3>
+				<h3 id='foursquare-rating-header' class='foursquare-rating-header'>Foursquare Rating: <span id='foursquare-rating' class='foursquare-rating' data-bind="text: foursquareRating"></span></h3>
 
-				<h3 id='foursquareNoVenue' class='foursquareNoVenue' data-bind="text: foursquareNoVenue"></h3>
+				<h3 id='foursquare-no-venue' class='foursquare-no-venue' data-bind="text: foursquareNoVenue"></h3>
 
 				<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
 
@@ -112,7 +112,7 @@
 		</div>
 
 		<!-- Div to contain map -->
-		<div id="mapContainer" class="mapContainer">
+		<div id="map-container" class="map-container">
 		</div>
 
 	<!-- Allow us to first utilize KO, then jquery, then load our data, then provide the callback function for the Google Maps API -->
