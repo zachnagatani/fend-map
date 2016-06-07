@@ -30,7 +30,7 @@ function initApplication() {
 	var userCityGeocode = {};
 	var allMarkers = [];
 	var infoWindow = new google.maps.InfoWindow({
-		content: "infowindow-node"
+		content: infoWindowNode
 	});
 	var foursquareVenueNames = [];
 
@@ -213,7 +213,7 @@ function initApplication() {
 		foursquareNoVenue: ko.observable(),
 		foursquareError: ko.observable(false),
 
-		infoWindowNode: document.getElementById('infowindow-node'),
+		infoWindowNode: document.getElementById('infoWindowNode'),
 
 		infoWindowHeader: document.getElementById('infowindow-header'),
 		openInfoWindow: function(index) {
