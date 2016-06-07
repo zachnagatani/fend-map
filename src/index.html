@@ -7,12 +7,13 @@
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="shortcut icon" type="img/ico" href="images/favicon.ico">
 	</head>
 
 	<body>
 		<div class="se-pre-con"></div>
 
-		<div id="intro-search-container" class="intro-search-container">
+		<section id="intro-search-container" class="intro-search-container">
 			<div id="intro-flex" class="intro-flex">
 				<h1 id="feast-on-header" class="feast-on-header">FeastOn!</h1>
 
@@ -23,7 +24,7 @@
 					<button type="submit" form="intro-search-form" id="intro-search-button" class="btn intro-search-button" data-bind="click: introSearch">Search</button>
 				</form>
 			</div>
-		</div>
+		</section>
 
 		<a id="open-nav" class="open-nav" data-bind="click: openNav">&#9776;</a>
 		<a id="close-nav" class="close-nav" data-bind="click: closeNav">X</a>
@@ -45,29 +46,31 @@
 			</div>
 		</section>
 
-		<div id="infoWindowNode" class="infowindow-node">
-			<div id="infowindow-header" class="infowindow-header" data-bind="text: venueName"></div>
+		<main>
+			<section id="infoWindowNode" class="infowindow-node">
+				<div id="infowindow-header" class="infowindow-header" data-bind="text: venueName"></div>
 
-			<div id="infowindow-content-container" class="infowindow-content-container">
-				<h2 id='foursquare-location' class="foursquare-location" data-bind="text: foursquareLocation"></h2>
+				<div id="infowindow-content-container" class="infowindow-content-container">
+					<h2 id='foursquare-location' class="foursquare-location" data-bind="text: foursquareLocation"></h2>
 
-				<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
+					<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
 
-				<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
+					<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
 
-				<p id='foursquare-contact' class='foursquare-contact' data-bind='text: foursquareContact'></p>
+					<p id='foursquare-contact' class='foursquare-contact' data-bind='text: foursquareContact'></p>
 
-				<p id='foursquare-status' class='foursquare-status' data-bind='text: foursquareStatus'></p>
+					<p id='foursquare-status' class='foursquare-status' data-bind='text: foursquareStatus'></p>
 
-				<h3 id='foursquare-price' class='foursquare-price'>Price: <strong data-bind="text: venuePrice"></strong></h3>
+					<h3 id='foursquare-price' class='foursquare-price'>Price: <strong data-bind="text: venuePrice"></strong></h3>
 
-				<h3 id='foursquare-rating-header' class='foursquare-rating-header'>Foursquare Rating: <span id='foursquare-rating' class='foursquare-rating' data-bind="text: foursquareRating"></span></h3>
+					<h3 id='foursquare-rating-header' class='foursquare-rating-header'>Foursquare Rating:<br><br><span id='foursquare-rating' class='foursquare-rating' data-bind="text: foursquareRating"></span></h3>
 
-				<h3 id='foursquare-no-venue' class='foursquare-no-venue' data-bind="text: foursquareNoVenue"></h3>
+					<h3 id='foursquare-no-venue' class='foursquare-no-venue' data-bind="text: foursquareNoVenue"></h3>
 
-				<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
-			</div>
-		</div>
+					<small><em>Location data provided by <a href="https://foursquare.com/" target="_blank">Foursquare.</a></em></small>
+				</div>
+			</section>
+		</main>
 
 		<div id="map-container" class="map-container"></div>
 

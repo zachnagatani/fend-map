@@ -178,7 +178,7 @@ body {
 
 .list-container {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     margin-left: 20px;
     width: 230px;
     height: 100%;
@@ -313,7 +313,7 @@ body {
                 color: black;
             }
 
-@media screen and (max-width: 100px) {
+@media screen and (max-width: 1000px) {
     .search-section {
         height: 200px;
         width: 100%;
@@ -364,6 +364,8 @@ body {
     overflow: auto;
     border-radius: 6px;
     display: none;
+    position: relative;
+    z-index: 10;
 }
 
     .infowindow-header {

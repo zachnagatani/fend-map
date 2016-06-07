@@ -5,19 +5,6 @@ function preLoad() {
 
 }
 preLoad();
-function googleMapsTimeout() {
-
-
-	var googleMapsTimeout = setTimeout(function() {
-		var loaderWrapper = document.getElementById('loaderWrapper');
-		if (typeof google === 'object' && typeof google.maps === 'object') {
-			loaderWrapper.style.opacity = "0";
-			loaderWrapper.style.zIndex = "0";
-		} else {
-			alert('This is taking longer than usual... reload the page. Homie.');
-		}
-	}, 5000);
-}
 
 function googleError() {
 	alert('Google maps failed to load. Please refresh the page and try again.');
@@ -35,13 +22,11 @@ function initApplication() {
 	var foursquareVenueNames = [];
 
 	function venueNames() {
-
 		foursquareVenues.forEach(function(venue){
 			foursquareVenueNames.push(venue.name);
 		});
 
 		console.log(foursquareVenueNames);
-
 	};
 
 	function styleInfoWindow() {
@@ -53,25 +38,36 @@ function initApplication() {
 			 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
 			 */
 			var iwBackground = iwOuter.prev();
+
 			iwBackground.children(':nth-child(2)').css({
 				'display': 'none'
 			});
+
 			iwBackground.children(':nth-child(4)').css({
 				'display': 'none'
 			});
 
+			iwBackground.children(':nth-child(1)').css({
+				'position': 'relative',
+				'z-index': '0'
+			});
+
 			iwBackground.children(':nth-child(3)').find('div').children().css({
 				'box-shadow': 'none',
-				'z-index': '1',
-				'background': 'rgba(255, 255, 255, 1)'
+				'z-index': '-1',
+				'background': 'rgba(255, 255, 255, 1)',
+				'position': 'relative',
+				'z-index': '0'
 			});
 
 			iwBackground.children(':nth-child(3)').find('div').children().css({
 				'z-index': '1'
 			});
+
 			var iwCloseBtn = iwOuter.next();
 
 			var iwCloseBtnX = iwCloseBtn.next();
+
 			iwCloseBtn.css({
 				width: "25px",
 				height: "25px",
@@ -83,24 +79,24 @@ function initApplication() {
 				'box-shadow': '0 0 5px #f0f0f0', // 3D effect to highlight the button
 				background: '#fff'
 			});
+
 			iwCloseBtn.children(':nth-child(1)').css({
 				top: '-330px',
 				left: '3px'
 			});
+
 			iwCloseBtn.mouseout(function() {
 				$(this).css({
 					opacity: '1'
 				});
 			});
-
 		});
-
 	}
 
 	styleInfoWindow();
+
 	var ViewModel = {
 		foursquareVenues: ko.observableArray([]),
-
 		foursquareVenuesList: ko.observableArray([foursquareVenues]),
 		markerList: ko.observableArray([allMarkers]),
 		query: ko.observable(''),
@@ -109,72 +105,32 @@ function initApplication() {
 		stopRefreshOnEnter: $(function() {
 		  	  $("form").submit(function() { return false; });
 			}),
+
 		subscribeToSearch: function() {
 			ViewModel.query.subscribe(ViewModel.search);
 		},
+
 		search: function(value) {
 			allMarkers.forEach(function(marker) {
-
 				marker.setVisible(false);
-
 			});
+
 			for (var x in allMarkers) {
 				if (allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-
 					allMarkers[x].setVisible(true);
-
 				}
-
 			}
-			// var listItemsList = document.getElementsByClassName('listItem');
-			// for (var i = 0; i < listItemsList.length; i++) {
-
-			// 	listItemsList[i].style.display = "none";
-
-			// }
-			// for (var i in listItemsList) {
-			// 	if (foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-
-			// 		listItemsList[i].style.display = "flex";
-
-			// 	}
-
-			// }
-
-			// var listItemsList = document.getElementsByClassName('listItem');
-
-			// for (var i in listItemsList) {
-
-
-			// 		ViewModel.foursquareVenuesFilter(listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0);
-
-
-
-			// }
 
 			ViewModel.foursquareVenues.removeAll();
-
-
 			for (var venue in foursquareVenues) {
 				if (foursquareVenues[venue].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || foursquareVenues[venue].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-
 					ViewModel.foursquareVenues.push(foursquareVenues[venue]);
-
-
 				}
-
 			}
-
-
 		},
+
 		venueName: ko.observable(),
-		listContainer: document.getElementById('list-container'),
 
-		openNavButton: document.getElementById('open-nav'),
-
-		closeNavButton: document.getElementById('close-nav'),
-
-		searchSection: document.getElementById('search-section'),
 		openNav: function() {
 			ViewModel.listContainer.style.zIndex = "2";
 			ViewModel.listContainer.style.opacity = "1";
@@ -185,8 +141,8 @@ function initApplication() {
 			ViewModel.searchSection.style.zIndex = "3";
 			ViewModel.searchSection.style.opacity = "1";
 		},
-		closeNav: function() {
 
+		closeNav: function() {
 			ViewModel.listContainer.style.zIndex = "0";
 			ViewModel.listContainer.style.opacity = "0";
 
@@ -195,13 +151,14 @@ function initApplication() {
 
 			ViewModel.closeNavButton.style.display = "none";
 			ViewModel.openNavButton.style.display = "block";
-
 		},
+
 		closeNavOnSelect: function() {
 			if ($(window).width() < 768) {
 				ViewModel.closeNav();
 			}
 		},
+
 		venuePrice: ko.observable(),
 		foursquareLocation: ko.observable(),
 		googleDirections: ko.observable(),
@@ -212,17 +169,16 @@ function initApplication() {
 		foursquareRating: ko.observable(),
 		foursquareNoVenue: ko.observable(),
 		foursquareError: ko.observable(false),
-
 		infoWindowNode: document.getElementById('infoWindowNode'),
 
-		infoWindowHeader: document.getElementById('infowindow-header'),
 		openInfoWindow: function(index) {
 			ViewModel.infoWindowNode.style.display = "block";
+
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
+
 			// Grab the name from the venue to grab the correct index
 			var indexByName = foursquareVenueNames.indexOf(ViewModel.venueName());
-			console.log(indexByName);
-			console.log(ViewModel.venueName().toString());
+
 			// Use correct index, otherwise index will be wrong when filter is in place
 			infoWindow.open(map, allMarkers[indexByName]);
 			function getFourSquare() {
@@ -262,52 +218,44 @@ function initApplication() {
 						background: '#fff',
 					});
 
-					// $("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
 					alert("Foursquare could not be reached at this time.");
-
 				});
-
 			}
-
 			getFourSquare();
+
 			if (allMarkers[indexByName].getAnimation() !== null) {
-
 				allMarkers[indexByName].setAnimation(null);
-
 			} else {
-
 				allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 				setTimeout(function() {
 					allMarkers[indexByName].setAnimation(null);
 				}, 750);
-
 			}
-
 		},
 
 		userAddress: ko.observable(),
+
 		initMap: function() {
 			geocoder = new google.maps.Geocoder();
+
 			var mapCenter = {
 				lat: 37.3036,
 				lng: -121.8974
 			};
 
 			var zoomVal;
-
 			if($(window).width() <= 768) {
 				zoomVal = 11;
 			} else {
 				zoomVal = 14;
 			}
 
-			console.log(zoomVal);
 			map = new google.maps.Map(document.getElementById('map-container'), {
 				center: mapCenter,
 				zoom: zoomVal,
-
 				mapTypeControl: false
 			});
+
 			if (geocoder) {
 				geocoder.geocode({
 					'address': userCity
@@ -320,12 +268,14 @@ function initApplication() {
 					}
 				});
 			}
+
 			ViewModel.createMarkers();
+
 			google.maps.event.addDomListener(window, 'resize', function() {
 				map.setCenter(userCityGeocode);
 			});
-
 		},
+
 		createMarkers: function() {
 			foursquareVenues.forEach(function(location) {
 				location.coordinates = {
@@ -337,20 +287,17 @@ function initApplication() {
 					map: map,
 					title: location.name,
 					animation: google.maps.Animation.DROP,
-
 				});
+
 				allMarkers.push(marker);
+
 				function createInfoWindow() {
-
 					ViewModel.infoWindowNode.style.display = "block";
-
 					infoWindow.open(map, marker);
-
 				}
+
 				function getFourSquare() {
 					ViewModel.venueName(marker.title);
-
-
 					var venueID = location.id;
 					var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 					$.ajax({
@@ -384,107 +331,77 @@ function initApplication() {
 						ViewModel.foursquareContact('');
 						ViewModel.foursquareStatus('');
 						ViewModel.foursquareRating('');
+
 						$('#foursquare-rating').css({
 							background: '#fff',
 						});
 
-
-
-						// $("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
-					alert("Foursquare could not be reached at this time.");
-
-
+						alert("Foursquare could not be reached at this time.");
 					});
 
 				}
+
 				function toggleBounce() {
 					if (marker.getAnimation() !== null) {
-
 						marker.setAnimation(null);
-
 					} else {
-
 						marker.setAnimation(google.maps.Animation.BOUNCE);
 						setTimeout(function() {
 							marker.setAnimation(null);
 						}, 750);
-
 					}
 				}
+
 				marker.addListener('click', function() {
-
 					createInfoWindow();
-
 					getFourSquare();
-
 					toggleBounce();
-
 				});
-
 			});
-
 		},
 
 		introSearchInput: ko.observable(""),
+
 		introSearch: function() {
-			// var introSearchInput = document.getElementById('introSearchInput');
 			userCity = ViewModel.introSearchInput();
-			console.log(userCity);
 			function getFoursquareVenues() {
 				var foursquareVenuesURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() + "&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 				$.ajax({
-
 					dataType: "jsonp",
 					url: foursquareVenuesURL
-
 				}).done(function(data) {
-
-					console.log(data);
-
 					if (!data.response.groups) {
 						alert('Error! Please enter a properly formatted address or city.');
 					} else {
 						var foursquareVenueResponseArray = data.response.groups[0].items;
 						foursquareVenueResponseArray.forEach(function(venue) {
 							foursquareVenues.push(venue.venue);
-
 						});
 						ViewModel.initMap();
 						var closeSearch = function() {
 							var introSearchContainer = document.getElementById('intro-search-container');
 							introSearchContainer.style.opacity = "0";
 							var displayTimeout = setTimeout(function() {
-
 								introSearchContainer.style.display = "none";
-
 							}, 1000);
-
 						};
-
 						closeSearch();
 						(function() {
 							foursquareVenues.forEach(function(venue) {
 								ViewModel.foursquareVenues.push(venue);
 							});
 							console.log(ViewModel.foursquareVenues());
-
 						})();
 						ViewModel.userAddress(userCity);
 						venueNames();
-
 					}
 
 				}).fail(function() {
 					alert("Sorry; the Foursquare servers could not be reached.");
-
 				});
-
 			}
-
 			getFoursquareVenues();
-
 		},
-
 	}; //ViewModel Closing Brace
 
 	ko.applyBindings(ViewModel);
