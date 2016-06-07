@@ -32,6 +32,18 @@ function initApplication() {
 	var infoWindow = new google.maps.InfoWindow({
 		content: infoWindowNode
 	});
+	var foursquareVenueNames = [];
+
+	function venueNames() {
+
+		foursquareVenues.forEach(function(venue){
+			foursquareVenueNames.push(venue.name);
+		});
+
+		console.log(foursquareVenueNames);
+
+	};
+
 	function styleInfoWindow() {
 		google.maps.event.addListener(infoWindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
@@ -92,6 +104,8 @@ function initApplication() {
 		foursquareVenuesList: ko.observableArray([foursquareVenues]),
 		markerList: ko.observableArray([allMarkers]),
 		query: ko.observable(''),
+		foursquareVenuesFilter: ko.observable(),
+
 		stopRefreshOnEnter: $(function() {
 		  	  $("form").submit(function() { return false; });
 			}),
@@ -112,20 +126,45 @@ function initApplication() {
 				}
 
 			}
-			var listItemsList = document.getElementsByClassName('listItem');
-			for (var i = 0; i < listItemsList.length; i++) {
+			// var listItemsList = document.getElementsByClassName('listItem');
+			// for (var i = 0; i < listItemsList.length; i++) {
 
-				listItemsList[i].style.display = "none";
+			// 	listItemsList[i].style.display = "none";
 
-			}
-			for (var i in listItemsList) {
-				if (foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+			// }
+			// for (var i in listItemsList) {
+			// 	if (foursquareVenues[i].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 
-					listItemsList[i].style.display = "flex";
+			// 		listItemsList[i].style.display = "flex";
+
+			// 	}
+
+			// }
+
+			// var listItemsList = document.getElementsByClassName('listItem');
+
+			// for (var i in listItemsList) {
+
+
+			// 		ViewModel.foursquareVenuesFilter(listItemsList[i].textContent.toLowerCase().indexOf(value.toLowerCase()) >= 0);
+
+
+
+			// }
+
+			ViewModel.foursquareVenues.removeAll();
+
+
+			for (var venue in foursquareVenues) {
+				if (foursquareVenues[venue].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || foursquareVenues[venue].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+
+					ViewModel.foursquareVenues.push(foursquareVenues[venue]);
+
 
 				}
 
 			}
+
 
 		},
 		venueName: ko.observable(),
@@ -180,8 +219,12 @@ function initApplication() {
 		openInfoWindow: function(index) {
 			ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
-			console.log(ViewModel.venueName());
-			infoWindow.open(map, allMarkers[index]);
+			// Grab the name from the venue to grab the correct index
+			var indexByName = foursquareVenueNames.indexOf(ViewModel.venueName());
+			console.log(indexByName);
+			console.log(ViewModel.venueName().toString());
+			// Use correct index, otherwise index will be wrong when filter is in place
+			infoWindow.open(map, allMarkers[indexByName]);
 			function getFourSquare() {
 				var venueID = ViewModel.foursquareVenues()[index].id;
 				var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID + "?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
@@ -221,15 +264,15 @@ function initApplication() {
 			}
 
 			getFourSquare();
-			if (allMarkers[index].getAnimation() !== null) {
+			if (allMarkers[indexByName].getAnimation() !== null) {
 
-				allMarkers[index].setAnimation(null);
+				allMarkers[indexByName].setAnimation(null);
 
 			} else {
 
-				allMarkers[index].setAnimation(google.maps.Animation.BOUNCE);
+				allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 				setTimeout(function() {
-					allMarkers[index].setAnimation(null);
+					allMarkers[indexByName].setAnimation(null);
 				}, 750);
 
 			}
@@ -411,6 +454,7 @@ function initApplication() {
 
 						})();
 						ViewModel.userAddress(userCity);
+						venueNames();
 
 					}
 

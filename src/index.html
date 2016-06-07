@@ -65,6 +65,8 @@
 			<ul id="locationList" class="locationList" data-bind="foreach: foursquareVenues">
 
 				<li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+				<!-- <li id="listItem" class="listItem" data-bind="click: $parent.openInfoWindow.bind($data, $index()), style: { display: $parent.foursquareVenuesFilter() >= 0 ? 'flex' : 'none' }"> -->
+
 
 					<!-- <div id="anchorContainer" class="anchorContainer" data-bind="click: $parent.closeNavOnSelect"> -->
 
