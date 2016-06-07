@@ -115,18 +115,18 @@ function initApplication() {
 				marker.setVisible(false);
 			});
 
-			for (var x in allMarkers) {
-				if (allMarkers[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-					allMarkers[x].setVisible(true);
+			allMarkers.forEach(function(marker){
+				if (marker.title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+					marker.setVisible(true);
 				}
-			}
+			});
 
 			ViewModel.foursquareVenues.removeAll();
-			for (var venue in foursquareVenues) {
-				if (foursquareVenues[venue].categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || foursquareVenues[venue].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-					ViewModel.foursquareVenues.push(foursquareVenues[venue]);
+			foursquareVenues.forEach(function(venue){
+				if (venue.categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >= 0 || venue.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+					ViewModel.foursquareVenues.push(venue);
 				}
-			}
+			});
 		},
 
 		venueName: ko.observable(),
