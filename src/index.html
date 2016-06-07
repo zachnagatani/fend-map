@@ -28,6 +28,14 @@
 		<a id="open-nav" class="open-nav" data-bind="click: openNav">&#9776;</a>
 		<a id="close-nav" class="close-nav" data-bind="click: closeNav">X</a>
 
+		<nav id="list-container" class="list-container">
+			<ul id="location-list" class="location-list" data-bind="foreach: foursquareVenues">
+				<li id="list-item" class="list-item" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
+						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+				</li>
+			</ul>
+		</nav>
+
 		<section id ="search-section" class="search-section">
 			<div class="search-container">
 				<form class="search-form">
@@ -36,14 +44,6 @@
 				</form>
 			</div>
 		</section>
-
-		<nav id="list-container" class="list-container">
-			<ul id="location-list" class="location-list" data-bind="foreach: foursquareVenues">
-				<li id="list-item" class="list-item" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
-						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
-				</li>
-			</ul>
-		</nav>
 
 		<div id="infoWindowNode" class="infowindow-node">
 			<div id="infowindow-header" class="infowindow-header" data-bind="text: venueName"></div>
