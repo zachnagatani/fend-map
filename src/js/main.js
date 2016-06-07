@@ -211,7 +211,7 @@ function initApplication() {
 		foursquareStatus: ko.observable(),
 		foursquareRating: ko.observable(),
 		foursquareNoVenue: ko.observable(),
-		foursquareError: ko.observable(),
+		foursquareError: ko.observable(false),
 
 		infoWindowNode: document.getElementById('infoWindowNode'),
 
@@ -233,31 +233,37 @@ function initApplication() {
 					url: foursquareURL
 				}).done(function(data) {
 					console.log(data);
-					if (!("venue" in data.response)) {
-						$('#infoWindowContentContainer').empty();
-						viewModel.foursquareNoVenue('Sorry! Foursquare data could not be found for this location');
-					} else {
-						var venueInfo = data.response.venue;
-						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
-						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
-						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-						ViewModel.googleDirections(googleDirectionsURL);
-						ViewModel.foursquareURL(venueInfo.url);
-						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
-						ViewModel.foursquareStatus(venueInfo.hours.status);
-						if (venueInfo.rating !== undefined) {
-							ViewModel.foursquareRating(venueInfo.rating);
-						}
-
-						$('#foursquareRating').css({
-							background: '#' + venueInfo.ratingColor
-						});
-
+					var venueInfo = data.response.venue;
+					ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
+					ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+					var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+					ViewModel.googleDirections(googleDirectionsURL);
+					ViewModel.foursquareURL(venueInfo.url);
+					ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
+					ViewModel.foursquareStatus(venueInfo.hours.status);
+					if (venueInfo.rating !== undefined) {
+						ViewModel.foursquareRating(venueInfo.rating);
 					}
+
+					$('#foursquareRating').css({
+						background: '#' + venueInfo.ratingColor
+					});
+
 				}).fail(function() {
-					$('#infoWindowContentContainer').empty();
-					$("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
-					// alert("Foursquare could not be reached at this time.");
+					ViewModel.foursquareError(true);
+					ViewModel.venuePrice('');
+					ViewModel.foursquareLocation('');;
+					ViewModel.googleDirections('');
+					ViewModel.foursquareURL('#');
+					ViewModel.foursquareContact('');
+					ViewModel.foursquareStatus('');
+					ViewModel.foursquareRating('');
+					$('#foursquareRating').css({
+						background: '#fff',
+					});
+
+					// $("#infoWindowContentContainer").append("<h3>Foursquare could not be reached at this time.</h3>");
+					alert("Foursquare could not be reached at this time.");
 
 				});
 
@@ -352,31 +358,41 @@ function initApplication() {
 						url: foursquareURL
 					}).done(function(data) {
 						console.log(data);
-						if (!("venue" in data.response)) {
-							$('#infoWindowContentContainer').empty();
-							viewModel.foursquareNoVenue('Sorry! Foursquare data could not be found for this location');
-
-						} else {
-							var venueInfo = data.response.venue;
-							ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
-							ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
-							var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-							ViewModel.googleDirections(googleDirectionsURL);
-							ViewModel.foursquareURL(venueInfo.url);
-							ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
-							ViewModel.foursquareStatus(venueInfo.hours.status);
-							if (venueInfo.rating !== undefined) {
-								ViewModel.foursquareRating(venueInfo.rating);
-							}
-
-							$('#foursquareRating').css({
-								background: '#' + venueInfo.ratingColor
-							});
-
+						var venueInfo = data.response.venue;
+						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
+						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+						ViewModel.googleDirections(googleDirectionsURL);
+						ViewModel.foursquareURL(venueInfo.url);
+						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
+						ViewModel.foursquareStatus(venueInfo.hours.status);
+						if (venueInfo.rating !== undefined) {
+							ViewModel.foursquareRating(venueInfo.rating);
 						}
+
+						$('#foursquareRating').css({
+							background: '#' + venueInfo.ratingColor
+						});
+
 					}).fail(function() {
-						$("#infoWindowContentContainer").empty();
-						$("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
+						ViewModel.foursquareError(true);
+						console.log(foursquareError());
+						ViewModel.venuePrice('');
+						ViewModel.foursquareLocation('');;
+						ViewModel.googleDirections('');
+						ViewModel.foursquareURL('');
+						ViewModel.foursquareContact('');
+						ViewModel.foursquareStatus('');
+						ViewModel.foursquareRating('');
+						$('#foursquareRating').css({
+							background: '#fff',
+						});
+
+
+
+						// $("#infoWindowNode").append("<h3>Foursquare could not be reached at this time.</h3>");
+					alert("Foursquare could not be reached at this time.");
+
 
 					});
 
