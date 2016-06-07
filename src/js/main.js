@@ -8,13 +8,13 @@ function initViewModel(){
 
 		foursquareVenueNames: [],
 
-	venueNames: function() {
-		foursquareVenues.forEach(function(venue){
-			ViewModel.foursquareVenueNames.push(venue.name);
-		});
+		venueNames: function() {
+			foursquareVenues.forEach(function(venue){
+				ViewModel.foursquareVenueNames.push(venue.name);
+			});
 
-		console.log(ViewModel.foursquareVenueNames);
-	},
+			console.log(ViewModel.foursquareVenueNames);
+		},
 
 		stopRefreshOnEnter: $(function() {
 		  	  $("form").submit(function() { return false; });
@@ -44,6 +44,11 @@ function initViewModel(){
 		},
 
 		venueName: ko.observable(),
+
+		listContainer: document.getElementById('list-container'),
+		openNavButton: document.getElementById('open-nav'),
+		closeNavButton: document.getElementById('close-nav'),
+		searchSection: document.getElementById('search-section'),
 
 		openNav: function() {
 			ViewModel.listContainer.style.zIndex = "2";
@@ -118,7 +123,7 @@ function initViewModel(){
 				}).fail(function() {
 					ViewModel.foursquareError(true);
 					ViewModel.venuePrice('');
-					ViewModel.foursquareLocation('');;
+					ViewModel.foursquareLocation('');
 					ViewModel.googleDirections('');
 					ViewModel.foursquareURL('#');
 					ViewModel.foursquareContact('');
@@ -136,7 +141,7 @@ function initViewModel(){
 			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
-			}, 750);
+			}, 1400);
 		},
 
 		userAddress: ko.observable(),
@@ -231,7 +236,7 @@ function initViewModel(){
 						ViewModel.foursquareError(true);
 						console.log(foursquareError());
 						ViewModel.venuePrice('');
-						ViewModel.foursquareLocation('');;
+						ViewModel.foursquareLocation('');
 						ViewModel.googleDirections('');
 						ViewModel.foursquareURL('');
 						ViewModel.foursquareContact('');
@@ -251,7 +256,7 @@ function initViewModel(){
 					marker.setAnimation(google.maps.Animation.BOUNCE);
 					setTimeout(function() {
 						marker.setAnimation(null);
-					}, 750);
+					}, 1400);
 				}
 
 				marker.addListener('click', function() {
@@ -262,7 +267,7 @@ function initViewModel(){
 			});
 		},
 
-		introSearchInput: ko.observable(""),
+		introSearchInput: ko.observable(''),
 
 		introSearch: function() {
 			userCity = ViewModel.introSearchInput();

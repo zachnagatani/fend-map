@@ -1,7 +1,7 @@
 function initApplication() {
 	var map;
 	var	geocoder;
-		userCity = "";
+		userCity = '';
 		userCityGeocode = {};
 		allMarkers = [];
 		infoWindow = new google.maps.InfoWindow({
