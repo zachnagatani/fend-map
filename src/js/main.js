@@ -223,14 +223,10 @@ function initApplication() {
 			}
 			getFourSquare();
 
-			if (allMarkers[indexByName].getAnimation() !== null) {
+			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
-			} else {
-				allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
-				setTimeout(function() {
-					allMarkers[indexByName].setAnimation(null);
-				}, 750);
-			}
+			}, 750);
 		},
 
 		userAddress: ko.observable(),
