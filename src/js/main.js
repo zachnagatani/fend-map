@@ -111,7 +111,7 @@ function initViewModel(){
 					ViewModel.googleDirections(googleDirectionsURL);
 					ViewModel.foursquareURL(venueInfo.url);
 					ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
-					ViewModel.foursquareStatus(venueInfo.hours.status);
+					venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
 					if (venueInfo.rating !== undefined) {
 						ViewModel.foursquareRating(venueInfo.rating);
 					}
@@ -142,6 +142,8 @@ function initViewModel(){
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
+
+			// ViewModel.moveFilter();
 		},
 
 		userAddress: ko.observable(),
@@ -218,12 +220,12 @@ function initViewModel(){
 						console.log(data);
 						var venueInfo = data.response.venue;
 						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
-						ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
+						venueInfo.location.address && venueInfo.location.city && venueInfo.location.state ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
 						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
 						ViewModel.googleDirections(googleDirectionsURL);
 						ViewModel.foursquareURL(venueInfo.url);
 						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
-						ViewModel.foursquareStatus(venueInfo.hours.status);
+						venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
 						if (venueInfo.rating !== undefined) {
 							ViewModel.foursquareRating(venueInfo.rating);
 						}
@@ -234,7 +236,6 @@ function initViewModel(){
 
 					}).fail(function() {
 						ViewModel.foursquareError(true);
-						console.log(foursquareError());
 						ViewModel.venuePrice('');
 						ViewModel.foursquareLocation('');
 						ViewModel.googleDirections('');
@@ -263,6 +264,7 @@ function initViewModel(){
 					createInfoWindow();
 					getFourSquare();
 					toggleBounce();
+					// ViewModel.moveFilter();
 				});
 			});
 		},
@@ -309,6 +311,10 @@ function initViewModel(){
 			}
 			getFoursquareVenues();
 		},
+
+		// moveFilter: function() {
+
+		// }
 	}; //ViewModel Closing Brace
 
 	ko.applyBindings(ViewModel);
