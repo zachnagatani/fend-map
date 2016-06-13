@@ -108,13 +108,12 @@ function initViewModel(){
 					venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo.attributes.groups[0].summary) : ViewModel.venuePrice('Price info is not available for this location.');
 					venueInfo.location.address !== undefined && venueInfo.location.city !== undefined && venueInfo.location.state !== undefined ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
 					var googleDirectionsURL;
-					ViewModel.foursquareLocation('Address is not available') ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+					ViewModel.foursquareLocation() === 'Address is not available' ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
 					googleDirectionsURL !== null ? ViewModel.googleDirections(googleDirectionsURL) : ViewModel.googleDirections(null);
 					venueInfo.url ? ViewModel.foursquareURL(venueInfo.url) : ViewModel.foursquareURL(null);
 					venueInfo.contact.formattedPhone ? ViewModel.foursquareContact(venueInfo.contact.formattedPhone) : ViewModel.foursquareContact('Phone number not avaialable');
 					venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
 					venueInfo.rating !== undefined ? ViewModel.foursquareRating(venueInfo.rating) : ViewModel.foursquareRating('No Rating Avaialable');
-
 					venueInfo.ratingColor ? $('#foursquare-rating').css({
 						background: '#' + venueInfo.ratingColor
 					}) : $('#foursquare-rating').css({
@@ -223,13 +222,12 @@ function initViewModel(){
 						venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo.attributes.groups[0].summary) : ViewModel.venuePrice('Price info is not available for this location.');
 						venueInfo.location.address !== undefined && venueInfo.location.city !== undefined && venueInfo.location.state !== undefined ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
 						var googleDirectionsURL;
-						ViewModel.foursquareLocation('Address is not available') ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+						ViewModel.foursquareLocation() === 'Address is not available' ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
 						googleDirectionsURL !== null ? ViewModel.googleDirections(googleDirectionsURL) : ViewModel.googleDirections(null);
 						venueInfo.url ? ViewModel.foursquareURL(venueInfo.url) : ViewModel.foursquareURL(null);
 						venueInfo.contact.formattedPhone ? ViewModel.foursquareContact(venueInfo.contact.formattedPhone) : ViewModel.foursquareContact('Phone number not avaialable');
 						venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
 						venueInfo.rating !== undefined ? ViewModel.foursquareRating(venueInfo.rating) : ViewModel.foursquareRating('No Rating Avaialable');
-
 						venueInfo.ratingColor ? $('#foursquare-rating').css({
 							background: '#' + venueInfo.ratingColor
 						}) : $('#foursquare-rating').css({
