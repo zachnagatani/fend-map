@@ -259,6 +259,8 @@ body {
         }
 
 }
+
+
 .search-section {
     height: 200px;
     width: 100%;
@@ -267,6 +269,12 @@ body {
     z-index: 2;
     transition: .5s;
 }
+
+/*@media screen and (min-width: 1000px) {
+    .search-section {
+        top: -200px;
+    }
+}*/
 
     .search-container {
         width: 500px;
@@ -278,6 +286,11 @@ body {
         justify-content: center;
         background: rgba(255, 255, 255, .75);
     }
+
+        .filter-btn {
+          position: relative;
+          top: 56px;
+        }
 
         .search-form {
             width: 500px;

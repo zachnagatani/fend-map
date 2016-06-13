@@ -78,6 +78,10 @@ function initViewModel(){
 			}
 		},
 
+		openFilter: function() {
+			ViewModel.searchSection.style.top = '200px';
+		},
+
 		venuePrice: ko.observable(),
 		foursquareLocation: ko.observable(),
 		googleDirections: ko.observable(),
