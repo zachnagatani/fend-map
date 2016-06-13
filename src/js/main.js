@@ -105,19 +105,20 @@ function initViewModel(){
 				}).done(function(data) {
 					console.log(data);
 					var venueInfo = data.response.venue;
-					ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
-					ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state);
-					var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-					ViewModel.googleDirections(googleDirectionsURL);
-					ViewModel.foursquareURL(venueInfo.url);
-					ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
+					venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo.attributes.groups[0].summary) : ViewModel.venuePrice('Price info is not available for this location.');
+					venueInfo.location.address !== undefined && venueInfo.location.city !== undefined && venueInfo.location.state !== undefined ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
+					var googleDirectionsURL;
+					ViewModel.foursquareLocation('Address is not available') ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+					googleDirectionsURL !== null ? ViewModel.googleDirections(googleDirectionsURL) : ViewModel.googleDirections(null);
+					venueInfo.url ? ViewModel.foursquareURL(venueInfo.url) : ViewModel.foursquareURL(null);
+					venueInfo.contact.formattedPhone ? ViewModel.foursquareContact(venueInfo.contact.formattedPhone) : ViewModel.foursquareContact('Phone number not avaialable');
 					venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
-					if (venueInfo.rating !== undefined) {
-						ViewModel.foursquareRating(venueInfo.rating);
-					}
+					venueInfo.rating !== undefined ? ViewModel.foursquareRating(venueInfo.rating) : ViewModel.foursquareRating('No Rating Avaialable');
 
-					$('#foursquare-rating').css({
+					venueInfo.ratingColor ? $('#foursquare-rating').css({
 						background: '#' + venueInfo.ratingColor
+					}) : $('#foursquare-rating').css({
+						background: '#fff'
 					});
 
 				}).fail(function() {
@@ -219,19 +220,20 @@ function initViewModel(){
 					}).done(function(data) {
 						console.log(data);
 						var venueInfo = data.response.venue;
-						ViewModel.venuePrice(venueInfo.attributes.groups[0].summary);
-						venueInfo.location.address && venueInfo.location.city && venueInfo.location.state ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
-						var googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
-						ViewModel.googleDirections(googleDirectionsURL);
-						ViewModel.foursquareURL(venueInfo.url);
-						ViewModel.foursquareContact(venueInfo.contact.formattedPhone);
+						venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo.attributes.groups[0].summary) : ViewModel.venuePrice('Price info is not available for this location.');
+						venueInfo.location.address !== undefined && venueInfo.location.city !== undefined && venueInfo.location.state !== undefined ? ViewModel.foursquareLocation(venueInfo.location.address + " " + venueInfo.location.city + ", " + venueInfo.location.state) : ViewModel.foursquareLocation('Address is not available');
+						var googleDirectionsURL;
+						ViewModel.foursquareLocation('Address is not available') ? googleDirectionsURL = null : googleDirectionsURL = "http://maps.google.com/maps?saddr=" + userCity + "&daddr=" + venueInfo.location.address + venueInfo.location.city + venueInfo.location.state;
+						googleDirectionsURL !== null ? ViewModel.googleDirections(googleDirectionsURL) : ViewModel.googleDirections(null);
+						venueInfo.url ? ViewModel.foursquareURL(venueInfo.url) : ViewModel.foursquareURL(null);
+						venueInfo.contact.formattedPhone ? ViewModel.foursquareContact(venueInfo.contact.formattedPhone) : ViewModel.foursquareContact('Phone number not avaialable');
 						venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) : ViewModel.foursquareStatus('Open/Closed Status Not Available');
-						if (venueInfo.rating !== undefined) {
-							ViewModel.foursquareRating(venueInfo.rating);
-						}
+						venueInfo.rating !== undefined ? ViewModel.foursquareRating(venueInfo.rating) : ViewModel.foursquareRating('No Rating Avaialable');
 
-						$('#foursquare-rating').css({
+						venueInfo.ratingColor ? $('#foursquare-rating').css({
 							background: '#' + venueInfo.ratingColor
+						}) : $('#foursquare-rating').css({
+							background: '#fff'
 						});
 
 					}).fail(function() {
