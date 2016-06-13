@@ -265,7 +265,8 @@ body {
     height: 200px;
     width: 100%;
     position: fixed;
-    top: 50px;
+    /*top: 50px;*/
+    top: -200px;
     z-index: 2;
     transition: .5s;
 }
@@ -287,9 +288,21 @@ body {
         background: rgba(255, 255, 255, .75);
     }
 
-        .filter-btn {
+        .filter-btn, .close-filter-btn {
           position: relative;
           top: 56px;
+          font-size: 16px;
+          background: rgba(0, 0, 0, .75);
+          color: #f0f0f0;
+          border-radius: 0;
+        }
+
+        .filter-btn:hover, .close-filter-btn:hover {
+            background: #000;
+        }
+
+        .close-filter-btn {
+            display: none;
         }
 
         .search-form {

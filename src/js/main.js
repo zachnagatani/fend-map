@@ -49,6 +49,8 @@ function initViewModel(){
 		openNavButton: document.getElementById('open-nav'),
 		closeNavButton: document.getElementById('close-nav'),
 		searchSection: document.getElementById('search-section'),
+		filterBtn: document.getElementById('filter-btn'),
+		closeFilterBtn: document.getElementById('close-filter-btn'),
 
 		openNav: function() {
 			ViewModel.listContainer.style.zIndex = "2";
@@ -79,7 +81,17 @@ function initViewModel(){
 		},
 
 		openFilter: function() {
-			ViewModel.searchSection.style.top = '200px';
+			ViewModel.searchSection.style.top = '50px';
+
+			ViewModel.filterBtn.style.display = "none";
+			ViewModel.closeFilterBtn.style.display = "inline-block";
+		},
+
+		closeFilter: function() {
+			ViewModel.searchSection.style.top = '-200px';
+
+			ViewModel.filterBtn.style.display = "inline-block";
+			ViewModel.closeFilterBtn.style.display = "none";
 		},
 
 		venuePrice: ko.observable(),
@@ -96,6 +108,8 @@ function initViewModel(){
 
 		openInfoWindow: function(index) {
 			ViewModel.infoWindowNode.style.display = "block";
+
+			ViewModel.closeFilter();
 
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
@@ -237,6 +251,8 @@ function initViewModel(){
 						}) : $('#foursquare-rating').css({
 							background: '#fff'
 						});
+
+						ViewModel.closeFilter();
 
 					}).fail(function() {
 						ViewModel.foursquareError(true);
