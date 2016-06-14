@@ -1,13 +1,16 @@
+// Callback for Google Maps API to kick off app
 function initApplication() {
+	// Variables that must be accessible to rest of app
 	var map;
-	var	geocoder;
-		userCity = '';
-		userCityGeocode = {};
-		allMarkers = [];
-		infoWindow = new google.maps.InfoWindow({
+	var geocoder;
+	userCity = '';
+	userCityGeocode = {};
+	allMarkers = [];
+	infoWindow = new google.maps.InfoWindow({
 		content: infoWindowNode
 	});
 
+	// Change default styles of infoWindow
 	function styleInfoWindow() {
 		google.maps.event.addListener(infoWindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
@@ -73,5 +76,7 @@ function initApplication() {
 	}
 
 	styleInfoWindow();
+
+	// Launch the Knockout ViewModel
 	initViewModel();
 } //initApplication Closing Brace
