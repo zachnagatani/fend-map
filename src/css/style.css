@@ -358,7 +358,11 @@ body {
         padding: 10px;
         border: 1px solid #333;
         color: black;
-    };
+    }
+
+    .filter-btn, .close-filter-btn {
+        display: none;
+    }
 }
 
 .infowindow-node {

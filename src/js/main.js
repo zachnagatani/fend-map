@@ -143,7 +143,7 @@ function initViewModel() {
 				}
 				marker.addListener('click', function() {
 					grabMarkerIndex();
-					ViewModel.closeFilter();
+					ViewModel.closeFilterOnSelect();
 					createInfoWindow();
 					ViewModel.getFourSquare();
 					toggleBounce();
@@ -154,7 +154,7 @@ function initViewModel() {
 			ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.index(index);
 
-			ViewModel.closeFilter();
+			ViewModel.closeFilterOnSelect();
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
 			infoWindow.open(map, allMarkers[indexByName]);
@@ -163,6 +163,7 @@ function initViewModel() {
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
+			ViewModel.closeNavOnSelect();
 		},
 		getFourSquare: function() {
 			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
@@ -274,24 +275,28 @@ function initViewModel() {
 		},
 
 		closeNavOnSelect: function() {
-			if ($(window).width() < 768) {
+			if ($(window).width() <= 1000) {
 				ViewModel.closeNav();
 			}
 		},
 
 		openFilter: function() {
-			ViewModel.searchSection.style.top = '50px';
+		},
 
-			ViewModel.filterBtn.style.display = "none";
-			ViewModel.closeFilterBtn.style.display = "inline-block";
+		openFilterOnSelect: function() {
+			if ($(window).width() > 1000) {
+				ViewModel.openFilter();
+			}
 		},
 
 		closeFilter: function() {
-			ViewModel.searchSection.style.top = '-200px';
-
-			ViewModel.filterBtn.style.display = "inline-block";
-			ViewModel.closeFilterBtn.style.display = "none";
 		},
+
+		closeFilterOnSelect: function() {
+			if ($(window).width() > 1000) {
+				ViewModel.closeFilter();
+			}
+		}
 	}; //ViewModel Closing Brace
 
 	ko.applyBindings(ViewModel);
