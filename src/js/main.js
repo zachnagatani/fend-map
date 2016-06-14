@@ -1,8 +1,6 @@
-// Launch the Knockout ViewModel
+
 function initViewModel() {
 	var ViewModel = {
-
-		// Needed observables/properties
 		foursquareVenues: ko.observableArray([]),
 		foursquareVenuesList: ko.observableArray([foursquareVenues]),
 		markerList: ko.observableArray([allMarkers]),
@@ -35,12 +33,8 @@ function initViewModel() {
 		closeFilterBtn: document.getElementById('close-filter-btn'),
 
 		introSearchInput: ko.observable(''),
-
-		// Iniital search functionality
 		introSearch: function() {
-			// Store user input for geocoder
 			userCity = ViewModel.introSearchInput();
-			// Foursquare Venues API
 			function getFoursquareVenues() {
 				var foursquareVenuesURL =
 					"https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
@@ -49,18 +43,14 @@ function initViewModel() {
 					dataType: "jsonp",
 					url: foursquareVenuesURL
 				}).done(function(data) {
-					// Error handling for a response with no venues
 					if (!data.response.groups) {
 						alert('Error! Please enter a properly formatted address or city.');
 					} else {
 						var foursquareVenueResponseArray = data.response.groups[0].items;
-						// Push each venue into foursquareVenues array
 						foursquareVenueResponseArray.forEach(function(venue) {
 							foursquareVenues.push(venue.venue);
 						});
-						// Initialize the Google Map
 						ViewModel.initMap();
-						// Close the search screen
 						var closeSearch = function() {
 							var introSearchContainer = document.getElementById(
 								'intro-search-container');
@@ -70,13 +60,11 @@ function initViewModel() {
 							}, 1000);
 						};
 						closeSearch();
-						// IIFE to push each venue into an observable array
 						(function() {
 							foursquareVenues.forEach(function(venue) {
 								ViewModel.foursquareVenues.push(venue);
 							});
 						})();
-						// Store userCity in observable
 						ViewModel.userAddress(userCity);
 						ViewModel.venueNames();
 					}
@@ -87,10 +75,7 @@ function initViewModel() {
 			}
 			getFoursquareVenues();
 		},
-
-		// Initiate the Google Map
 		initMap: function() {
-			// Instantiate the geocoder
 			geocoder = new google.maps.Geocoder();
 
 			var mapCenter = {
@@ -110,8 +95,6 @@ function initViewModel() {
 				zoom: zoomVal,
 				mapTypeControl: false
 			});
-
-			// Geocode the user-entered address and set the map to its center
 			if (geocoder) {
 				geocoder.geocode({
 					'address': userCity
@@ -131,81 +114,56 @@ function initViewModel() {
 				map.setCenter(userCityGeocode);
 			});
 		},
-
-		// Set up markers and their functionality
 		createMarkers: function() {
 			foursquareVenues.forEach(function(location) {
-				// Grab the lat and long of each venue
 				location.coordinates = {
 					"lat": location.location.lat,
 					"lng": location.location.lng
 				};
-				// Create the marker with the right info in the right location
 				var marker = new google.maps.Marker({
 					position: location.coordinates,
 					map: map,
 					title: location.name,
 					animation: google.maps.Animation.DROP,
 				});
-
-				// Push the marker into the allMarkers array
 				allMarkers.push(marker);
-
-				// Open the infoWindow over the marker
 				function createInfoWindow() {
 					ViewModel.infoWindowNode.style.display = "block";
 					infoWindow.open(map, marker);
 					ViewModel.venueName(marker.title);
 				}
-
-				// Grab the index of the marker and store it in observable
 				function grabMarkerIndex() {
 					ViewModel.index(foursquareVenues.indexOf(location));
 				}
-
-				// Bounce the marker twice on click
 				function toggleBounce() {
 					marker.setAnimation(google.maps.Animation.BOUNCE);
 					setTimeout(function() {
 						marker.setAnimation(null);
 					}, 1400);
 				}
-
-				// Call relevant functions on click
 				marker.addListener('click', function() {
 					grabMarkerIndex();
+					ViewModel.closeFilter();
 					createInfoWindow();
 					ViewModel.getFourSquare();
 					toggleBounce();
 				});
 			});
 		},
-
-		// Launches infoWindows on li click
 		openInfoWindow: function(index) {
-			// Unhide the infoWindow
 			ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.index(index);
 
 			ViewModel.closeFilter();
-
-			// Set the name of the venue in the infoWindow
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
-			// Open the infoWindow over the correct marker
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
 			infoWindow.open(map, allMarkers[indexByName]);
-
-			// Launch the FS Api
 			ViewModel.getFourSquare();
-
-			// Bounce the marker twice on click
 			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
 		},
-
-		// Foursquare API
 		getFourSquare: function() {
 			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
 			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID +
@@ -262,41 +220,28 @@ function initViewModel() {
 				alert("Foursquare could not be reached at this time.");
 			});
 		},
-
-		// Store venue names in array
 		venueNames: function() {
 			foursquareVenues.forEach(function(venue) {
 				ViewModel.foursquareVenueNames.push(venue.name);
 			});
 		},
-
-		// IIFE to stop page from refreshing when enter key is pressed
 		stopRefreshOnEnter: $(function() {
 			$("form").submit(function() {
 				return false;
 			});
 		}),
-
-		// Update the query observable when search is run
 		subscribeToSearch: function() {
 			ViewModel.query.subscribe(ViewModel.search);
 		},
-
-		// Location filtering
 		search: function(value) {
-			// Make all the markers invisible
 			allMarkers.forEach(function(marker) {
 				marker.setVisible(false);
 			});
-
-			// Make matching markers visible
 			allMarkers.forEach(function(marker) {
 				if (marker.title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
 					marker.setVisible(true);
 				}
 			});
-
-			// Remove all venues from observable array - push them back if matching
 			ViewModel.foursquareVenues.removeAll();
 			foursquareVenues.forEach(function(venue) {
 				if (venue.categories[0].name.toLowerCase().indexOf(value.toLowerCase()) >=
