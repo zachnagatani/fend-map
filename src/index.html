@@ -32,7 +32,7 @@
 		<nav id="list-container" class="list-container">
 			<ul id="location-list" class="location-list" data-bind="foreach: foursquareVenues">
 				<li id="list-item" class="list-item" data-bind="click: $parent.openInfoWindow.bind($data, $index())">
-						<a data-bind="text: name, click: $parent.closeNavOnSelect"></a>
+						<a data-bind="text: name"></a>
 				</li>
 			</ul>
 		</nav>
@@ -42,8 +42,8 @@
 				<form class="search-form">
 					<label id="type-search-label" for="search-field">Search For Food Near: <small data-bind="text: userAddress" class="address-text"></small></label><br>
 					<input id="search-field" class="search-field" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"><br>
-					<a class='btn filter-btn' id='filter-btn' data-bind='click: openFilter'>Open Filter</a>
-					<a class='btn close-filter-btn' id='close-filter-btn' data-bind='click: closeFilter'>Close Filter</a>
+					<a class='btn filter-btn' id='filter-btn' data-bind='click: openFilterOnSelect'>Open Filter</a>
+					<a class='btn close-filter-btn' id='close-filter-btn' data-bind='click: closeFilterOnSelect'>Close Filter</a>
 				</form>
 			</div>
 		</section>
