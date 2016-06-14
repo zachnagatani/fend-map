@@ -281,6 +281,10 @@ function initViewModel() {
 		},
 
 		openFilter: function() {
+			ViewModel.searchSection.style.top = '50px';
+
+			ViewModel.filterBtn.style.display = "none";
+			ViewModel.closeFilterBtn.style.display = "inline-block";
 		},
 
 		openFilterOnSelect: function() {
@@ -290,6 +294,10 @@ function initViewModel() {
 		},
 
 		closeFilter: function() {
+			ViewModel.searchSection.style.top = '-200px';
+
+			ViewModel.filterBtn.style.display = "inline-block";
+			ViewModel.closeFilterBtn.style.display = "none";
 		},
 
 		closeFilterOnSelect: function() {
