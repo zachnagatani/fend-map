@@ -41,7 +41,9 @@
 			<div class="search-container">
 				<form class="search-form">
 					<label id="type-search-label" for="search-field">Search For Food Near: <small data-bind="text: userAddress" class="address-text"></small></label><br>
-					<input id="search-field" class="search-field" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+					<input id="search-field" class="search-field" type="text" placeholder="Enter a food type or location name" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"><br>
+					<a class='btn filter-btn' id='filter-btn' data-bind='click: openFilter'>Open Filter</a>
+					<a class='btn close-filter-btn' id='close-filter-btn' data-bind='click: closeFilter'>Close Filter</a>
 				</form>
 			</div>
 		</section>
@@ -53,9 +55,9 @@
 				<div id="infowindow-content-container" class="infowindow-content-container">
 					<h2 id='foursquare-location' class="foursquare-location" data-bind="text: foursquareLocation"></h2>
 
-					<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }'>Get Directions</a>
+					<a href="" target="_blank" id="google-directions" class="google-directions btn" data-bind='attr: { href: googleDirections }, style: { display: googleDirections() === null ? "none" : "inline-block" }'>Get Directions</a>
 
-					<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }'>Visit Website</a>
+					<a target='_blank' id='foursquare-link' class='foursquare-link btn' data-bind='attr: { href: foursquareURL }, style: { display: foursquareURL() === null ? "none" : "inline-block" }'>Visit Website</a>
 
 					<p id='foursquare-contact' class='foursquare-contact' data-bind='text: foursquareContact'></p>
 

@@ -1,13 +1,13 @@
+
 function initApplication() {
 	var map;
-	var	geocoder;
-		userCity = '';
-		userCityGeocode = {};
-		allMarkers = [];
-		infoWindow = new google.maps.InfoWindow({
+	var geocoder;
+	userCity = '';
+	userCityGeocode = {};
+	allMarkers = [];
+	infoWindow = new google.maps.InfoWindow({
 		content: infoWindowNode
 	});
-
 	function styleInfoWindow() {
 		google.maps.event.addListener(infoWindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
