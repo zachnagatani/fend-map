@@ -25,6 +25,8 @@ function initViewModel() {
 
 		venueName: ko.observable(),
 
+		venueCoordinates: ko.observable(),
+
 		listContainer: document.getElementById('list-container'),
 		openNavButton: document.getElementById('open-nav'),
 		closeNavButton: document.getElementById('close-nav'),
@@ -129,7 +131,7 @@ function initViewModel() {
 				allMarkers.push(marker);
 				function createInfoWindow() {
 					ViewModel.infoWindowNode.style.display = "block";
-					infoWindow.open(map, marker);
+					// infoWindow.open(map, marker);
 					ViewModel.venueName(marker.title);
 				}
 				function grabMarkerIndex() {
@@ -147,6 +149,7 @@ function initViewModel() {
 					createInfoWindow();
 					ViewModel.getFourSquare();
 					toggleBounce();
+					ViewModel.panToVenue();
 				});
 			});
 		},
@@ -157,13 +160,14 @@ function initViewModel() {
 			ViewModel.closeFilterOnSelect();
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
-			infoWindow.open(map, allMarkers[indexByName]);
+			// infoWindow.open(map, allMarkers[indexByName]);
 			ViewModel.getFourSquare();
 			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
 			ViewModel.closeNavOnSelect();
+			ViewModel.panToVenue();
 		},
 		getFourSquare: function() {
 			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
@@ -204,6 +208,15 @@ function initViewModel() {
 				}) : $('#foursquare-rating').css({
 					background: '#fff'
 				});
+
+				// ViewModel.venueCoordinates = {
+				// 	'lat': venueInfo.location.lat,
+				// 	'lng': venueInfo.location.lng
+				// }
+				// ViewModel.venueCoordinates(new google.maps.LatLng(venueInfo.location.lat, venueInfo.location.lng));
+				// console.log(venueInfo);
+				// console.log(ViewModel.venueCoordinates);
+				// return venueInfo;
 
 			}).fail(function() {
 				ViewModel.foursquareError(true);
@@ -304,6 +317,12 @@ function initViewModel() {
 			if ($(window).width() > 1000) {
 				ViewModel.closeFilter();
 			}
+		},
+
+		panToVenue: function() {
+			// var latLng = new google.maps.LatLng(ViewModel.venueCoordinates.lat, ViewModel.venueCoordinates.lng);
+			map.panTo(ViewModel.venueCoordinates());
+			console.log(venueInfo);
 		}
 	}; //ViewModel Closing Brace
 

@@ -5,9 +5,9 @@ function initApplication() {
 	userCity = '';
 	userCityGeocode = {};
 	allMarkers = [];
-	infoWindow = new google.maps.InfoWindow({
-		content: infoWindowNode
-	});
+	// infoWindow = new google.maps.InfoWindow({
+	// 	// content: infoWindowNode
+	// });
 	function styleInfoWindow() {
 		google.maps.event.addListener(infoWindow, 'domready', function() {
 			var iwOuter = $('.gm-style-iw');
@@ -72,6 +72,6 @@ function initApplication() {
 		});
 	}
 
-	styleInfoWindow();
+	// styleInfoWindow();
 	initViewModel();
 } //initApplication Closing Brace
