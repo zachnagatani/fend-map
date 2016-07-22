@@ -33,48 +33,61 @@ function initViewModel() {
 		closeFilterBtn: document.getElementById('close-filter-btn'),
 
 		introSearchInput: ko.observable(''),
-		introSearch: function() {
-			userCity = ViewModel.introSearchInput();
-			function getFoursquareVenues() {
-				var foursquareVenuesURL =
-					"https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
-					"&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
-				$.ajax({
-					dataType: "jsonp",
-					url: foursquareVenuesURL
-				}).done(function(data) {
-					if (!data.response.groups) {
-						alert('Error! Please enter a properly formatted address or city.');
-					} else {
-						var foursquareVenueResponseArray = data.response.groups[0].items;
-						foursquareVenueResponseArray.forEach(function(venue) {
-							foursquareVenues.push(venue.venue);
-						});
-						ViewModel.initMap();
-						var closeSearch = function() {
-							var introSearchContainer = document.getElementById(
-								'intro-search-container');
-							introSearchContainer.style.opacity = "0";
-							var displayTimeout = setTimeout(function() {
-								introSearchContainer.style.display = "none";
-							}, 1000);
-						};
-						closeSearch();
-						(function() {
-							foursquareVenues.forEach(function(venue) {
-								ViewModel.foursquareVenues.push(venue);
-							});
-						})();
-						ViewModel.userAddress(userCity);
-						ViewModel.venueNames();
-					}
 
-				}).fail(function() {
-					alert("Sorry; the Foursquare servers could not be reached.");
-				});
-			}
-			getFoursquareVenues();
+		// Get data from API
+		fetch: function(url) {
+			return fetch(url);
 		},
+
+		// Parse that data as JSON
+		getJSON: function(url) {
+			return ViewModel.fetch(url).then(function(response) {
+				return response.json();
+			});
+		},
+
+		introSearch: function() {
+
+			userCity = ViewModel.introSearchInput();
+
+			let introURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
+			"&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
+			"TVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
+
+
+			ViewModel.getJSON(introURL)
+			.then(function(response) {
+				let foursquareVenueResponseArray = response.response.groups[0].items;
+				foursquareVenueResponseArray.forEach(function(venue) {
+					foursquareVenues.push(venue.venue);
+				});
+
+				ViewModel.initMap();
+
+				(function() {
+					foursquareVenues.forEach(function(venue) {
+						ViewModel.foursquareVenues.push(venue);
+					});
+				})();
+
+				ViewModel.userAddress(userCity);
+				ViewModel.venueNames();
+			})
+			.then(function() {
+				(function(){
+					let introSearchContainer = document.getElementById(
+						'intro-search-container');
+					introSearchContainer.style.opacity = "0";
+					let displayTimeout = setTimeout(function() {
+						introSearchContainer.style.display = "none";
+					}, 1000);
+				})();
+			})
+			.catch(function(){
+				alert("Sorry; the Foursquare servers could not be reached.");
+			});
+		},
+
 		initMap: function() {
 			geocoder = new google.maps.Geocoder();
 
@@ -166,46 +179,56 @@ function initViewModel() {
 			ViewModel.closeNavOnSelect();
 		},
 		getFourSquare: function() {
-			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
-			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID +
+			let venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
+			let foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID +
 				"?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
-			$.ajax({
-				dataType: "jsonp",
-				url: foursquareURL
-			}).done(function(data) {
-				var venueInfo = data.response.venue;
+
+
+			ViewModel.getJSON(foursquareURL)
+			.then(function(response) {
+				let venueInfo = response.response.venue;
+
 				venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo
 					.attributes.groups[0].summary) : ViewModel.venuePrice(
 					'Price info is not available for this location.');
+
 				venueInfo.location.address !== undefined && venueInfo.location.city !==
 					undefined && venueInfo.location.state !== undefined ? ViewModel.foursquareLocation(
 						venueInfo.location.address + " " + venueInfo.location.city + ", " +
 						venueInfo.location.state) : ViewModel.foursquareLocation(
 						'Address is not available');
-				var googleDirectionsURL;
+
+				let googleDirectionsURL;
+
 				ViewModel.foursquareLocation() === 'Address is not available' ?
 					googleDirectionsURL = null : googleDirectionsURL =
 					"http://maps.google.com/maps?saddr=" + userCity + "&daddr=" +
 					venueInfo.location.address + venueInfo.location.city + venueInfo.location
 					.state;
+
 				googleDirectionsURL !== null ? ViewModel.googleDirections(
 					googleDirectionsURL) : ViewModel.googleDirections(null);
+
 				venueInfo.url ? ViewModel.foursquareURL(venueInfo.url) : ViewModel.foursquareURL(
 					null);
+
 				venueInfo.contact.formattedPhone ? ViewModel.foursquareContact(
 					venueInfo.contact.formattedPhone) : ViewModel.foursquareContact(
 					'Phone number not avaialable');
+
 				venueInfo.hours ? ViewModel.foursquareStatus(venueInfo.hours.status) :
 					ViewModel.foursquareStatus('Open/Closed Status Not Available');
+
 				venueInfo.rating !== undefined ? ViewModel.foursquareRating(venueInfo.rating) :
 					ViewModel.foursquareRating('No Rating Avaialable');
+
 				venueInfo.ratingColor ? $('#foursquare-rating').css({
 					background: '#' + venueInfo.ratingColor
 				}) : $('#foursquare-rating').css({
 					background: '#fff'
 				});
-
-			}).fail(function() {
+			})
+			.catch(function() {
 				ViewModel.foursquareError(true);
 				ViewModel.venuePrice('');
 				ViewModel.foursquareLocation('');
@@ -221,19 +244,23 @@ function initViewModel() {
 				alert("Foursquare could not be reached at this time.");
 			});
 		},
+
 		venueNames: function() {
 			foursquareVenues.forEach(function(venue) {
 				ViewModel.foursquareVenueNames.push(venue.name);
 			});
 		},
+
 		stopRefreshOnEnter: $(function() {
 			$("form").submit(function() {
 				return false;
 			});
 		}),
+
 		subscribeToSearch: function() {
 			ViewModel.query.subscribe(ViewModel.search);
 		},
+
 		search: function(value) {
 			allMarkers.forEach(function(marker) {
 				marker.setVisible(false);
