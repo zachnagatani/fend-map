@@ -33,13 +33,9 @@ function initViewModel() {
 		closeFilterBtn: document.getElementById('close-filter-btn'),
 
 		introSearchInput: ko.observable(''),
-
-		// Get data from API
 		fetch: function(url) {
 			return fetch(url);
 		},
-
-		// Parse that data as JSON
 		getJSON: function(url) {
 			return ViewModel.fetch(url).then(function(response) {
 				return response.json();
@@ -50,14 +46,14 @@ function initViewModel() {
 
 			userCity = ViewModel.introSearchInput();
 
-			let introURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
+			var introURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
 			"&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
 			"TVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 
 			ViewModel.getJSON(introURL)
 			.then(function(response) {
-				let foursquareVenueResponseArray = response.response.groups[0].items;
+				var foursquareVenueResponseArray = response.response.groups[0].items;
 				foursquareVenueResponseArray.forEach(function(venue) {
 					foursquareVenues.push(venue.venue);
 				});
@@ -75,10 +71,10 @@ function initViewModel() {
 			})
 			.then(function() {
 				(function(){
-					let introSearchContainer = document.getElementById(
+					var introSearchContainer = document.getElementById(
 						'intro-search-container');
 					introSearchContainer.style.opacity = "0";
-					let displayTimeout = setTimeout(function() {
+					var displayTimeout = setTimeout(function() {
 						introSearchContainer.style.display = "none";
 					}, 1000);
 				})();
@@ -179,14 +175,14 @@ function initViewModel() {
 			ViewModel.closeNavOnSelect();
 		},
 		getFourSquare: function() {
-			let venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
-			let foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID +
+			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
+			var foursquareURL = "https://api.foursquare.com/v2/venues/" + venueID +
 				"?client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFDTVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 
 			ViewModel.getJSON(foursquareURL)
 			.then(function(response) {
-				let venueInfo = response.response.venue;
+				var venueInfo = response.response.venue;
 
 				venueInfo.attributes.groups[0].summary ? ViewModel.venuePrice(venueInfo
 					.attributes.groups[0].summary) : ViewModel.venuePrice(
@@ -198,7 +194,7 @@ function initViewModel() {
 						venueInfo.location.state) : ViewModel.foursquareLocation(
 						'Address is not available');
 
-				let googleDirectionsURL;
+				var googleDirectionsURL;
 
 				ViewModel.foursquareLocation() === 'Address is not available' ?
 					googleDirectionsURL = null : googleDirectionsURL =
