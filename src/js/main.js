@@ -137,10 +137,15 @@ function initViewModel() {
 				});
 				allMarkers.push(marker);
 				function createInfoWindow() {
-					ViewModel.infoWindowNode.style.display = "block";
-					infoWindow.open(map, marker);
 					ViewModel.venueName(marker.title);
+					$('#modal1').openModal();
 				}
+
+				function panToVenue() {
+					var latLng = new google.maps.LatLng(location.coordinates.lat, location.coordinates.lng);
+					map.panTo(latLng);
+				}
+
 				function grabMarkerIndex() {
 					ViewModel.index(foursquareVenues.indexOf(location));
 				}
@@ -153,26 +158,32 @@ function initViewModel() {
 				marker.addListener('click', function() {
 					grabMarkerIndex();
 					ViewModel.closeFilterOnSelect();
+					panToVenue();
+					toggleBounce();
 					createInfoWindow();
 					ViewModel.getFourSquare();
-					toggleBounce();
 				});
 			});
 		},
 		openInfoWindow: function(index) {
-			ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.index(index);
 
 			ViewModel.closeFilterOnSelect();
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
-			infoWindow.open(map, allMarkers[indexByName]);
 			ViewModel.getFourSquare();
+			panToVenue();
 			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
 			ViewModel.closeNavOnSelect();
+			$('#modal1').openModal();
+
+			function panToVenue() {
+				var latLng = new google.maps.LatLng(ViewModel.foursquareVenues()[index].location.lat, ViewModel.foursquareVenues()[index].location.lng);
+				map.panTo(latLng);
+			}
 		},
 		getFourSquare: function() {
 			var venueID = ViewModel.foursquareVenues()[ViewModel.index()].id;
