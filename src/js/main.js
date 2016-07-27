@@ -137,8 +137,6 @@ function initViewModel() {
 				});
 				allMarkers.push(marker);
 				function createInfoWindow() {
-					// ViewModel.infoWindowNode.style.display = "block";
-					// infoWindow.open(map, marker);
 					ViewModel.venueName(marker.title);
 					$('#modal1').openModal();
 				}
@@ -164,18 +162,15 @@ function initViewModel() {
 					toggleBounce();
 					createInfoWindow();
 					ViewModel.getFourSquare();
-					// ViewModel.openInfoWindow();
 				});
 			});
 		},
 		openInfoWindow: function(index) {
-			// ViewModel.infoWindowNode.style.display = "block";
 			ViewModel.index(index);
 
 			ViewModel.closeFilterOnSelect();
 			ViewModel.venueName(ViewModel.foursquareVenues()[index].name);
 			var indexByName = ViewModel.foursquareVenueNames.indexOf(ViewModel.venueName());
-			// infoWindow.open(map, allMarkers[indexByName]);
 			ViewModel.getFourSquare();
 			panToVenue();
 			allMarkers[indexByName].setAnimation(google.maps.Animation.BOUNCE);
