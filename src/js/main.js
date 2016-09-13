@@ -66,7 +66,7 @@ function initViewModel() {
 					// from the first object in array
 					var indexEnd = results.results[0].formatted_address.search(", USA");
 					ViewModel.introSearchInput(results.results[0].formatted_address.substring(0, indexEnd));
-					output.val(Viewmodel.introSearchInput());
+					output.val(ViewModel.introSearchInput());
 					// output.val(results.results[0].address_components[0].long_name + ' ' + results.results[0].address_components[1].short_name + ' ' + results.results[0].address_components[3].long_name + ', ' + results.results[0].address_components[5].short_name);
 
 				});
