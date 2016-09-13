@@ -92,7 +92,7 @@ function initViewModel() {
 			userCity = ViewModel.introSearchInput();
 
 			var introURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
-			"&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
+			"&section=food&limit=20&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
 			"TVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 
@@ -255,7 +255,7 @@ function initViewModel() {
 				ViewModel.foursquareLocation() === 'Address is not available' ?
 					googleDirectionsURL = null : googleDirectionsURL =
 					"http://maps.google.com/maps?saddr=" + userCity + "&daddr=" +
-					venueInfo.location.address + venueInfo.location.city + venueInfo.location
+					venueInfo.location.address + "+" + venueInfo.location.city + "+" + venueInfo.location
 					.state;
 
 				googleDirectionsURL !== null ? ViewModel.googleDirections(
