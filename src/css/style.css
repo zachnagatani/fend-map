@@ -276,6 +276,7 @@ body {
     width: 500px;
     text-align: center;
     height: 200px;
+    padding: 20px 20px 0 20px;
 }
 
 .search-form label {
@@ -320,8 +321,7 @@ body {
     .search-form {
         width: 500px;
         text-align: center;
-        position: relative;
-        top: 20px;
+        padding-top: 60px;
     }
 
     .search-form label {
