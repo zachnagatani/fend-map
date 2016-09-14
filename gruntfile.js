@@ -15,7 +15,8 @@ module.exports = function (grunt) {
 		'uglify',
 		'csslint',
 		'cssmin',
-		'imagemin'
+		'imagemin',
+		'grunt-serve'
 	]);
 
 };
