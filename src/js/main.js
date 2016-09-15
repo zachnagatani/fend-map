@@ -46,6 +46,8 @@ function initViewModel() {
 			// If there geolocation is not supported, return
 			if (!navigator.geolocation) return;
 
+			Materialize.toast('Finding your location...', 1000);
+
 			// The element to update with the location (the input field in this case)
 			var output = $('#intro-search-input');
 
@@ -75,7 +77,7 @@ function initViewModel() {
 			// If the location cannot be retrieved, alert the user
 			// On mobile, this could be because their location services are turned off
 			function error() {
-				alert('Sorry; we couldn\'t find your location. Please make sure your location services (GPS) are enabled.');
+				Materialize.toast('Sorry; we couldn\'t find your location. Please make sure your location services (GPS) are enabled.', 4000);
 			}
 
 			// Call the HTML5 geolocation API and pass in our success and error callback functions
