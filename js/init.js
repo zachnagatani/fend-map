@@ -1,1 +1,1 @@
-function initApplication(){userCity="",userCityGeocode={},allMarkers=[],initViewModel()}
+function initApplication(){function initAutoComplete(){new google.maps.places.Autocomplete(document.getElementById("intro-search-input"))}navigator.serviceWorker&&navigator.serviceWorker.register("sw.js").then(function(reg){console.log("YOU DID IT!!!"+reg.scope)})["catch"](function(error){console.log("Nope you made a boo boo and uh baa-baa and a "+error)});userCity="",userCityGeocode={},allMarkers=[],initAutoComplete(),initViewModel()}

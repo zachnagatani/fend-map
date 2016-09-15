@@ -61,9 +61,11 @@ module.exports = function(grunt, config) {
 
 					'dist/js/init.js': ['src/js/init.js'],
 
-					'dist/knockout/knockout.js': ['src/knockout/knockout.js'],
+					'dist/knockout/knockout.js': ['src/libs/knockout.js'],
 
-					'dist/jquery/jquery.min.js': ['src/jquery/jquery.min.js']
+					'dist/jquery/jquery.min.js': ['src/libs/jquery.min.js'],
+
+					'dist/sw.js': ['src/sw.js']
 
 				}
 
