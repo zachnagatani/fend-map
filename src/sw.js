@@ -21,7 +21,7 @@ this.addEventListener('install', function(event) {
 			.then(function(cache) {
 				return cache.addAll([
 					'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css',
-					'http://fonts.googleapis.com/icon?family=Material+Icons',
+					'https://fonts.googleapis.com/icon?family=Material+Icons',
 					'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js'
 				]);
 			})
