@@ -127,7 +127,7 @@ function initViewModel() {
 				})();
 			})
 			.catch(function(){
-				alert("Sorry; the Foursquare servers could not be reached.");
+				Materialize.toast("Sorry; the Foursquare servers could not be reached.", 2000);				
 			});
 		},
 
@@ -225,7 +225,6 @@ function initViewModel() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
 			ViewModel.closeNavOnSelect();
-			$('#modal1').openModal();
 
 			function panToVenue() {
 				var latLng = new google.maps.LatLng(ViewModel.foursquareVenues()[index].location.lat, ViewModel.foursquareVenues()[index].location.lng);
@@ -281,6 +280,7 @@ function initViewModel() {
 				}) : $('#foursquare-rating').css({
 					background: '#fff'
 				});
+				$('#modal1').openModal();
 			})
 			.catch(function() {
 				ViewModel.foursquareError(true);
@@ -295,7 +295,7 @@ function initViewModel() {
 					background: '#fff',
 				});
 
-				alert("Foursquare could not be reached at this time.");
+				Materialize.toast("Sprry; Foursquare could not be reached at this time for venue info.", 2000);
 			});
 		},
 
