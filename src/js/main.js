@@ -139,7 +139,7 @@ function initViewModel() {
 
 			var zoomVal;
 			if ($(window).width() <= 768) {
-				zoomVal = 11;
+				zoomVal = 12;
 			} else {
 				zoomVal = 14;
 			}

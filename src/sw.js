@@ -6,8 +6,9 @@ this.addEventListener('install', function(event) {
 		caches.open(staticCache)
 			.then(function(cache) {
 				return cache.addAll([
-					'http://localhost:9999/src/index.html',
-					'http://localhost:9999/src/css/style.css'
+					'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css',
+					'http://fonts.googleapis.com/icon?family=Material+Icons',
+					'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js'
 				]);
 			})
 	);
@@ -36,13 +37,33 @@ this.addEventListener('install', function(event) {
 
 this.addEventListener('fetch', function(event) {
 	var requestUrl = new URL(event.request.url);
-	if (requestUrl.href.startsWith('https://api.foursquare.com/')) {
-		event.respondWith(grabScript(event.request));
+
+	if (requestUrl.href.startsWith('http://localhost:9999/')) {
+		event.respondWith(grabStatic(event.request));
+	}
+
+	if (requestUrl.href.startsWith('https://api.foursquare.com/') || 
+		requestUrl.href.startsWith('http://fonts.googleapis.com/') || 
+		requestUrl.href.startsWith('https://cdnjs.cloudflare.com/')) {
+		event.respondWith(grabStatic(event.request));
 	}
 });
 
 function grabScript(request) {
 	return caches.open(apiCache).then(function(cache) {
+		return cache.match(request.url).then(function(response) {
+			if (response) return response;
+			
+			return fetch(request).then(function(networkResponse) {
+				cache.put(request.url, networkResponse.clone());
+				return networkResponse;
+			});
+		});
+	});
+}
+
+function grabStatic(request) {
+	return caches.open(staticCache).then(function(cache) {
 		return cache.match(request.url).then(function(response) {
 			if (response) return response;
 			
