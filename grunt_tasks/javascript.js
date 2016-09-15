@@ -69,7 +69,13 @@ module.exports = function(grunt, config) {
 
 			}
 
-		}
+		},
+
+		serve: {
+	        options: {
+	            port: 9999
+	        }
+    	}
 
 		// concat: {
 		//     options: {

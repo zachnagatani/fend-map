@@ -1,4 +1,3 @@
-
 function initViewModel() {
 	var ViewModel = {
 		foursquareVenues: ko.observableArray([]),
@@ -42,12 +41,60 @@ function initViewModel() {
 			});
 		},
 
+					// Function to find the location of the user
+		findLocation: function() {
+			// If there geolocation is not supported, return
+			if (!navigator.geolocation) return;
+
+			Materialize.toast('Finding your location...', 1000);
+
+			// The element to update with the location (the input field in this case)
+			var output = $('#intro-search-input');
+
+			// The success callback function if the location is retrieved
+			function success(position) {
+				// Access the latitude and longitude that are returned
+				var latitude = position.coords.latitude;
+				var longitude = position.coords.longitude;
+
+				// Use the Google Maps Geocoding API's reverse geocoding to grab an address from the lat and long
+				// Your own API key is required from google
+				fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyDstwW4Ea6RJFKBuw2hj2kHXAcFioor_2o').then(function(response) {
+					// Convert the response to a JSON object and return it
+					// This will be an array of objects containing address information
+					return response.json();
+				}).then(function(results) {
+					// Update the value of our input field with the formatted_address property
+					// from the first object in array
+					var indexEnd = results.results[0].formatted_address.search(", USA");
+					ViewModel.introSearchInput(results.results[0].formatted_address.substring(0, indexEnd));
+					output.val(ViewModel.introSearchInput());
+					// output.val(results.results[0].address_components[0].long_name + ' ' + results.results[0].address_components[1].short_name + ' ' + results.results[0].address_components[3].long_name + ', ' + results.results[0].address_components[5].short_name);
+
+				});
+			}
+
+			// If the location cannot be retrieved, alert the user
+			// On mobile, this could be because their location services are turned off
+			function error() {
+				Materialize.toast('Sorry; we couldn\'t find your location. Please make sure your location services (GPS) are enabled.', 4000);
+			}
+
+			// Call the HTML5 geolocation API and pass in our success and error callback functions
+			// Also pass in our object with options: enableHighAccuracy may cause geolocating to take longer,
+			// but should return a more accurate result. Timeout is the maximum length of time allowed
+			// before the error handler is called (default is infinity). MaximumAge is the oldest a cached
+			// location is allowed to be before the actual current location must be fetched. Setting to 0
+			// forces the geolocater to fetch the actual current location
+			navigator.geolocation.getCurrentPosition(success, error, {enableHighAccuracy: true, timeout: 30000, maximumAge: 0});
+		},
+
 		introSearch: function() {
 
 			userCity = ViewModel.introSearchInput();
 
 			var introURL = "https://api.foursquare.com/v2/venues/explore?near=" + ViewModel.introSearchInput() +
-			"&section=food&limit=50&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
+			"&section=food&limit=20&client_id=2DV1P3YPGYBLCEXLTRGNBKZR2EHZINKEHVET2TCUFQFQ23KS&client_secret=EFD" +
 			"TVXXZJSBEVC12RAMZBV24RFUDEY3E1CG2USRDT0NWEK1A&v=20170101&m=foursquare";
 
 
@@ -80,7 +127,7 @@ function initViewModel() {
 				})();
 			})
 			.catch(function(){
-				alert("Sorry; the Foursquare servers could not be reached.");
+				Materialize.toast("Sorry; the Foursquare servers could not be reached.", 2000);				
 			});
 		},
 
@@ -94,7 +141,7 @@ function initViewModel() {
 
 			var zoomVal;
 			if ($(window).width() <= 768) {
-				zoomVal = 11;
+				zoomVal = 12;
 			} else {
 				zoomVal = 14;
 			}
@@ -178,7 +225,6 @@ function initViewModel() {
 				allMarkers[indexByName].setAnimation(null);
 			}, 1400);
 			ViewModel.closeNavOnSelect();
-			$('#modal1').openModal();
 
 			function panToVenue() {
 				var latLng = new google.maps.LatLng(ViewModel.foursquareVenues()[index].location.lat, ViewModel.foursquareVenues()[index].location.lng);
@@ -210,7 +256,7 @@ function initViewModel() {
 				ViewModel.foursquareLocation() === 'Address is not available' ?
 					googleDirectionsURL = null : googleDirectionsURL =
 					"http://maps.google.com/maps?saddr=" + userCity + "&daddr=" +
-					venueInfo.location.address + venueInfo.location.city + venueInfo.location
+					venueInfo.location.address + "+" + venueInfo.location.city + "+" + venueInfo.location
 					.state;
 
 				googleDirectionsURL !== null ? ViewModel.googleDirections(
@@ -234,6 +280,7 @@ function initViewModel() {
 				}) : $('#foursquare-rating').css({
 					background: '#fff'
 				});
+				$('#modal1').openModal();
 			})
 			.catch(function() {
 				ViewModel.foursquareError(true);
@@ -248,7 +295,7 @@ function initViewModel() {
 					background: '#fff',
 				});
 
-				alert("Foursquare could not be reached at this time.");
+				Materialize.toast("Sprry; Foursquare could not be reached at this time for venue info.", 2000);
 			});
 		},
 
@@ -343,5 +390,8 @@ function initViewModel() {
 
 	ko.applyBindings(ViewModel);
 
+	ViewModel.findLocation();
+
 	ViewModel.subscribeToSearch();
+
 } //initVieModel closing brace
