@@ -48,7 +48,7 @@ function initViewModel() {
 			function success(position) {
 				var latitude = position.coords.latitude;
 				var longitude = position.coords.longitude;
-				fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyDstwW4Ea6RJFKBuw2hj2kHXAcFioor_2o').then(function(response) {
+				fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyBdAGYoQaxnPLmzxb9hb_D7gk_xhPj7bM8').then(function(response) {
 					return response.json();
 				}).then(function(results) {
 					var indexEnd = results.results[0].formatted_address.search(", USA");
